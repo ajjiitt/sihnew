@@ -1,7 +1,7 @@
 import React from 'react'
 import QRCode from 'react-qr-code'
 
-const qrcode = () => {
+const Qrcode = () => {
     return (
         <div>
             <div style={{ height: "auto", margin: "0 auto", maxWidth: 64, width: "100%" }}>
@@ -16,4 +16,4 @@ const qrcode = () => {
     )
 }
 
-export default qrcode
+export default Qrcode
