@@ -1,11 +1,14 @@
 import Navbar from './Components/Navbar';
+import AllCenterData from './SubComponents/AllCenterData';
 import IpfsUpload from './SubComponents/IpfsUpload';
 
 function App() {
   return (
     <div className="App">
-        <Navbar/>
+        <Navbar/>\
+        {/* TESTING PURPOSE */}
         {/* <IpfsUpload /> */}
+        {/* <AllCenterData /> */}
     </div>
   );
 }

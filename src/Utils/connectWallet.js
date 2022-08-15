@@ -11,7 +11,7 @@ export const intializeMasterContract = () => {
 };
 export const intializeDisasterContract = () => {
     const web3 = new Web3(Web3.givenProvider);
-    return new web3.eth.Contract(DisasterContractAddress, DisasterContractABI);
+    return new web3.eth.Contract(DisasterContractABI, DisasterContractAddress);
 };
 
 export const connectWallet = async(setdata) => {
