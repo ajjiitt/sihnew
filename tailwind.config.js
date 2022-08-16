@@ -8,6 +8,7 @@ module.exports = {
       colors: {
         "footer-darkblue": '#22262F',
         "grey-copyright" : '#AFAFAF',
+        "buttonOrange":"#F2994A",
       },
       borderWidth: {
         '1': '1px',
