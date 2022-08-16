@@ -41,6 +41,23 @@
     },
     {
         "inputs": [{
+                "internalType": "address",
+                "name": "demandCreator",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "index",
+                "type": "uint256"
+            }
+        ],
+        "name": "acceptDemand",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [{
             "internalType": "uint256",
             "name": "",
             "type": "uint256"
@@ -55,6 +72,37 @@
                 "internalType": "string",
                 "name": "name",
                 "type": "string"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+        }],
+        "name": "allDemands",
+        "outputs": [{
+                "internalType": "string",
+                "name": "name",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "location",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "demandDescription",
+                "type": "string"
+            },
+            {
+                "internalType": "enum Disaster.DemandState",
+                "name": "state",
+                "type": "uint8"
             }
         ],
         "stateMutability": "view",
@@ -150,6 +198,43 @@
                 "type": "uint256"
             }
         ],
+        "name": "authorityDemand",
+        "outputs": [{
+                "internalType": "string",
+                "name": "name",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "location",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "demandDescription",
+                "type": "string"
+            },
+            {
+                "internalType": "enum Disaster.DemandState",
+                "name": "state",
+                "type": "uint8"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+                "internalType": "address",
+                "name": "",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
         "name": "authorityRequest",
         "outputs": [{
                 "internalType": "string",
@@ -210,6 +295,23 @@
             }
         ],
         "name": "createCenterLevel",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+                "internalType": "string",
+                "name": "_location",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_demandDescription",
+                "type": "string"
+            }
+        ],
+        "name": "createDemand",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"
@@ -306,6 +408,38 @@
     },
     {
         "inputs": [],
+        "name": "getAllDemands",
+        "outputs": [{
+            "components": [{
+                    "internalType": "string",
+                    "name": "name",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "location",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "demandDescription",
+                    "type": "string"
+                },
+                {
+                    "internalType": "enum Disaster.DemandState",
+                    "name": "state",
+                    "type": "uint8"
+                }
+            ],
+            "internalType": "struct Disaster.Demand[]",
+            "name": "",
+            "type": "tuple[]"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
         "name": "getAllRequest",
         "outputs": [{
             "components": [{
@@ -357,6 +491,42 @@
                 }
             ],
             "internalType": "struct Disaster.CenterData[]",
+            "name": "",
+            "type": "tuple[]"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+            "internalType": "address",
+            "name": "demandCreator",
+            "type": "address"
+        }],
+        "name": "getDemands",
+        "outputs": [{
+            "components": [{
+                    "internalType": "string",
+                    "name": "name",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "location",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "demandDescription",
+                    "type": "string"
+                },
+                {
+                    "internalType": "enum Disaster.DemandState",
+                    "name": "state",
+                    "type": "uint8"
+                }
+            ],
+            "internalType": "struct Disaster.Demand[]",
             "name": "",
             "type": "tuple[]"
         }],

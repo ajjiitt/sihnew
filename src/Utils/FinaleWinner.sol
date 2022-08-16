@@ -10,7 +10,7 @@ contract Disaster {
 
     //Enums
     enum RequestState { Initiated, Dispatched, Delivered, Cancelled }
-
+    enum DemandState { Unfulfilled, Fulfilled }
     //Structs
     struct Request {
         string supplyType;
@@ -31,6 +31,12 @@ contract Disaster {
         address groundAddress;
         string name;
     }
+    struct Demand {
+        string name;
+        string location;
+        string demandDescription;
+        DemandState state;
+    }
 
     //Mappings
     mapping(address => string) public AuthorityName;
@@ -38,13 +44,15 @@ contract Disaster {
     mapping(address => bool) public isState;
     mapping(address => bool) public isGround;
     mapping(address => Request[]) public authorityRequest;
+    mapping(address => Demand[]) public authorityDemand;
 
     //Arrays
     CenterData[] public allCenterData;
     StateData[] public allStateData;
     GroundData[] public allGroundData;
     Request[] public allRequests;
-    
+    Demand[] public allDemands;
+ 
     constructor(address EOA, string memory DisasterType) {
         owner = EOA;
         DisasterName = DisasterType;
@@ -99,6 +107,7 @@ contract Disaster {
     //create Center Level 
     function createCenterLevel(address toGrant, string memory centerName) external onlyCenter {
 
+        require(isCenter[toGrant] == false, "Sorry You are already registered");
         AuthorityName[toGrant] = centerName;
         isCenter[toGrant] = true;
         CenterData memory newCenter;
@@ -111,6 +120,7 @@ contract Disaster {
     //create State level
     function createStateLevel(address toGrant, string memory stateName) external onlyCenter {
 
+        require(isCenter[toGrant] == false, "Sorry You are already registered");
         AuthorityName[toGrant] = stateName;
         isState[toGrant] = true;
         StateData memory newState;
@@ -123,6 +133,7 @@ contract Disaster {
     //create Ground Level
     function createGroundLevel(address toGrant, string memory GroundName) external onlyStateOrCenter {
 
+        require(isCenter[toGrant] == false, "Sorry You are already registered");
         AuthorityName[toGrant] = GroundName;
         isGround[toGrant] = true;
         GroundData memory newGround;
@@ -170,6 +181,35 @@ contract Disaster {
     function cancelSupply(address supplyCreator, uint index) external {
         authorityRequest[supplyCreator][index].state = RequestState.Cancelled;
     }
+
+    //Create Demand
+    function createDemand(string memory _location, string memory _demandDescription) external onlyInvolvedAuthorities {
+
+        Demand memory newDemand;
+        newDemand.location = _location;
+        newDemand.demandDescription = _demandDescription;
+        newDemand.name = AuthorityName[msg.sender];
+        newDemand.state = DemandState.Unfulfilled;
+        allDemands.push(newDemand);
+        authorityDemand[msg.sender].push(newDemand);
+
+    }
+
+    //Accept Demand
+    function acceptDemand(address demandCreator, uint index) external onlyInvolvedAuthorities {
+        authorityDemand[demandCreator][index].state = DemandState.Fulfilled;
+    }
+
+    //Get All Demands
+    function getAllDemands() external view returns (Demand[] memory) {
+        return allDemands;
+    }
+
+    //Get Authority Specific Demands
+    function getDemands(address demandCreator) external view returns (Demand[] memory) {
+        return authorityDemand[demandCreator];
+    }
+
     
 }
 
@@ -177,6 +217,13 @@ contract Disaster {
 contract MasterContract {
     address private ownerMaster;
     Disaster[] public deployedDisaster;
+    
+    struct Disasters {
+        address disastarContract;
+        string disasterName;
+    }
+
+    Disasters[] public allDisasters;
 
     constructor () {
         ownerMaster = msg.sender;
@@ -185,5 +232,13 @@ contract MasterContract {
     function CreateDisaster(string memory DisasterType) public {
         Disaster new_Disaster_address = new Disaster(msg.sender, DisasterType);
         deployedDisaster.push(new_Disaster_address);
+        Disasters memory newDisaster;
+        newDisaster.disastarContract = address(new_Disaster_address);
+        newDisaster.disasterName = DisasterType;
+        allDisasters.push(newDisaster);
+    }
+
+    function getDisasters() external view returns(Disasters[] memory){
+        return allDisasters;
     }
 }

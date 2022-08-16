@@ -20,11 +20,54 @@
             "name": "",
             "type": "uint256"
         }],
+        "name": "allDisasters",
+        "outputs": [{
+                "internalType": "address",
+                "name": "disastarContract",
+                "type": "address"
+            },
+            {
+                "internalType": "string",
+                "name": "disasterName",
+                "type": "string"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+        }],
         "name": "deployedDisaster",
         "outputs": [{
             "internalType": "contract Disaster",
             "name": "",
             "type": "address"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "getDisasters",
+        "outputs": [{
+            "components": [{
+                    "internalType": "address",
+                    "name": "disastarContract",
+                    "type": "address"
+                },
+                {
+                    "internalType": "string",
+                    "name": "disasterName",
+                    "type": "string"
+                }
+            ],
+            "internalType": "struct MasterContract.Disasters[]",
+            "name": "",
+            "type": "tuple[]"
         }],
         "stateMutability": "view",
         "type": "function"
