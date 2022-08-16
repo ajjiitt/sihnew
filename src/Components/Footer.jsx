@@ -5,7 +5,10 @@ import youtube from "../assets/youtube.svg";
 export default function Footer() {
   return (
     <>
-      <div className="h-full md:h-80 bg-footer-darkblue flex md:flex-row flex-col justify-center items-center text-white gap-5 md:gap-1 py-5 md:py-0">
+      <div
+        style={{ fontFamily: "Inter" }}
+        className="h-full md:h-80 bg-footer-darkblue flex md:flex-row flex-col justify-center items-center text-white gap-5 md:gap-1 py-5 md:py-0"
+      >
         {/* div1 */}
         <div className="md:w-2/12 text-xl font-bold flex items-center justify-center">
           10K user already connected worldwide
