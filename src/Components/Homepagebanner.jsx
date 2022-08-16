@@ -3,16 +3,18 @@ export default function Homepagebanner() {
   return (
     <div
       style={{
-        backgroundImage: `url('/homebanner.png')`,
+        backgroundImage: `url('/homebanner.jpg')`,
         backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center center",
       }}
-      className="h-full w-full py-10 flex flex-col items-center justify-around text-white gap-3 text-center "
+      className="h-full w-full py-48 flex flex-col items-center justify-around text-white gap-3 text-center "
     >
-      <div className="">Give Hopes for Homeless</div>
-      <div className="text-5xl text-center text-bold">
+      <div className="font-thin text-sm">Give Hopes for Homeless</div>
+      <div className="text-6xl text-center text-bold">
         Helping each other <br /> can make world better
       </div>
-      <div className="font-extralight">
+      <div className="text-base">
         We are a transparent platform that help in reaching out to the people
         stuck in Calamities and help them.
       </div>
