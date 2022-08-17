@@ -21,14 +21,14 @@ export default function Example() {
     address: "",
   });
   return (
-    <Disclosure as="nav" className="bg-gray-800">
+    <Disclosure as="nav" className="bg-white ">
       {({ open }) => (
         <>
           <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
             <div className="relative flex items-center justify-between h-16">
               <div className="flex-1 flex items-center justify-start sm:items-stretch sm:justify-start">
                 <div className="flex-shrink-0 flex items-center">
-                  <img
+                  {/* <img
                     className="block lg:hidden h-8 w-auto"
                     src="https://tailwindui.com/img/logos/workflow-mark.svg?color=indigo&shade=500"
                     alt="Workflow"
@@ -37,9 +37,14 @@ export default function Example() {
                     className="hidden lg:block h-8 w-auto"
                     src="https://tailwindui.com/img/logos/workflow-mark.svg?color=indigo&shade=500"
                     alt="Workflow"
-                  />
+                  /> */}
+                  <div className="flex justify-between">
+                    <div className="" style={{ height: "50px", width: "130px" }}>
+                      <img src="ndrflogo.jpg" alt="" style={{ height: "100%", width: "100%" }} />
+                    </div>
+		            	</div>
                 </div>
-                <div className="hidden md:block md:ml-36 lg:ml-64">
+                <div className="hidden md:flex md:ml-36 lg:ml-64  md:justify-center  md:items-center">
                   <div className="flex space-x-4">
                     {navigation.map((item) => (
                       <a

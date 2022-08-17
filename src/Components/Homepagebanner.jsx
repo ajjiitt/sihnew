@@ -3,10 +3,11 @@ export default function Homepagebanner() {
   return (
     <div
       style={{
-        backgroundImage: `url('/homebanner.jpg')`,
+        backgroundImage: `url('https://cdn.discordapp.com/attachments/1005565612749246467/1009563352814596126/unknown.png')`,
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center center",
+        opacity:"0.8"
       }}
       className="h-full w-full py-48 flex flex-col items-center justify-around text-white gap-3 text-center "
     >
