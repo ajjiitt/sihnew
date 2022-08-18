@@ -1,6 +1,7 @@
 import React from "react";
 import SupplyRequest from "../SubComponents/SupplyRequest";
 import DemandRequest from "../SubComponents/DemandRequest";
+import AllGroundAuthorities from "../SubComponents/AllGroundAuthorities";
 const ViewDisaster = () => {
   const [openTab, setOpenTab] = React.useState(1);
   const color = "footer-darkblue";
@@ -80,7 +81,7 @@ const ViewDisaster = () => {
                   <DemandRequest/>
                 </div>
                 <div className={openTab === 3 ? "block" : "hidden"} id="link3">
-                  Ground authorities
+                  <AllGroundAuthorities/>
                 </div>
               </div>
             </div>
