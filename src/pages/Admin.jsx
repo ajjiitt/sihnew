@@ -1,10 +1,15 @@
 import React, { useState } from "react";
+import AuthorizeCentral from "../Components/AuthorizeCentral";
+import AuthorizeState from "../Components/AuthorizeState";
+import CentralAuthorities from "../Components/CentralAuthorities";
 import CreateDisaster from "../Components/CreateDisaster";
+import FileSharing from "../Components/FileSharing";
+import StateAuthorities from "../Components/StateAuthorities";
 import ViewDisasters from "../Components/ViewDisasters";
 
 const Admin = () => {
   const [curIndex, setCurIndex] = useState(0);  
-  const tabComponents = [<ViewDisasters />, <CreateDisaster />];
+  const tabComponents = [<ViewDisasters />, <CreateDisaster />, <AuthorizeCentral />, <AuthorizeState />, <CentralAuthorities />, <StateAuthorities />, <FileSharing />];
   return (
     <div>
       <div className="mx-5 my-5">
@@ -48,24 +53,55 @@ const Admin = () => {
             </button>
           </li>
           <li className="w-full">
-            <a
-              href="#"
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                setCurIndex(2);
+              }}
               className="inline-block p-4 w-full bg-white hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
             >
-              Dashboard
-            </a>
+              Authorize Central Authority
+            </button>
+          </li>
+          <li className="w-full">
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                setCurIndex(3);
+              }}
+              className="inline-block p-4 w-full bg-white hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
+            >
+              Authorize State Authority
+            </button>
+          </li>
+          <li className="w-full">
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                setCurIndex(4);
+              }}
+              className="inline-block p-4 w-full bg-white hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
+            >
+             Central Authorities
+            </button>
+          </li>
+          <li className="w-full">
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                setCurIndex(5);
+              }}
+              className="inline-block p-4 w-full bg-white hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
+            >
+               State Authorities
+            </button>
           </li>
           <li className="w-full">
             <a
-              href="#"
-              className="inline-block p-4 w-full bg-white hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
-            >
-              Settings
-            </a>
-          </li>
-          <li className="w-full">
-            <a
-              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                setCurIndex(6);
+              }}
               className="inline-block p-4 w-full bg-white rounded-r-lg hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
             >
               File Storage
