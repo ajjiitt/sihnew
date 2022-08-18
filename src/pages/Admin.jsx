@@ -60,7 +60,7 @@ const Admin = () => {
               }}
               className="inline-block p-4 w-full bg-white hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
             >
-              Authorize Central Authority
+              Authorize Central
             </button>
           </li>
           <li className="w-full">
@@ -71,7 +71,7 @@ const Admin = () => {
               }}
               className="inline-block p-4 w-full bg-white hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
             >
-              Authorize State Authority
+              Authorize State
             </button>
           </li>
           <li className="w-full">
