@@ -1,12 +1,12 @@
 [{
         "inputs": [{
                 "internalType": "address",
-                "name": "EOA",
+                "name": "_EOA",
                 "type": "address"
             },
             {
                 "internalType": "string",
-                "name": "DisasterType",
+                "name": "_disasterName",
                 "type": "string"
             }
         ],

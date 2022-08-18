@@ -53,12 +53,12 @@ contract Disaster {
     Request[] public allRequests;
     Demand[] public allDemands;
  
-    constructor(address EOA, string memory DisasterType) {
-        owner = EOA;
-        DisasterName = DisasterType;
-        isCenter[EOA] = true;
+    constructor(address _EOA, string memory _disasterName) {
+        owner = _EOA;
+        DisasterName = _disasterName;
+        isCenter[_EOA] = true;
         CenterData memory newCenter;
-        newCenter.centerAddress = EOA;
+        newCenter.centerAddress = _EOA;
         newCenter.name = "Admin";
         allCenterData.push(newCenter);
     }
@@ -221,6 +221,8 @@ contract MasterContract {
     struct Disasters {
         address disastarContract;
         string disasterName;
+        string location;
+        string severity;
     }
 
     Disasters[] public allDisasters;
@@ -229,12 +231,14 @@ contract MasterContract {
         ownerMaster = msg.sender;
     }
 
-    function CreateDisaster(string memory DisasterType) public {
-        Disaster new_Disaster_address = new Disaster(msg.sender, DisasterType);
+    function CreateDisaster(string memory _disasterName, string memory _location, string memory _severity) public {
+        Disaster new_Disaster_address = new Disaster(msg.sender, _disasterName);
         deployedDisaster.push(new_Disaster_address);
         Disasters memory newDisaster;
         newDisaster.disastarContract = address(new_Disaster_address);
-        newDisaster.disasterName = DisasterType;
+        newDisaster.disasterName = _disasterName;
+        newDisaster.location = _location;
+        newDisaster.severity = _severity;
         allDisasters.push(newDisaster);
     }
 
