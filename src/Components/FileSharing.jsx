@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import storeFiles from "../Utils/storeFiles";
 const FileSharing = () => {
   return (
-    <div className="flex items-center justify-center my-5 flex-col">
+    <div className="flex items-center justify-center my-5 flex-col mx-5 md:mx-0">
       <FileShareForm />
       <FileTable />
     </div>
@@ -92,9 +92,9 @@ const FileTable = () => {
   const [openTab, setOpenTab] = React.useState(1);
   const color = "footer-darkblue";
   return (
-    <>
+    <div className="w-1/2">
       <div className="flex flex-wrap w-full">
-        <div className=" w-full ">
+        <div className=" w-full">
           <ul
             className="flex mb-0 list-none flex-col pt-3 pb-4 md:flex-row w-full gap-3"
             role="tablist"
@@ -152,7 +152,7 @@ const FileTable = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -14,6 +14,7 @@ import ViewState from "./pages/ViewState";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Volunteer from "./pages/Volunteer";
+import FileSharing from "./Components/FileSharing";
 function App() {
   // const notify = () => toast.info("Hello World !");
   return (
@@ -41,6 +42,7 @@ function App() {
         <Route path="/registerform" element={<RegisterForm />} />
         <Route path="/state" element={<ViewState />} />
         <Route path="/volunteer" element={<Volunteer />} />
+        <Route path="/file-share" element={<FileSharing />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
