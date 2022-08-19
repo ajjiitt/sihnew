@@ -74,6 +74,15 @@ function SupplyCard({ location, demandDescription, name, state }) {
             <p class="font-bold">{name}</p>
           </div>
         </div>
+        <hr className="w-full my-2 border-t-2 border-gray-300" />
+        <div className="flex gap-2 items-center justify-center flex-col md:flex-row">
+          <div className="w-4/5 md:w-2/5 ">
+            <button className="text-xs w-full  bg-green-700 rounded-lg p-2 text-white font-semibold cursor-pointer">CREATE</button>
+          </div>
+          <div className="w-4/5 md:w-2/5">
+            <button className="text-xs w-full bg-red-600 rounded-lg p-2 text-white font-semibold cursor-pointer">CANCEL</button>
+          </div>
+        </div>
       </div>
     </div>
   );

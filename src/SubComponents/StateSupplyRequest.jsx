@@ -81,13 +81,25 @@ function SupplyCard({
           Location : {deliveryAddress}
         </div>
 
-        <div class="flex items-center pt-3">
-          <div class="bg-blue-700 w-12 h-12 flex justify-center items-center rounded-full uppercase font-bold text-white">
-            {requestedBy.charAt(0)}
+        <div class="flex items-center pt-3 justify-between flex-col lg:flex-row">
+          <div className="flex flex-row items-center"> 
+            <div class="bg-blue-700 w-12 h-12 flex justify-center items-center rounded-full uppercase font-bold text-white">
+              {requestedBy.charAt(0)}
+            </div>
+            <div class="ml-3">
+              <p class="font-bold">{requestedBy}</p>
+            </div>
           </div>
-          <div class="ml-4">
-            <p class="font-bold">{requestedBy}</p>
-          </div>
+
+        </div>
+        <hr className="w-full my-2 border-t-2 border-gray-300"/>
+        <div className="flex gap-2 items-center justify-center flex-col md:flex-row">
+              <div className="w-4/5 md:w-2/5 ">
+                <button className="text-xs w-full  bg-green-700 rounded-lg p-2 text-white font-semibold cursor-pointer">DISPATCH</button>
+              </div>
+              <div className="w-4/5 md:w-2/5">
+              <button className="text-xs w-full bg-red-600 rounded-lg p-2 text-white font-semibold cursor-pointer">CANCEL</button>
+              </div>
         </div>
       </div>
     </div>
