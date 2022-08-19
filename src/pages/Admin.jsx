@@ -27,7 +27,7 @@ const Admin = () => {
             <option>Germany</option>
           </select>
         </div>
-        <ul className="hidden text-sm font-medium text-center text-gray-500 rounded-lg divide-x divide-gray-200 shadow sm:flex dark:divide-gray-700 dark:text-gray-400">
+        <ul className="hidden text-xs  font-medium text-center text-gray-500 rounded-lg divide-x divide-gray-200 shadow sm:flex dark:divide-gray-700 dark:text-gray-400">
           <li className="w-full">
             <button
               onClick={(e) => {

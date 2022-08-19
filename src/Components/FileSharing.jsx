@@ -33,7 +33,7 @@ const FileShareForm = () => {
     }
   };
   return (
-    <div className="p-2 md:p-6 rounded-lg shadow-lg bg-white max-w-sm mb-5">
+    <div className="p-2 md:p-6 rounded-lg shadow-lg bg-white max-w-full mb-5">
       <div className="form-group mb-6">
         <input
           type="text"
@@ -58,7 +58,7 @@ const FileShareForm = () => {
       </div>
       <input
         type="file"
-        className="mb-6"
+        className="mb-6 w-full"
         onChange={(e) => setSelectedFile(e.target.files[0])}
       />
       <button
@@ -93,10 +93,10 @@ const FileTable = () => {
   const color = "footer-darkblue";
   return (
     <>
-      <div className="flex flex-wrap">
-        <div className="w-9/12 sm:w-full ">
+      <div className="flex flex-wrap w-full">
+        <div className=" w-full ">
           <ul
-            className="flex mb-0 list-none flex-col pt-3 pb-4 sm:flex-row w-full gap-3"
+            className="flex mb-0 list-none flex-col pt-3 pb-4 md:flex-row w-full gap-3"
             role="tablist"
           >
             <li className="-mb-px mr-2 last:mr-0 flex-auto text-center ">
