@@ -2,6 +2,64 @@
 
 pragma solidity >= 0.5.0 < 0.9.0;
 
+contract RegisterData {
+
+    //struct
+    struct Register {
+        string name;
+        address registerAddress;
+    }
+
+    //mapping
+    mapping(address => bool) public hasRegistered;
+
+    //Arrays
+    Register[] public registerCenter;
+    Register[] public registerState;
+    Register[] public registerGround;
+
+    //Register for Center Authority
+    function regCenter(string memory _name, address _registerAddress) external {
+        require(hasRegistered[msg.sender] == false, "already registered");
+        Register memory newRegister;
+        newRegister.name = _name;
+        newRegister.registerAddress = _registerAddress;
+        registerCenter.push(newRegister);
+    }
+    //Register for State Authority
+    function regState(string memory _name, address _registerAddress) external {
+        require(hasRegistered[msg.sender] == false, "already registered");
+        Register memory newRegister;
+        newRegister.name = _name;
+        newRegister.registerAddress = _registerAddress;
+        registerState.push(newRegister);
+    }
+    //Register for Ground Authority
+    function regGround(string memory _name, address _registerAddress) external {
+        require(hasRegistered[msg.sender] == false, "already registered");
+        Register memory newRegister;
+        newRegister.name = _name;
+        newRegister.registerAddress = _registerAddress;
+        registerGround.push(newRegister);
+    }
+
+    //Fetch all registered Center
+    function getRegCenter() external view returns (Register[] memory) {
+        return registerCenter;
+    }
+
+    //Fetch all registered Center
+    function getRegState() external view returns (Register[] memory) {
+        return registerState;
+    }
+
+    //Fetch all registered Center
+    function getRegGround() external view returns (Register[] memory) {
+        return registerGround;
+    }
+
+}
+
 contract Disaster {
     //Contract Variables
     address private owner;
@@ -37,6 +95,7 @@ contract Disaster {
         string demandDescription;
         DemandState state;
     }
+    
 
     //Mappings
     mapping(address => string) public AuthorityName;
@@ -46,12 +105,15 @@ contract Disaster {
     mapping(address => Request[]) public authorityRequest;
     mapping(address => Demand[]) public authorityDemand;
 
+
     //Arrays
     CenterData[] public allCenterData;
     StateData[] public allStateData;
     GroundData[] public allGroundData;
     Request[] public allRequests;
     Demand[] public allDemands;
+
+
  
     constructor(address _EOA, string memory _disasterName) {
         owner = _EOA;
@@ -65,27 +127,27 @@ contract Disaster {
 
     //Access Modifiers
     modifier onlyAdmin{
-        require(owner == msg.sender, "Sorry You are not an Admin");
+        require(owner == msg.sender, "Not an Admin");
         _;
     }
 
     modifier onlyCenter{
-        require(isCenter[msg.sender] == true, "Only Center Level Authorities Allowed");
+        require(isCenter[msg.sender] == true, "Only Center");
         _;
     }
 
     modifier onlyState{
-        require(isState[msg.sender] == true, "Only Center Level Authorities Allowed");
+        require(isState[msg.sender] == true, "Only State");
         _;
     }
 
     modifier onlyStateOrCenter {
-        require(isState[msg.sender] == true || isCenter[msg.sender] == true, "Only Center or State Level Authorities Allowed");
+        require(isState[msg.sender] == true || isCenter[msg.sender] == true, "Only Center or State");
         _;
     }
 
     modifier onlyInvolvedAuthorities {
-        require(isState[msg.sender] == true || isCenter[msg.sender] == true || isGround[msg.sender] == true, "Only Involved Authorities Allowed");
+        require(isState[msg.sender] == true || isCenter[msg.sender] == true || isGround[msg.sender] == true, "Only Involved");
         _;
     }
 
@@ -107,7 +169,7 @@ contract Disaster {
     //create Center Level 
     function createCenterLevel(address toGrant, string memory centerName) external onlyCenter {
 
-        require(isCenter[toGrant] == false, "Sorry You are already registered");
+        require(isCenter[toGrant] == false, "Already registered");
         AuthorityName[toGrant] = centerName;
         isCenter[toGrant] = true;
         CenterData memory newCenter;
@@ -120,7 +182,7 @@ contract Disaster {
     //create State level
     function createStateLevel(address toGrant, string memory stateName) external onlyCenter {
 
-        require(isCenter[toGrant] == false, "Sorry You are already registered");
+        require(isState[toGrant] == false, "Already registered");
         AuthorityName[toGrant] = stateName;
         isState[toGrant] = true;
         StateData memory newState;
@@ -133,7 +195,7 @@ contract Disaster {
     //create Ground Level
     function createGroundLevel(address toGrant, string memory GroundName) external onlyStateOrCenter {
 
-        require(isCenter[toGrant] == false, "Sorry You are already registered");
+        require(isGround[toGrant] == false, "Already registered");
         AuthorityName[toGrant] = GroundName;
         isGround[toGrant] = true;
         GroundData memory newGround;
@@ -211,12 +273,14 @@ contract Disaster {
     }
 
     
+
+    
 }
 
 
 contract MasterContract {
     address private ownerMaster;
-    Disaster[] public deployedDisaster;
+  
     
     struct Disasters {
         address disastarContract;
@@ -233,7 +297,6 @@ contract MasterContract {
 
     function CreateDisaster(string memory _disasterName, string memory _location, string memory _severity) public {
         Disaster new_Disaster_address = new Disaster(msg.sender, _disasterName);
-        deployedDisaster.push(new_Disaster_address);
         Disasters memory newDisaster;
         newDisaster.disastarContract = address(new_Disaster_address);
         newDisaster.disasterName = _disasterName;
@@ -245,4 +308,6 @@ contract MasterContract {
     function getDisasters() external view returns(Disasters[] memory){
         return allDisasters;
     }
+
+    
 }

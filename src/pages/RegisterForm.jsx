@@ -1,11 +1,31 @@
 import React, { useState } from "react";
+import { getAccountID, intializeRegisterContract } from "../Utils/connectWallet";
 
 export default function RegisterForm() {
   const [authorityName, setAuthorityName] = useState("");
   const [role, setRole] = useState("");
-  const registerUser = () => {
+  const registerUser = async (e) => {
+    e.preventDefault();
     console.log({ authorityName, role });
+    const accountId = await getAccountID();
+    const contract = intializeRegisterContract();
+    let user;
+
+    if(role === "Central"){
+      user = await contract.methods.regCenter(authorityName, accountId).send({from: accountId});
+    }else if(role === "State"){
+      user = await contract.methods.regState(authorityName, accountId).send({from: accountId});
+    }else if(role === "Ground"){
+      user = await contract.methods.regGround(authorityName, accountId).send({from: accountId});
+    }
+
+    console.log(user);
+
+    setAuthorityName("");
+    setRole("");
+
   };
+  
   return (
     <div className="bg-main h-screen w-screen my-5">
       <div className="flex flex-col items-center flex-1 h-full justify-center px-4 sm:px-0">
@@ -48,10 +68,10 @@ export default function RegisterForm() {
                   <div className="flex flex-col mt-8">
                     <button
                       type="submit"
-                      onClick={registerUser}
+                      onClick={(e) => registerUser(e)}
                       className="bg-blackDmain bg-footer-darkblue text-white hover:text-footer-darkblue hover:bg-white hover:border-1 hover:border-footer-darkblue  text-sm font-semibold py-2 px-4 rounded"
                     >
-                      Login
+                      Register
                     </button>
                   </div>
                 </div>

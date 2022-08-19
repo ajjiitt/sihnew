@@ -1,0 +1,196 @@
+[{
+        "inputs": [{
+                "internalType": "string",
+                "name": "_name",
+                "type": "string"
+            },
+            {
+                "internalType": "address",
+                "name": "_registerAddress",
+                "type": "address"
+            }
+        ],
+        "name": "regCenter",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+                "internalType": "string",
+                "name": "_name",
+                "type": "string"
+            },
+            {
+                "internalType": "address",
+                "name": "_registerAddress",
+                "type": "address"
+            }
+        ],
+        "name": "regGround",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+                "internalType": "string",
+                "name": "_name",
+                "type": "string"
+            },
+            {
+                "internalType": "address",
+                "name": "_registerAddress",
+                "type": "address"
+            }
+        ],
+        "name": "regState",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "getRegCenter",
+        "outputs": [{
+            "components": [{
+                    "internalType": "string",
+                    "name": "name",
+                    "type": "string"
+                },
+                {
+                    "internalType": "address",
+                    "name": "registerAddress",
+                    "type": "address"
+                }
+            ],
+            "internalType": "struct RegisterData.Register[]",
+            "name": "",
+            "type": "tuple[]"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "getRegGround",
+        "outputs": [{
+            "components": [{
+                    "internalType": "string",
+                    "name": "name",
+                    "type": "string"
+                },
+                {
+                    "internalType": "address",
+                    "name": "registerAddress",
+                    "type": "address"
+                }
+            ],
+            "internalType": "struct RegisterData.Register[]",
+            "name": "",
+            "type": "tuple[]"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "getRegState",
+        "outputs": [{
+            "components": [{
+                    "internalType": "string",
+                    "name": "name",
+                    "type": "string"
+                },
+                {
+                    "internalType": "address",
+                    "name": "registerAddress",
+                    "type": "address"
+                }
+            ],
+            "internalType": "struct RegisterData.Register[]",
+            "name": "",
+            "type": "tuple[]"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+        }],
+        "name": "hasRegistered",
+        "outputs": [{
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+        }],
+        "name": "registerCenter",
+        "outputs": [{
+                "internalType": "string",
+                "name": "name",
+                "type": "string"
+            },
+            {
+                "internalType": "address",
+                "name": "registerAddress",
+                "type": "address"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+        }],
+        "name": "registerGround",
+        "outputs": [{
+                "internalType": "string",
+                "name": "name",
+                "type": "string"
+            },
+            {
+                "internalType": "address",
+                "name": "registerAddress",
+                "type": "address"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+        }],
+        "name": "registerState",
+        "outputs": [{
+                "internalType": "string",
+                "name": "name",
+                "type": "string"
+            },
+            {
+                "internalType": "address",
+                "name": "registerAddress",
+                "type": "address"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    }
+]

@@ -1,4 +1,9 @@
 [{
+        "inputs": [],
+        "stateMutability": "nonpayable",
+        "type": "constructor"
+    },
+    {
         "inputs": [{
                 "internalType": "string",
                 "name": "_disasterName",
@@ -19,11 +24,6 @@
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"
-    },
-    {
-        "inputs": [],
-        "stateMutability": "nonpayable",
-        "type": "constructor"
     },
     {
         "inputs": [{
@@ -53,21 +53,6 @@
                 "type": "string"
             }
         ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [{
-            "internalType": "uint256",
-            "name": "",
-            "type": "uint256"
-        }],
-        "name": "deployedDisaster",
-        "outputs": [{
-            "internalType": "contract Disaster",
-            "name": "",
-            "type": "address"
-        }],
         "stateMutability": "view",
         "type": "function"
     },
