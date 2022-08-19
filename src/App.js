@@ -9,6 +9,7 @@ import Admin from "./pages/Admin";
 import ViewDisaster from "./pages/ViewDisaster";
 import DemandForm from "./pages/DemandForm";
 import SupplyForm from "./pages/SupplyForm";
+import RegisterForm from "./pages/RegisterForm";
 function App() {
   return (
     <div className="App flex flex-col justify-between h-screen" style={{ fontFamily: "Inter" }}>
@@ -21,6 +22,7 @@ function App() {
         <Route path="/disaster" element={<ViewDisaster />}/>
         <Route path="/demand" element={<DemandForm />}/>
         <Route path="/supply" element={<SupplyForm />}/>
+        <Route path="/register" element={<RegisterForm />}/>
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
