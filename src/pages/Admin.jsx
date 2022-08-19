@@ -109,7 +109,7 @@ const Admin = () => {
           </li>
         </ul>
       </div>
-      <div className="">
+      <div className="px-9 md:px-24">
             {tabComponents[curIndex]}
       </div>
     </div>

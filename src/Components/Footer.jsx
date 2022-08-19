@@ -4,7 +4,7 @@ import twitter from "../assets/twitter.svg";
 import youtube from "../assets/youtube.svg";
 export default function Footer() {
   return (
-    <>
+    <div>
       <div
         style={{ fontFamily: "Inter" }}
         className="h-full md:h-80 bg-footer-darkblue flex md:flex-row flex-col justify-center items-center text-white gap-5 md:gap-1 py-5 md:py-0"
@@ -58,6 +58,6 @@ export default function Footer() {
           copyright &copy; 2022. All rights reserved. Privacy policy
         </div>
       </div>
-    </>
+    </div>
   );
 }

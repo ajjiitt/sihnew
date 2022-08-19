@@ -9,7 +9,7 @@ import Admin from "./pages/Admin";
 import ViewDisaster from "./pages/ViewDisaster";
 function App() {
   return (
-    <div className="App" style={{ fontFamily: "Inter" }}>
+    <div className="App flex flex-col justify-between h-screen" style={{ fontFamily: "Inter" }}>
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
