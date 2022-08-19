@@ -10,6 +10,7 @@ import ViewDisaster from "./pages/ViewDisaster";
 import DemandForm from "./pages/DemandForm";
 import SupplyForm from "./pages/SupplyForm";
 import RegisterForm from "./pages/RegisterForm";
+import Register from "./pages/Register";
 function App() {
   return (
     <div className="App flex flex-col justify-between h-screen" style={{ fontFamily: "Inter" }}>
@@ -24,6 +25,8 @@ function App() {
         <Route path="/supply" element={<SupplyForm />}/>
         <Route path="/register" element={<RegisterForm />}/>
         <Route path="*" element={<NotFound />} />
+        <Route path="/register" element={<Register />} />
+
       </Routes>
       <Footer />
     </div>
