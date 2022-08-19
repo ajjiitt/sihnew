@@ -7,6 +7,8 @@ import Footer from "./Components/Footer";
 import NotFound from "./pages/NotFound";
 import Admin from "./pages/Admin";
 import ViewDisaster from "./pages/ViewDisaster";
+import DemandForm from "./pages/DemandForm";
+import SupplyForm from "./pages/SupplyForm";
 function App() {
   return (
     <div className="App flex flex-col justify-between h-screen" style={{ fontFamily: "Inter" }}>
@@ -17,6 +19,8 @@ function App() {
         <Route path="/ipfs" element={<IpfsUpload />} />
         <Route path="/allcenterdata" element={<AllCenterData />} />
         <Route path="/disaster" element={<ViewDisaster />}/>
+        <Route path="/demand" element={<DemandForm />}/>
+        <Route path="/supply" element={<SupplyForm />}/>
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
