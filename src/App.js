@@ -13,6 +13,7 @@ import RegisterForm from "./pages/RegisterForm";
 import ViewState from "./pages/ViewState";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Volunteer from "./pages/Volunteer";
 function App() {
   // const notify = () => toast.info("Hello World !");
   return (
@@ -39,6 +40,7 @@ function App() {
         <Route path="/supply" element={<SupplyForm />} />
         <Route path="/registerform" element={<RegisterForm />} />
         <Route path="/state" element={<ViewState />} />
+        <Route path="/volunteer" element={<Volunteer />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
