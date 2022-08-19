@@ -7,6 +7,7 @@ import Footer from "./Components/Footer";
 import NotFound from "./pages/NotFound";
 import Admin from "./pages/Admin";
 import ViewDisaster from "./pages/ViewDisaster";
+import Register from "./pages/Register";
 function App() {
   return (
     <div className="App flex flex-col justify-between h-screen" style={{ fontFamily: "Inter" }}>
@@ -18,6 +19,7 @@ function App() {
         <Route path="/allcenterdata" element={<AllCenterData />} />
         <Route path="/disaster" element={<ViewDisaster />}/>
         <Route path="*" element={<NotFound />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
       <Footer />
     </div>
