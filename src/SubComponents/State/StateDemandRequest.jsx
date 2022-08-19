@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { intializeDisasterContract } from "../Utils/connectWallet";
+import { intializeDisasterContract } from "../../Utils/connectWallet";
 const StateDemandRequest = () => {
   //just set supplies called from contract
   const [supplies, setSupplies] = useState([

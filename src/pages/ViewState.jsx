@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import StateDemandRequest from "../SubComponents/StateDemandRequest";
-import StateSupplyRequest from "../SubComponents/StateSupplyRequest";
+import StateDemandRequest from "../SubComponents/State/StateDemandRequest";
+import StateSupplyRequest from "../SubComponents/State/StateSupplyRequest";
 import FileSharing from "../Components/FileSharing";
 import AllGroundAuthorities from "../SubComponents/State/AllGroundAuthorities";
 import AllStateAuthorities from "../SubComponents/State/AllStateAuthorities";
