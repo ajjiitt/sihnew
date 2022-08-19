@@ -11,13 +11,24 @@ import DemandForm from "./pages/DemandForm";
 import SupplyForm from "./pages/SupplyForm";
 import RegisterForm from "./pages/RegisterForm";
 import ViewState from "./pages/ViewState";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 function App() {
+  // const notify = () => toast.info("Hello World !");
   return (
     <div
       className="App flex flex-col justify-between h-screen"
       style={{ fontFamily: "Inter" }}
     >
       <Navbar />
+      <ToastContainer
+        theme="dark"
+        toastStyle={{
+          backgroundColor: "#22262F",
+          color: "white",
+          border: "1px solid white",
+        }}
+      />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route exact path="/admin" element={<Admin />} />
