@@ -1,6 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
+import { getAccountID, intializeMasterContract } from "../Utils/connectWallet";
 
 const CreateDisaster = () => {
+  const [inputs, setInputs] = useState({
+    type_of_disaster: "",
+    location_of_disaster: "",
+    severity: ""
+  });
+
+  const handleChange = (e) => {
+    setInputs({...inputs, [e.target.name] : e.target.value});
+  }
+  
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    const contract = intializeMasterContract();
+    const accountId = await getAccountID();
+    const createDisaster = await contract.methods.CreateDisaster(inputs.type_of_disaster, inputs.location_of_disaster, inputs.severity).send({from: accountId})
+    console.log(createDisaster);
+    setInputs({
+      type_of_disaster: "",
+    location_of_disaster: "",
+    severity: ""
+    });
+  }
+
   return (
     <div>
       <section className="text-gray-600 body-font relative">
@@ -24,7 +48,9 @@ const CreateDisaster = () => {
                   <input
                     type="text"
                     id="name"
-                    name="name"
+                    name="type_of_disaster"
+                    value={inputs.type_of_disaster}
+                    onChange={e => handleChange(e)}
                     className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                   />
                 </div>
@@ -37,19 +63,26 @@ const CreateDisaster = () => {
                   <input
                     type="email"
                     id="email"
-                    name="email"
+                    name="location_of_disaster"
+                    value={inputs.location_of_disaster}
+                    onChange={e => handleChange(e)}
                     className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                   />
                 </div>
               </div>
+              
               <div className="p-2 w-full md:flex flex-wrap justify-between">
                 {/* <div className=""> */}
+                <div  className="leading-7 text-sm text-gray-600 flex justify-center items-center">
+                    Severity :
+                  </div>
                 <div className="flex items-center pl-4 rounded border border-gray-200 dark:border-gray-700 md:w-1/4 w-full">
                   <input
                     id="bordered-radio-1"
                     type="radio"
-                    value=""
-                    name="bordered-radio"
+                    name="severity"
+                    value="Low"
+                    onChange={e => handleChange(e)}
                     className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                   />
                   <label
@@ -63,8 +96,9 @@ const CreateDisaster = () => {
                   <input
                     id="bordered-radio-2"
                     type="radio"
-                    value=""
-                    name="bordered-radio"
+                    name="severity"
+                    value="Moderate"
+                    onChange={e => handleChange(e)}
                     className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                   />
                   <label
@@ -78,8 +112,9 @@ const CreateDisaster = () => {
                   <input
                     id="bordered-radio-3"
                     type="radio"
-                    value=""
-                    name="bordered-radio"
+                    name="severity"
+                    value="High"
+                    onChange={e => handleChange(e)}
                     className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                   />
                   <label
@@ -92,7 +127,7 @@ const CreateDisaster = () => {
               </div>
               {/* </div> */}
               <div className="p-2 w-full">
-                <button className="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">
+                <button className="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg" onClick={(e) => onSubmit(e)}>
                   Register
                 </button>
               </div>

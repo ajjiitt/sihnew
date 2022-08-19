@@ -1,18 +1,29 @@
 [{
-        "inputs": [],
-        "stateMutability": "nonpayable",
-        "type": "constructor"
-    },
-    {
         "inputs": [{
-            "internalType": "string",
-            "name": "DisasterType",
-            "type": "string"
-        }],
+                "internalType": "string",
+                "name": "_disasterName",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_location",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_severity",
+                "type": "string"
+            }
+        ],
         "name": "CreateDisaster",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"
+    },
+    {
+        "inputs": [],
+        "stateMutability": "nonpayable",
+        "type": "constructor"
     },
     {
         "inputs": [{
@@ -29,6 +40,16 @@
             {
                 "internalType": "string",
                 "name": "disasterName",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "location",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "severity",
                 "type": "string"
             }
         ],
@@ -62,6 +83,16 @@
                 {
                     "internalType": "string",
                     "name": "disasterName",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "location",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "severity",
                     "type": "string"
                 }
             ],

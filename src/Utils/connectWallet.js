@@ -2,7 +2,7 @@ import Web3 from "web3";
 import MasterContractABI from './MasterContractABI.json';
 import DisasterContractABI from './DisasterContractABI.json';
 
-const MasterContractAddress = "0x54A767302737036c73E4a5F752f6846396411a1a";
+const MasterContractAddress = "0xe81331f40597f59a43D080f0a0e324fA0422400C";
 // const DisasterContractAddress = "0xb8EC8BA2Be1781C3Ac6B9cF7B5204FFe9f34885C";
 
 export const intializeMasterContract = () => {

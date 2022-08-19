@@ -1,7 +1,21 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Disaster from "../Cards/Disaster";
+import { intializeMasterContract } from "../Utils/connectWallet";
 
 const ViewDisasters = () => {
+    const [disasters, setDisasters] = useState([]);
+
+    const fetchDisasters = async () => {
+        const contract = intializeMasterContract();
+        const allDisasters = await contract.methods.getDisasters().call();
+        console.log(allDisasters);
+        setDisasters(allDisasters);
+    }
+
+    useEffect(() => {
+        fetchDisasters();
+    }, [])
+
   return (
     <div>
       <div class="p-6 my-5 mx-5 bg-white rounded-lg border border-gray-200 shadow-md  ">
@@ -11,10 +25,14 @@ const ViewDisasters = () => {
 
         <div class="bg-white rounded-lg border border-gray-200 shadow-md  dark:border-gray-700">
           <div className="w-full md:flex flex-wrap justify-center items-start">
-            <Disaster name="Flood" location="Pune"/>
-            <Disaster name="Earthquake" location="Mumbai"/>
-            <Disaster name="Landslide" location="Delhi"/>
-            <Disaster name="Cloud Burst" location="Ludhiyana"/>
+            {
+                disasters.map((ele, index) => {
+                    return (
+                        <Disaster name={ele.disasterName} location={ele.location} contract={ele.disasterContract} key={index}/>
+                    );
+                })
+            }
+      
           </div>
         </div>
       </div>
