@@ -11,6 +11,22 @@ const StateSupplyRequest = () => {
       state: "Dispatched",
     },
     // {
+    {
+      supplyType: "Home",
+      requestedBy: "Ghi",
+      deliveryAddress: "Mumbai",
+      amount: 100,
+      state: "Dispatched",
+    },
+    // {
+    {
+      supplyType: "Home",
+      requestedBy: "Ghi",
+      deliveryAddress: "Mumbai",
+      amount: 100,
+      state: "Dispatched",
+    },
+    // {
     //   supplyType: "Home",
     //   requestedBy: "Ghi",
     //   deliveryAddress: "Mumbai",
@@ -27,7 +43,7 @@ const StateSupplyRequest = () => {
     fetchSupplies();
   }, []);
   return (
-    <div className="flex items-center justify-center gap-5 flex-wrap">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
       {supplies.length !== 0 ? (
         supplies.map((props, index) => (
           <SupplyCard
@@ -58,7 +74,7 @@ function SupplyCard({
   state,
 }) {
   return (
-    <div class="w-10/12 md:w-5/12 flex flex-col bg-white shadow-lg rounded-lg overflow-hidden">
+    <div class="w-full flex flex-col bg-white shadow-lg rounded-lg overflow-hidden">
       <div class="bg-gray-200 text-gray-700 text-lg px-6 py-4">
         Supply Type : {supplyType}
       </div>

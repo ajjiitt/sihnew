@@ -19,7 +19,8 @@ const StateDemandRequest = () => {
     fetchSupplies();
   }, []);
   return (
-    <div className="flex items-center justify-center gap-5 flex-wrap">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+    {/* <div className="flex items-center justify-center gap-5 flex-wrap"> */}
       {supplies.length !== 0 ? (
         supplies.map((props, index) => (
           <SupplyCard
@@ -43,7 +44,8 @@ export default StateDemandRequest;
 
 function SupplyCard({ location, demandDescription, name, state }) {
   return (
-    <div class="w-8/12 md:w-4/12 flex flex-col bg-white shadow-lg rounded-lg overflow-hidden">
+    <div class="w-full flex flex-col bg-white shadow-lg rounded-lg overflow-hidden">
+    {/* <div class="w-8/12 md:w-4/12 flex flex-col bg-white shadow-lg rounded-lg overflow-hidden"> */}
       <div class="bg-gray-200 text-gray-700 text-lg px-6 py-4">
         Description : {demandDescription}
       </div>

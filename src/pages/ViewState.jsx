@@ -90,7 +90,7 @@ export default function ViewState() {
           </li>
         </ul>
       </div>
-      <div className="px-9 md:px-24">{tabComponents[curIndex]}</div>
+      <div className="px-9 md:px-24 py-4">{tabComponents[curIndex]}</div>
     </div>
   );
 }
