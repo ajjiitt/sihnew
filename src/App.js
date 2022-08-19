@@ -23,7 +23,7 @@ function App() {
         <Route path="/disaster" element={<ViewDisaster />}/>
         <Route path="/demand" element={<DemandForm />}/>
         <Route path="/supply" element={<SupplyForm />}/>
-        <Route path="/register" element={<RegisterForm />}/>
+        <Route path="/registerfrom" element={<RegisterForm />}/>
         <Route path="*" element={<NotFound />} />
         <Route path="/register" element={<Register />} />
 
