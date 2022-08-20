@@ -19,7 +19,7 @@ function App() {
   // const notify = () => toast.info("Hello World !");
   return (
     <div
-      className="App flex flex-col justify-between h-screen"
+      className="App flex flex-col justify-between h-screen bg-gray-50"
       style={{ fontFamily: "Inter" }}
     >
       <div>

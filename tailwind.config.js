@@ -7,6 +7,7 @@ module.exports = {
         "footer-darkblue": '#22262F',
         "grey-copyright" : '#AFAFAF',
         "buttonOrange":"#F2994A",
+        "mainBg":"#F8FAFC"
       },
       borderWidth: {
         1: "1px",

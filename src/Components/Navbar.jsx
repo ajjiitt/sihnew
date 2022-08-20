@@ -1,27 +1,26 @@
 import React, { useState } from "react";
 import { connectWallet, disconnectWallet } from "../Utils/connectWallet";
-import { Fragment } from 'react'
-import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
+import { Fragment } from "react";
+import { Disclosure, Menu, Transition } from "@headlessui/react";
+import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
 
 const navigation = [
-  { name: 'Dashboard', href: '#', current: true },
-  { name: 'Team', href: '#', current: false },
-  { name: 'Projects', href: '#', current: false },
-  { name: 'Calendar', href: '#', current: false },
-]
+  { name: "Dashboard", href: "#", current: true },
+  { name: "Team", href: "#", current: false },
+  { name: "Projects", href: "#", current: false },
+  { name: "Calendar", href: "#", current: false },
+];
 
 function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
+  return classes.filter(Boolean).join(" ");
 }
 
 export default function Example() {
-
   const [data, setdata] = useState({
     address: "",
   });
   return (
-    <Disclosure as="nav" className="bg-white ">
+    <Disclosure as="nav" className="bg-white">
       {({ open }) => (
         <>
           <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
@@ -39,10 +38,17 @@ export default function Example() {
                     alt="Workflow"
                   /> */}
                   <div className="flex justify-between">
-                    <div className="" style={{ height: "50px", width: "130px" }}>
-                      <img src="ndrflogo.jpg" alt="" style={{ height: "100%", width: "100%" }} />
+                    <div
+                      className=""
+                      style={{ height: "50px", width: "130px" }}
+                    >
+                      <img
+                        src="ndrflogo.jpg"
+                        alt=""
+                        style={{ height: "100%", width: "100%" }}
+                      />
                     </div>
-		            	</div>
+                  </div>
                 </div>
                 <div className="hidden md:flex md:ml-36 lg:ml-64  md:justify-center  md:items-center">
                   <div className="flex space-x-4">
@@ -51,10 +57,9 @@ export default function Example() {
                         key={item.name}
                         href={item.href}
                         className={classNames(
-                          item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                          'px-3 py-2 rounded-md text-sm font-medium'
+                          "px-3 py-2 rounded-md text-sm font-medium text-footer-darkblue hover:bg-gray-100"
                         )}
-                        aria-current={item.current ? 'page' : undefined}
+                        aria-current={item.current ? "page" : undefined}
                       >
                         {item.name}
                       </a>
@@ -208,15 +213,15 @@ export default function Example() {
                   )}
                 </button>
                 <div className="absolute inset-y-0 right-0 flex items-center md:hidden">
-                {/* Mobile menu button*/}
-                <Disclosure.Button className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
-                  <span className="sr-only">Open main menu</span>
-                  {open ? (
-                    <XIcon className="block h-6 w-6" aria-hidden="true" />
-                  ) : (
-                    <MenuIcon className="block h-6 w-6" aria-hidden="true" />
-                  )}
-                </Disclosure.Button>
+                  {/* Mobile menu button*/}
+                  <Disclosure.Button className="inline-flex items-center justify-center p-2 rounded-md text-footer-darkblue hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                    <span className="sr-only">Open main menu</span>
+                    {open ? (
+                      <XIcon className="block h-6 w-6" aria-hidden="true" />
+                    ) : (
+                      <MenuIcon className="block h-6 w-6" aria-hidden="true" />
+                    )}
+                  </Disclosure.Button>
                 </div>
               </div>
             </div>
@@ -230,10 +235,9 @@ export default function Example() {
                   as="a"
                   href={item.href}
                   className={classNames(
-                    item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                    'block px-3 py-2 rounded-md text-base font-medium'
+                    "block px-3 py-2 rounded-md text-base font-medium text-footer-darkblue hover:bg-gray-100"
                   )}
-                  aria-current={item.current ? 'page' : undefined}
+                  aria-current={item.current ? "page" : undefined}
                 >
                   {item.name}
                 </Disclosure.Button>
@@ -243,5 +247,5 @@ export default function Example() {
         </>
       )}
     </Disclosure>
-  )
+  );
 }
