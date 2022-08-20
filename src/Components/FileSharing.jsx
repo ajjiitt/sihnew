@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import storeFiles from "../Utils/storeFiles";
 const FileSharing = () => {
   return (
-    <div className="flex items-center justify-center my-5 flex-col px-9 md:px-24">
+    <div className="flex items-center justify-center my-5 flex-col px-3 lg:px-24">
       <FileShareForm />
       <FileTable />
     </div>

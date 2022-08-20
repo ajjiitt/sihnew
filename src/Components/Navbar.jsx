@@ -20,7 +20,7 @@ export default function Example() {
     address: "",
   });
   return (
-    <Disclosure as="nav" className="bg-white" style={{boxShadow: "10px 10px 10px #80808085"}}>
+    <Disclosure as="nav" className="bg-white shadow-xl" >
       {({ open }) => (
         <>
           <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
