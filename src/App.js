@@ -22,6 +22,8 @@ function App() {
       className="App flex flex-col justify-between h-screen"
       style={{ fontFamily: "Inter" }}
     >
+      <div>
+
       <Navbar />
       <ToastContainer
         theme="dark"
@@ -45,6 +47,7 @@ function App() {
         <Route path="/file-share" element={<FileSharing />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
+      </div>
       <Footer />
     </div>
   );
