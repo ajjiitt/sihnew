@@ -4,6 +4,16 @@ import ManageSupplies from "../SubComponents/Ground/ManageSupplies";
 
 const ViewGround = () => {
   const [curIndex, setCurIndex] = useState(0);
+  const options = [
+    {
+      label: "Create Demand",
+      value: 0,
+    },
+    {
+      label: "Manage Supplies",
+      value: 1,
+    },
+  ];
   const tabComponents = [<CreateDemand />,<ManageSupplies/>];
   return (
     <div>
@@ -13,13 +23,14 @@ const ViewGround = () => {
             Select your country
           </label>
           <select
+            value={curIndex}
+            onChange={(e) => setCurIndex(e.target.value)}
             id="tabs"
             className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           >
-            <option>Profile</option>
-            <option>Canada</option>
-            <option>France</option>
-            <option>Germany</option>
+            {options.map((option) => (
+              <option value={option.value}>{option.label}</option>
+            ))}
           </select>
         </div>
         <ul className="hidden text-xs  font-medium text-center text-gray-500 rounded-lg divide-x divide-gray-200 shadow sm:flex dark:divide-gray-700 dark:text-gray-400">
