@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export default function SupplyForm() {
+const CreateDemand = () => {
   const [supplyType, setSupplyType] = useState("");
   const [requestedBy, setRequestedBy] = useState("");
   const [amount, setAmount] = useState(0);
@@ -159,4 +159,6 @@ export default function SupplyForm() {
       </div>
     </div>
   );
-}
+};
+
+export default CreateDemand;

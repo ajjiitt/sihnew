@@ -8,13 +8,13 @@ import NotFound from "./pages/NotFound";
 import Admin from "./pages/Admin";
 import ViewDisaster from "./pages/ViewDisaster";
 import DemandForm from "./pages/DemandForm";
-import SupplyForm from "./pages/SupplyForm";
 import RegisterForm from "./pages/RegisterForm";
 import ViewState from "./pages/ViewState";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Volunteer from "./pages/Volunteer";
 import FileSharing from "./Components/FileSharing";
+import ViewGround from "./pages/ViewGround";
 function App() {
   // const notify = () => toast.info("Hello World !");
   return (
@@ -40,9 +40,9 @@ function App() {
         <Route path="/allcenterdata" element={<AllCenterData />} />
         <Route path="/disaster" element={<ViewDisaster />} />
         <Route path="/demand" element={<DemandForm />} />
-        <Route path="/supply" element={<SupplyForm />} />
         <Route path="/registerform" element={<RegisterForm />} />
         <Route path="/state" element={<ViewState />} />
+        <Route path="/ground" element={<ViewGround />} />
         <Route path="/volunteer" element={<Volunteer />} />
         <Route path="/file-share" element={<FileSharing />} />
         <Route path="*" element={<NotFound />} />
