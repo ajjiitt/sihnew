@@ -1,6 +1,22 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import { intializeMasterContract } from '../Utils/connectWallet';
 
 const StateAuthorities = () => {
+  
+  const [stateArr, setStateArr] = useState([]);
+
+  const contract = intializeMasterContract();
+
+  const fetchState = async () => {
+    const state = await contract.methods.getStateData().call();
+    setStateArr(state);
+    console.log(state);
+  }
+
+  useEffect(() => {
+    fetchState();
+  }, []);
+
   return (
     <div>
         <div class="flex flex-col">
@@ -8,60 +24,43 @@ const StateAuthorities = () => {
           <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
             <div class="overflow-hidden">
               <table class="min-w-full">
-                <thead class="bg-white border-b">
-                  <tr>
-                    <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                      #
-                    </th>
-                    <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                      First
-                    </th>
-                    <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                      Last
-                    </th>
-                    <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                      Handle
-                    </th>
-                  </tr>
-                </thead>
+              <thead className="bg-white border-b">
+                <tr>
+                  <th
+                    scope="col"
+                    className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                  >
+                    No.
+                  </th>
+                  <th
+                    scope="col"
+                    className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                  >
+                    Name
+                  </th>
+                  <th
+                    scope="col"
+                    className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                  >
+                    Address
+                  </th>
+                </tr>
+              </thead>
                 <tbody>
-                  <tr class="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">1</td>
-                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                      Mark
+                {stateArr.map((authority, index) => (
+                  <tr className="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                      {index + 1}
                     </td>
-                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                      Otto
+                    <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                      {authority.name}
                     </td>
-                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                      @mdo
-                    </td>
-                  </tr>
-                  <tr class="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">2</td>
-                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                      Jacob
-                    </td>
-                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                      Thornton
-                    </td>
-                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                      @fat
+                    <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                      {authority.stateAddress}
                     </td>
                   </tr>
-                  <tr class="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">3</td>
-                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                      Larry
-                    </td>
-                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                      Wild
-                    </td>
-                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                      @twitter
-                    </td>
-                  </tr>
-                </tbody>
+                ))}
+              </tbody>
               </table>
             </div>
           </div>
