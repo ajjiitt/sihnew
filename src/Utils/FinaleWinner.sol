@@ -63,8 +63,10 @@ contract RegisterData {
 contract Disaster {
     //Contract Variables
     address private owner;
+    address public MasterContractAddress;
     string public DisasterName;
 
+    
 
     //Enums
     enum RequestState { Initiated, Dispatched, Delivered, Cancelled }
@@ -77,7 +79,130 @@ contract Disaster {
         uint amount;
         RequestState state;
     }
-    struct CenterData {
+    struct Demand {
+        string name;
+        string location;
+        string demandDescription;
+        DemandState state;
+    }
+
+    //Mappings
+    mapping(address => Request[]) public authorityRequest;
+    mapping(address => Demand[]) public authorityDemand;
+
+
+    //Arrays
+    Request[] public allRequests;
+    Demand[] public allDemands;
+
+    //Access Modifiers
+    modifier onlyMasterContract {
+        require(msg.sender == MasterContractAddress);
+        _;
+    }
+ 
+    constructor(address _EOA, string memory _disasterName) {
+        owner = _EOA;
+        DisasterName = _disasterName;
+        MasterContractAddress = msg.sender;
+    }
+
+    
+
+    //Create a new Supply Request
+    function createRequest(string memory _supplyType, string memory _deliveryAddress, string memory AuthorityName, uint _amount) external {
+
+        Request memory newRequest;
+        newRequest.supplyType = _supplyType;
+        newRequest.requestedBy = AuthorityName;
+        newRequest.deliveryAddress = _deliveryAddress;
+        newRequest.amount = _amount;
+        newRequest.state = RequestState.Initiated;
+        allRequests.push(newRequest);
+        authorityRequest[msg.sender].push(newRequest);
+
+    }
+
+    //Gets Disaster Name
+    function getDisasterName() external view returns(string memory) {
+        return DisasterName;
+    }
+
+    //Gets All Requests for this particular disastar
+    function getAllRequest() external view returns(Request[] memory){
+        return allRequests;
+    }
+
+    //Gets Specific User Supply Requests
+    function getRequest(address supplyCreator) external view returns (Request[] memory){
+        return authorityRequest[supplyCreator];
+    }
+
+    //Dispatch Supply
+    function dispatchSupply(address supplyCreator, uint index) external {
+        authorityRequest[supplyCreator][index].state = RequestState.Dispatched;
+    }
+
+    //Supply Delivered
+    function deliveredSupply(address supplyCreator, uint index) external {
+        authorityRequest[supplyCreator][index].state = RequestState.Delivered;
+    }
+
+    //Supply Cancelled
+    function cancelSupply(address supplyCreator, uint index) external {
+        authorityRequest[supplyCreator][index].state = RequestState.Cancelled;
+    }
+
+    //Create Demand
+    function createDemand(string memory _location, string memory _demandDescription, string memory AuthorityName) external  {
+
+        Demand memory newDemand;
+        newDemand.location = _location;
+        newDemand.demandDescription = _demandDescription;
+        newDemand.name = AuthorityName;
+        newDemand.state = DemandState.Unfulfilled;
+        allDemands.push(newDemand);
+        authorityDemand[msg.sender].push(newDemand);
+
+    }
+
+    //Accept Demand
+    function acceptDemand(address demandCreator, uint index) external  {
+        authorityDemand[demandCreator][index].state = DemandState.Fulfilled;
+    }
+
+    //Get All Demands
+    function getAllDemands() external view returns (Demand[] memory) {
+        return allDemands;
+    }
+
+    //Get Authority Specific Demands
+    function getDemands(address demandCreator) external view returns (Demand[] memory) {
+        return authorityDemand[demandCreator];
+    }
+
+    
+
+    
+}
+
+
+contract MasterContract is RegisterData{
+    address private ownerMaster;
+
+    //mappings
+    mapping(address => string) public AuthorityName;
+    mapping(address => bool) public isCenter;
+    mapping(address => bool) public isState;
+    mapping(address => bool) public isGround;
+
+    //Arrays
+    CenterData[] public allCenterData;
+    StateData[] public allStateData;
+    GroundData[] public allGroundData;
+
+    //structs
+     struct CenterData {
         address centerAddress;
         string name;
     }
@@ -89,45 +214,43 @@ contract Disaster {
         address groundAddress;
         string name;
     }
-    struct Demand {
-        string name;
+    struct Disasters {
+        address disastarContract;
+        string disasterName;
         string location;
-        string demandDescription;
-        DemandState state;
+        string severity;
     }
-    
 
-    //Mappings
-    mapping(address => string) public AuthorityName;
-    mapping(address => bool) public isCenter;
-    mapping(address => bool) public isState;
-    mapping(address => bool) public isGround;
-    mapping(address => Request[]) public authorityRequest;
-    mapping(address => Demand[]) public authorityDemand;
+    Disasters[] public allDisasters;
 
+    constructor () {
+        ownerMaster = msg.sender;
+        isCenter[msg.sender] = true;
+    }
 
-    //Arrays
-    CenterData[] public allCenterData;
-    StateData[] public allStateData;
-    GroundData[] public allGroundData;
-    Request[] public allRequests;
-    Demand[] public allDemands;
+    function CreateDisaster(string memory _disasterName, string memory _location, string memory _severity) public {
+        Disaster new_Disaster_address = new Disaster(msg.sender, _disasterName);
+        Disasters memory newDisaster;
+        newDisaster.disastarContract = address(new_Disaster_address);
+        newDisaster.disasterName = _disasterName;
+        newDisaster.location = _location;
+        newDisaster.severity = _severity;
+        allDisasters.push(newDisaster);
 
-
- 
-    constructor(address _EOA, string memory _disasterName) {
-        owner = _EOA;
-        DisasterName = _disasterName;
-        isCenter[_EOA] = true;
+        isCenter[msg.sender] = true;
         CenterData memory newCenter;
-        newCenter.centerAddress = _EOA;
+        newCenter.centerAddress = msg.sender;
         newCenter.name = "Admin";
         allCenterData.push(newCenter);
     }
 
+    function getDisasters() external view returns(Disasters[] memory){
+        return allDisasters;
+    }
+
     //Access Modifiers
     modifier onlyAdmin{
-        require(owner == msg.sender, "Not an Admin");
+        require(ownerMaster == msg.sender, "Not an Admin");
         _;
     }
 
@@ -205,108 +328,8 @@ contract Disaster {
 
     }
 
-    //Create a new Supply Request
-    function createRequest(string memory _supplyType, string memory _deliveryAddress, uint _amount) external onlyInvolvedAuthorities{
-
-        Request memory newRequest;
-        newRequest.supplyType = _supplyType;
-        newRequest.requestedBy = AuthorityName[msg.sender];
-        newRequest.deliveryAddress = _deliveryAddress;
-        newRequest.amount = _amount;
-        newRequest.state = RequestState.Initiated;
-        allRequests.push(newRequest);
-        authorityRequest[msg.sender].push(newRequest);
-
-    }
-
-    //Gets All Requests for this particular disastar
-    function getAllRequest() external view returns(Request[] memory){
-        return allRequests;
-    }
-
-    //Gets Specific User Supply Requests
-    function getRequest(address supplyCreator) external view returns (Request[] memory){
-        return authorityRequest[supplyCreator];
-    }
-
-    //Dispatch Supply
-    function dispatchSupply(address supplyCreator, uint index) external {
-        authorityRequest[supplyCreator][index].state = RequestState.Dispatched;
-    }
-
-    //Supply Delivered
-    function deliveredSupply(address supplyCreator, uint index) external {
-        authorityRequest[supplyCreator][index].state = RequestState.Delivered;
-    }
-
-    //Supply Cancelled
-    function cancelSupply(address supplyCreator, uint index) external {
-        authorityRequest[supplyCreator][index].state = RequestState.Cancelled;
-    }
-
-    //Create Demand
-    function createDemand(string memory _location, string memory _demandDescription) external onlyInvolvedAuthorities {
-
-        Demand memory newDemand;
-        newDemand.location = _location;
-        newDemand.demandDescription = _demandDescription;
-        newDemand.name = AuthorityName[msg.sender];
-        newDemand.state = DemandState.Unfulfilled;
-        allDemands.push(newDemand);
-        authorityDemand[msg.sender].push(newDemand);
-
-    }
-
-    //Accept Demand
-    function acceptDemand(address demandCreator, uint index) external onlyInvolvedAuthorities {
-        authorityDemand[demandCreator][index].state = DemandState.Fulfilled;
-    }
-
-    //Get All Demands
-    function getAllDemands() external view returns (Demand[] memory) {
-        return allDemands;
-    }
-
-    //Get Authority Specific Demands
-    function getDemands(address demandCreator) external view returns (Demand[] memory) {
-        return authorityDemand[demandCreator];
-    }
-
-    
-
-    
-}
-
-
-contract MasterContract {
-    address private ownerMaster;
-  
-    
-    struct Disasters {
-        address disastarContract;
-        string disasterName;
-        string location;
-        string severity;
-    }
-
-    Disasters[] public allDisasters;
-
-    constructor () {
-        ownerMaster = msg.sender;
-    }
-
-    function CreateDisaster(string memory _disasterName, string memory _location, string memory _severity) public {
-        Disaster new_Disaster_address = new Disaster(msg.sender, _disasterName);
-        Disasters memory newDisaster;
-        newDisaster.disastarContract = address(new_Disaster_address);
-        newDisaster.disasterName = _disasterName;
-        newDisaster.location = _location;
-        newDisaster.severity = _severity;
-        allDisasters.push(newDisaster);
-    }
-
-    function getDisasters() external view returns(Disasters[] memory){
-        return allDisasters;
+    function getDisasterName(Disaster curDisaster) external view returns(string memory) {
+        return curDisaster.getDisasterName();
     }
 
     

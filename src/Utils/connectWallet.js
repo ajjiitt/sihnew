@@ -1,25 +1,16 @@
 import Web3 from "web3";
 import MasterContractABI from './MasterContractABI.json';
 import DisasterContractABI from './DisasterContractABI.json';
-import RegisterDataABI from './RegisterDataABI.json';
+// import RegisterDataABI from './RegisterDataABI.json';
 
-const MasterContractAddress = "0xe81331f40597f59a43D080f0a0e324fA0422400C";
-const RegisterDataContractAddress = "0xcDb089c1B785Db76C607Ce4C4C8C1eD6EB4c50B8";
+const MasterContractAddress = "0xbE284026CA99f84FeA90780C9dc4cBCD4BCC18E2";
+// const RegisterDataContractAddress = "0xcDb089c1B785Db76C607Ce4C4C8C1eD6EB4c50B8";
 // const DisasterContractAddress = "0xb8EC8BA2Be1781C3Ac6B9cF7B5204FFe9f34885C";
 
 export const intializeMasterContract = () => {
     const web3 = new Web3(Web3.givenProvider);
     return new web3.eth.Contract(MasterContractABI, MasterContractAddress);
 };
-
-export const intializeRegisterContract = () => {
-    const web3 = new Web3(Web3.givenProvider);
-    return new web3.eth.Contract(RegisterDataABI, RegisterDataContractAddress);
-};
-// export const intializeDisasterContract = () => {
-//     const web3 = new Web3(Web3.givenProvider);
-//     return new web3.eth.Contract(DisasterContractABI, DisasterContractAddress);
-// };
 
 export const intializeDisasterContract = (DisasterContractAddress) => {
     const web3 = new Web3(Web3.givenProvider);

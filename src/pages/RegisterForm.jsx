@@ -1,14 +1,15 @@
 import React, { useState } from "react";
-import { getAccountID, intializeRegisterContract } from "../Utils/connectWallet";
+import { getAccountID, intializeMasterContract } from "../Utils/connectWallet";
 
 export default function RegisterForm() {
   const [authorityName, setAuthorityName] = useState("");
   const [role, setRole] = useState("");
   const registerUser = async (e) => {
+    console.log("cow");
     e.preventDefault();
     console.log({ authorityName, role });
     const accountId = await getAccountID();
-    const contract = intializeRegisterContract();
+    const contract = intializeMasterContract();
     let user;
 
     if(role === "Central"){

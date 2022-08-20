@@ -1,11 +1,21 @@
-import React, {useState} from 'react'
+import React, { useState, useEffect } from 'react'
+import { intializeMasterContract } from '../Utils/connectWallet';
 
 const CentralAuthorities = () => {
-    const [authorities, setAuthorities] = useState([{
-        name:"Tejas",
-        address: "aiodhaskdsa"
-    }]);
+    const [authorities, setAuthorities] = useState([]);
 
+    const contract = intializeMasterContract();
+
+    const fetchCentralAuthorities = async () => {
+      const central = await contract.methods.getCenterData().call();
+      console.log(central);
+      setAuthorities(central);
+
+    }
+
+    useEffect(() => {
+      fetchCentralAuthorities();
+    }, []);
   return (
     <div className="flex flex-col mx-9">
       <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -44,7 +54,7 @@ const CentralAuthorities = () => {
                       {authority.name}
                     </td>
                     <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                      {authority.address}
+                      {authority.centerAddress}
                     </td>
                   </tr>
                 ))}

@@ -14,12 +14,8 @@
         "type": "constructor"
     },
     {
-        "inputs": [{
-            "internalType": "address",
-            "name": "",
-            "type": "address"
-        }],
-        "name": "AuthorityName",
+        "inputs": [],
+        "name": "DisasterName",
         "outputs": [{
             "internalType": "string",
             "name": "",
@@ -30,11 +26,11 @@
     },
     {
         "inputs": [],
-        "name": "DisasterName",
+        "name": "MasterContractAddress",
         "outputs": [{
-            "internalType": "string",
+            "internalType": "address",
             "name": "",
-            "type": "string"
+            "type": "address"
         }],
         "stateMutability": "view",
         "type": "function"
@@ -54,27 +50,6 @@
         "name": "acceptDemand",
         "outputs": [],
         "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [{
-            "internalType": "uint256",
-            "name": "",
-            "type": "uint256"
-        }],
-        "name": "allCenterData",
-        "outputs": [{
-                "internalType": "address",
-                "name": "centerAddress",
-                "type": "address"
-            },
-            {
-                "internalType": "string",
-                "name": "name",
-                "type": "string"
-            }
-        ],
-        "stateMutability": "view",
         "type": "function"
     },
     {
@@ -114,27 +89,6 @@
             "name": "",
             "type": "uint256"
         }],
-        "name": "allGroundData",
-        "outputs": [{
-                "internalType": "address",
-                "name": "groundAddress",
-                "type": "address"
-            },
-            {
-                "internalType": "string",
-                "name": "name",
-                "type": "string"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [{
-            "internalType": "uint256",
-            "name": "",
-            "type": "uint256"
-        }],
         "name": "allRequests",
         "outputs": [{
                 "internalType": "string",
@@ -160,27 +114,6 @@
                 "internalType": "enum Disaster.RequestState",
                 "name": "state",
                 "type": "uint8"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [{
-            "internalType": "uint256",
-            "name": "",
-            "type": "uint256"
-        }],
-        "name": "allStateData",
-        "outputs": [{
-                "internalType": "address",
-                "name": "stateAddress",
-                "type": "address"
-            },
-            {
-                "internalType": "string",
-                "name": "name",
-                "type": "string"
             }
         ],
         "stateMutability": "view",
@@ -284,23 +217,6 @@
     },
     {
         "inputs": [{
-                "internalType": "address",
-                "name": "toGrant",
-                "type": "address"
-            },
-            {
-                "internalType": "string",
-                "name": "centerName",
-                "type": "string"
-            }
-        ],
-        "name": "createCenterLevel",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [{
                 "internalType": "string",
                 "name": "_location",
                 "type": "string"
@@ -309,26 +225,14 @@
                 "internalType": "string",
                 "name": "_demandDescription",
                 "type": "string"
-            }
-        ],
-        "name": "createDemand",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [{
-                "internalType": "address",
-                "name": "toGrant",
-                "type": "address"
             },
             {
                 "internalType": "string",
-                "name": "GroundName",
+                "name": "AuthorityName",
                 "type": "string"
             }
         ],
-        "name": "createGroundLevel",
+        "name": "createDemand",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"
@@ -345,29 +249,17 @@
                 "type": "string"
             },
             {
+                "internalType": "string",
+                "name": "AuthorityName",
+                "type": "string"
+            },
+            {
                 "internalType": "uint256",
                 "name": "_amount",
                 "type": "uint256"
             }
         ],
         "name": "createRequest",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [{
-                "internalType": "address",
-                "name": "toGrant",
-                "type": "address"
-            },
-            {
-                "internalType": "string",
-                "name": "stateName",
-                "type": "string"
-            }
-        ],
-        "name": "createStateLevel",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"
@@ -476,28 +368,6 @@
         "type": "function"
     },
     {
-        "inputs": [],
-        "name": "getCenterData",
-        "outputs": [{
-            "components": [{
-                    "internalType": "address",
-                    "name": "centerAddress",
-                    "type": "address"
-                },
-                {
-                    "internalType": "string",
-                    "name": "name",
-                    "type": "string"
-                }
-            ],
-            "internalType": "struct Disaster.CenterData[]",
-            "name": "",
-            "type": "tuple[]"
-        }],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
         "inputs": [{
             "internalType": "address",
             "name": "demandCreator",
@@ -535,22 +405,11 @@
     },
     {
         "inputs": [],
-        "name": "getGroundData",
+        "name": "getDisasterName",
         "outputs": [{
-            "components": [{
-                    "internalType": "address",
-                    "name": "groundAddress",
-                    "type": "address"
-                },
-                {
-                    "internalType": "string",
-                    "name": "name",
-                    "type": "string"
-                }
-            ],
-            "internalType": "struct Disaster.GroundData[]",
+            "internalType": "string",
             "name": "",
-            "type": "tuple[]"
+            "type": "string"
         }],
         "stateMutability": "view",
         "type": "function"
@@ -592,73 +451,6 @@
             "internalType": "struct Disaster.Request[]",
             "name": "",
             "type": "tuple[]"
-        }],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "getStateData",
-        "outputs": [{
-            "components": [{
-                    "internalType": "address",
-                    "name": "stateAddress",
-                    "type": "address"
-                },
-                {
-                    "internalType": "string",
-                    "name": "name",
-                    "type": "string"
-                }
-            ],
-            "internalType": "struct Disaster.StateData[]",
-            "name": "",
-            "type": "tuple[]"
-        }],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [{
-            "internalType": "address",
-            "name": "",
-            "type": "address"
-        }],
-        "name": "isCenter",
-        "outputs": [{
-            "internalType": "bool",
-            "name": "",
-            "type": "bool"
-        }],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [{
-            "internalType": "address",
-            "name": "",
-            "type": "address"
-        }],
-        "name": "isGround",
-        "outputs": [{
-            "internalType": "bool",
-            "name": "",
-            "type": "bool"
-        }],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [{
-            "internalType": "address",
-            "name": "",
-            "type": "address"
-        }],
-        "name": "isState",
-        "outputs": [{
-            "internalType": "bool",
-            "name": "",
-            "type": "bool"
         }],
         "stateMutability": "view",
         "type": "function"
