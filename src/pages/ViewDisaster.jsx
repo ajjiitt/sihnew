@@ -1,7 +1,7 @@
 import React from "react";
-import SupplyRequest from "../SubComponents/SupplyRequest";
-import DemandRequest from "../SubComponents/DemandRequest";
-import AllGroundAuthorities from "../SubComponents/AllGroundAuthorities";
+import SupplyRequest from "../SubComponents/disaster/SupplyRequest";
+import DemandRequest from "../SubComponents/disaster/DemandRequest";
+import AllGroundAuthorities from "../SubComponents/disaster/AllGroundAuthorities";
 const ViewDisaster = () => {
   const [openTab, setOpenTab] = React.useState(1);
   const color = "footer-darkblue";
