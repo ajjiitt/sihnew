@@ -3,6 +3,9 @@ module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
+      screens: {
+        'belowSm': '387px',
+      },
       colors: {
         "footer-darkblue": '#22262F',
         "grey-copyright" : '#AFAFAF',
