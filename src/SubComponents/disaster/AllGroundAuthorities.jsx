@@ -8,7 +8,7 @@ export default function AllGroundAuthorities({ name, address }) {
     },
   ]);
   return (
-    <div className="sm:flex items-center justify-center text-xs">
+    <div className="sm:flex items-center justify-center text-xs ">
       {authorities.length !== 0 ? (
         <div class="flex flex-col">
         <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
