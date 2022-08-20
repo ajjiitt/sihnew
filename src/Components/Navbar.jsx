@@ -50,7 +50,7 @@ export default function Example() {
                     </div>
                   </div>
                 </div>
-                <div className="hidden md:flex md:ml-36 lg:ml-64  md:justify-center  md:items-center">
+                <div className="hidden sm:ml-3 md:flex md:ml-20 lg:ml-64  md:justify-center  md:items-center">
                   <div className="flex space-x-4">
                     {navigation.map((item) => (
                       <a
@@ -68,9 +68,9 @@ export default function Example() {
                 </div>
               </div>
 
-              <div className="w-60 absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 ">
+              <div className="w-52  sm:w-60  absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 ">
                 <button
-                  className="bg-gray-900  text-white px-3 py-2 rounded-md text-sm font-medium"
+                  className="bg-gray-900  text-white p-2 sm:px-3 sm:py-2 rounded-md text-sm font-medium"
                   aria-current="page"
                   onClick={() => {
                     !localStorage.account
@@ -81,8 +81,8 @@ export default function Example() {
                   {localStorage.account ? (
                     localStorage.account.slice(0, 10)
                   ) : (
-                    <div className="flex  justify-center items-center">
-                      <p>Connect to &nbsp;</p>
+                    <div className="flex  justify-center items-center ">
+                      <p className="text-xs sm:text-sm">Connect to &nbsp;</p>
                       <svg
                         className="h-4"
                         viewBox="0 0 40 38"
@@ -206,7 +206,7 @@ export default function Example() {
                           fill="#F5841F"
                         />
                       </svg>
-                      <span className="flex-1 ml-3 whitespace-nowrap">
+                      <span className="flex-1 ml-1 sm:ml-3 whitespace-nowrap text-xs sm:text-sm">
                         MetaMask
                       </span>
                     </div>
