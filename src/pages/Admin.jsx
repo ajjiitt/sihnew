@@ -66,84 +66,89 @@ const Admin = () => {
             ))}
           </select>
         </div>
-        <ul className="hidden text-xs  font-medium text-center text-gray-500 rounded-lg divide-x divide-gray-200 shadow sm:flex dark:divide-gray-700 dark:text-gray-400">
-          <li className="w-full">
+        <ul className="hidden text-xs h-16  font-medium text-center text-gray-500 rounded-lg divide-x divide-gray-200 shadow sm:flex dark:divide-gray-700 dark:text-gray-400">
+          <li className="w-full h-full">
             <button
               onClick={(e) => {
                 e.preventDefault();
                 setCurIndex(0);
               }}
-              className="inline-block p-4 w-full bg-white hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700 rounded-l-lg"
+              className="inline-block p-4 w-full h-full bg-white hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700 rounded-l-lg"
               aria-current="page"
             >
               View Disaster
             </button>
           </li>
-          <li className="w-full">
+          <li className="w-full h-full">
             <button
               onClick={(e) => {
                 e.preventDefault();
                 setCurIndex(1);
               }}
-              className="inline-block p-4 w-full bg-white hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
+              className="inline-block p-4 w-full h-full bg-white hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
               aria-current="page"
             >
               Create Disaster
             </button>
           </li>
-          <li className="w-full">
+          <li className="w-full h-full">
             <button
               onClick={(e) => {
                 e.preventDefault();
                 setCurIndex(2);
               }}
-              className="inline-block p-4 w-full bg-white hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
+              className="inline-block p-4 w-full h-full bg-white hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
             >
               Authorize Central
             </button>
           </li>
-          <li className="w-full">
+          <li className="w-full h-full">
             <button
               onClick={(e) => {
                 e.preventDefault();
                 setCurIndex(3);
               }}
-              className="inline-block p-4 w-full bg-white hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
+              className="inline-block p-4 w-full h-full bg-white hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
             >
               Authorize State
             </button>
           </li>
-          <li className="w-full">
+          <li className="w-full h-full">
             <button
               onClick={(e) => {
                 e.preventDefault();
                 setCurIndex(4);
               }}
-              className="inline-block p-4 w-full bg-white hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
+              className="inline-block p-4 w-full h-full bg-white hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
             >
               Central Authorities
             </button>
           </li>
-          <li className="w-full">
+          <li className="w-full h-full">
             <button
               onClick={(e) => {
                 e.preventDefault();
                 setCurIndex(5);
               }}
-              className="inline-block p-4 w-full bg-white hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
+              className="inline-block p-4 w-full bg-white h-full hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
             >
               State Authorities
             </button>
           </li>
-          <li className="w-full">
+          <li className="w-full h-full rounded-r-md">
             <a
               onClick={(e) => {
                 e.preventDefault();
                 setCurIndex(6);
               }}
-              className="inline-block p-4 w-full bg-white hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700 rounded-r-lg"
+              // className="inline-block  w-full h-full bg-white hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700 "
             >
+              <button
+              className="inline-block p-4 w-full bg-white h-full hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700 rounded-r-lg"
+            >
+
               File Storage
+            </button>
             </a>
           </li>
         </ul>
