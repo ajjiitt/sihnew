@@ -19,51 +19,42 @@ const StateAuthorities = () => {
 
   return (
     <div>
-        <div class="flex flex-col">
-        <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
-          <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
-            <div class="overflow-hidden">
-              <table class="min-w-full">
-              <thead className="bg-white border-b">
-                <tr>
+      <p className="font-semibold text-center text-2xl">State AUTHORITIES</p>
+      <div className="flex flex-col md:w-full justify-center items-center mx-auto overflow-hidden">
+        <div class="overflow-x-auto relative shadow-xl sm:rounded-lg mb-5">
+          <table class="w-full text-sm text-left text-gray-500 ">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+              <tr>
+                <th scope="col" class="py-3 px-6">
+                  #
+                </th>
+                <th scope="col" class="py-3 px-6">
+                  Authority Name
+                </th>
+                <th scope="col" class="py-3 px-6">
+                  Address
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {stateArr.map((ele, index) => (
+                <tr class="bg-white border-b " key={index}>
                   <th
-                    scope="col"
-                    className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                    scope="row"
+                    class="py-4 px-6 text-footer-darkblue"
                   >
-                    No.
+                   {index + 1}
                   </th>
-                  <th
-                    scope="col"
-                    className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
-                  >
-                    Name
-                  </th>
-                  <th
-                    scope="col"
-                    className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
-                  >
-                    Address
-                  </th>
+                  <td class="py-4 px-6 text-footer-darkblue">
+                    {ele.stateAddress}
+                  </td>
+                  <td class="py-4 px-6 text-footer-darkblue">
+                    {ele.name}
+                  </td>
                 </tr>
-              </thead>
-                <tbody>
-                {stateArr.map((authority, index) => (
-                  <tr className="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                      {index + 1}
-                    </td>
-                    <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                      {authority.name}
-                    </td>
-                    <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                      {authority.stateAddress}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-              </table>
-            </div>
-          </div>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
