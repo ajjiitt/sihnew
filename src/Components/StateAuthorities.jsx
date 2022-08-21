@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react'
-import { intializeMasterContract } from '../Utils/connectWallet';
+import React, { useState, useEffect } from "react";
+import { intializeMasterContract } from "../Utils/connectWallet";
 
 const StateAuthorities = () => {
-  
   const [stateArr, setStateArr] = useState([]);
 
   const contract = intializeMasterContract();
@@ -11,7 +10,7 @@ const StateAuthorities = () => {
     const state = await contract.methods.getStateData().call();
     setStateArr(state);
     console.log(state);
-  }
+  };
 
   useEffect(() => {
     fetchState();
@@ -20,8 +19,8 @@ const StateAuthorities = () => {
   return (
     <div>
       <p className="font-semibold text-center text-2xl">State AUTHORITIES</p>
-      <div className="flex flex-col md:w-full justify-center items-center mx-auto overflow-hidden">
-        <div class="overflow-x-auto relative shadow-xl sm:rounded-lg mb-5">
+      <div className="flex md:w-full justify-center items-center px-3 md:px-0 overflow-scroll">
+        <div class="overflow-x-auto shadow-xl sm:rounded-lg mb-5">
           <table class="w-full text-sm text-left text-gray-500 ">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50">
               <tr>
@@ -39,18 +38,13 @@ const StateAuthorities = () => {
             <tbody>
               {stateArr.map((ele, index) => (
                 <tr class="bg-white border-b " key={index}>
-                  <th
-                    scope="row"
-                    class="py-4 px-6 text-footer-darkblue"
-                  >
-                   {index + 1}
+                  <th scope="row" class="py-4 px-6 text-footer-darkblue">
+                    {index + 1}
                   </th>
                   <td class="py-4 px-6 text-footer-darkblue">
                     {ele.stateAddress}
                   </td>
-                  <td class="py-4 px-6 text-footer-darkblue">
-                    {ele.name}
-                  </td>
+                  <td class="py-4 px-6 text-footer-darkblue">{ele.name}</td>
                 </tr>
               ))}
             </tbody>
@@ -58,7 +52,7 @@ const StateAuthorities = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default StateAuthorities
+export default StateAuthorities;

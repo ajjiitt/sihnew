@@ -28,8 +28,8 @@ const AuthorizeState = () => {
   return (
     <div>
       <p className="font-semibold text-center text-2xl">State AUTHORITIES</p>
-      <div className="flex flex-col md:w-full justify-center items-center mx-auto overflow-hidden">
-        <div class="overflow-x-auto relative shadow-xl sm:rounded-lg mb-5">
+      <div className="flex md:w-full justify-center items-center px-3 md:px-0 overflow-scroll">
+        <div class="overflow-x-auto shadow-xl sm:rounded-lg mb-5">
           <table class="w-full text-sm text-left text-gray-500 ">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50">
               <tr>
