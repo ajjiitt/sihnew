@@ -39,8 +39,8 @@ export default function Example() {
                   /> */}
                   <div className="flex justify-between">
                     <div
-                      className=""
-                      style={{ height: "50px", width: "130px" }}
+                      className="cursor-pointer"
+                      style={{ height: "64px", width: "85px" }}
                     >
                       <img
                         src="ndrflogo.jpg"
@@ -48,6 +48,9 @@ export default function Example() {
                         style={{ height: "100%", width: "100%" }}
                       />
                     </div>
+                    {/* <div className="flex justify-center items-center">
+                    <p>NDRF</p>
+                    </div> */}
                   </div>
                 </div>
                 <div className="hidden sm:ml-3 md:flex md:ml-20 lg:ml-64  md:justify-center  md:items-center">
@@ -229,7 +232,7 @@ export default function Example() {
 
           <Disclosure.Panel className="md:hidden">
           <button
-                  className="bg-gray-900 ml-4 my-1 belowSm:hidden  text-white p-2 sm:px-3 sm:py-2 rounded-md text-sm font-medium"
+                  className="bg-gray-900 ml-4 mt-2  belowSm:hidden  text-white p-2 sm:px-3 sm:py-2 rounded-md text-sm font-medium"
                   aria-current="page"
                   onClick={() => {
                     !localStorage.account
