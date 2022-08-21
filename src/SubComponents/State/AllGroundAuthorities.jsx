@@ -1,12 +1,22 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { intializeMasterContract } from "../../Utils/connectWallet";
 
-export default function AllGroundAuthorities({ name, address }) {
-  const [authorities, setAuthorities] = React.useState([
-    {
-      name: "Ajit",
-      address: "0x1234567890123456789012345678901234567890",
-    },
-  ]);
+export default function AllGroundAuthorities() {
+  const [authorities, setAuthorities] = useState([]);
+
+
+  const contract = intializeMasterContract();
+
+  const fetchGroundAuthorities = async () => {
+    const ground = await contract.methods.getGroundData().call();
+    console.log(ground);
+    setAuthorities(ground);
+  }
+
+  useEffect(() => {
+    fetchGroundAuthorities();
+  }, []);
+
   return (
     <div className="sm:flex items-center justify-center text-xs">
       {authorities.length !== 0 ? (
@@ -38,20 +48,20 @@ export default function AllGroundAuthorities({ name, address }) {
                     </tr>
                   </thead>
                   <tbody>
-                    {authorities.map((authority, index) => (
-                      <tr className="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                          {index + 1}
-                        </td>
-                        <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                          {authority.name}
-                        </td>
-                        <td className="text-xs text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                          {authority.address}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
+                {authorities.map((authority, index) => (
+                  <tr className="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                      {index + 1}
+                    </td>
+                    <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                      {authority.name}
+                    </td>
+                    <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                      {authority.groundAddress}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
                 </table>
               </div>
             </div>

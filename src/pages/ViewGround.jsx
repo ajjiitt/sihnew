@@ -1,6 +1,9 @@
 import React, { useState } from "react";
+import FileSharing from "../Components/FileSharing";
+import StateAuthorities from "../Components/StateAuthorities";
 import CreateDemand from "../SubComponents/Ground/CreateDemand";
 import ManageSupplies from "../SubComponents/Ground/ManageSupplies";
+import AllGroundAuthorities from "../SubComponents/State/AllGroundAuthorities";
 
 const ViewGround = () => {
   const [curIndex, setCurIndex] = useState(0);
@@ -13,8 +16,31 @@ const ViewGround = () => {
       label: "Manage Supplies",
       value: 1,
     },
+    {
+      label: "Manage Volunteers",
+      value: 2,
+    },
+    {
+      label: "State Authorities",
+      value: 3,
+    },
+    {
+      label: "Ground Authorities",
+      value: 4,
+    },
+    {
+      label: "File Storage",
+      value: 5,
+    },
   ];
-  const tabComponents = [<CreateDemand />,<ManageSupplies/>];
+  const tabComponents = [
+    <CreateDemand />,
+    <ManageSupplies />,
+    <div></div>,
+    <StateAuthorities />,
+    <AllGroundAuthorities />,
+    <FileSharing />,
+  ];
   return (
     <div>
       <div className="mx-5 my-5">
@@ -64,9 +90,22 @@ const ViewGround = () => {
                 e.preventDefault();
                 setCurIndex(2);
               }}
-              className="inline-block p-4 w-ful h-full bg-white hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
+              className="inline-block p-4 w-full h-full bg-white hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
+              aria-current="page"
             >
-              Manage Volunteer
+              Manage Volunteers
+            </button>
+          </li>
+          <li className="w-full h-full">
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                setCurIndex(3);
+              }}
+              className="inline-block p-4 w-full h-full bg-white hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
+              aria-current="page"
+            >
+              State Authorities
             </button>
           </li>
           <li className="w-full h-full">
@@ -74,6 +113,18 @@ const ViewGround = () => {
               onClick={(e) => {
                 e.preventDefault();
                 setCurIndex(4);
+              }}
+              className="inline-block p-4 w-full h-full bg-white hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
+              aria-current="page"
+            >
+              Ground Authorities
+            </button>
+          </li>
+          <li className="w-full h-full">
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                setCurIndex(5);
               }}
               className="rounded-r-lg inline-block p-4 w-full h-full bg-white hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
             >

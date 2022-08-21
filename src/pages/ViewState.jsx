@@ -4,6 +4,8 @@ import StateSupplyRequest from "../SubComponents/State/StateSupplyRequest";
 import FileSharing from "../Components/FileSharing";
 import AllGroundAuthorities from "../SubComponents/State/AllGroundAuthorities";
 import AllStateAuthorities from "../SubComponents/State/AllStateAuthorities";
+import StateAuthorities from "../Components/StateAuthorities";
+import AuthorizeGround from "../Components/AuthorizeGround";
 export default function ViewState() {
   const [curIndex, setCurIndex] = useState(0);
   const options = [
@@ -16,22 +18,27 @@ export default function ViewState() {
       value: 1,
     },
     {
-      label: "State Authorities",
-      value: 2,
+      label: "Approve Ground",
+      value : 2
     },
     {
-      label: "Ground Authorities",
+      label: "State Authorities",
       value: 3,
     },
     {
-      label: "File Storage",
+      label: "Ground Authorities",
       value: 4,
+    },
+    {
+      label: "File Storage",
+      value: 5,
     },
   ];
   const tabComponents = [
     <StateSupplyRequest />,
     <StateDemandRequest />,
-    <AllStateAuthorities />,
+    <AuthorizeGround />,
+    <StateAuthorities />,
     <AllGroundAuthorities />,
     <FileSharing />,
   ];
@@ -86,7 +93,7 @@ export default function ViewState() {
               }}
               className="inline-block p-4 w-full h-full bg-white hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
             >
-              State Authorities
+              Approve Ground
             </button>
           </li>
           <li className="w-full h-full">
@@ -97,7 +104,7 @@ export default function ViewState() {
               }}
               className="inline-block p-4 w-full h-full bg-white hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
             >
-              Ground Authorities
+              State Authorities
             </button>
           </li>
           <li className="w-full h-full">
@@ -105,6 +112,17 @@ export default function ViewState() {
               onClick={(e) => {
                 e.preventDefault();
                 setCurIndex(4);
+              }}
+              className="inline-block p-4 w-full h-full bg-white hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
+            >
+              Ground Authorities
+            </button>
+          </li>
+          <li className="w-full h-full">
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                setCurIndex(5);
               }}
               className="rounded-r-lg inline-block p-4 w-full h-full bg-white hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
             >
