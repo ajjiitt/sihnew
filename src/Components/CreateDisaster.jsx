@@ -14,15 +14,15 @@ const CreateDisaster = () => {
   const options = [
     {
       label: "Low",
-      value: 0,
+      value: "Low",
     },
     {
       label: "Medium",
-      value: 1,
+      value: "Medium",
     },
     {
       label: "High",
-      value: 2,
+      value: "High",
     },
   ];
 

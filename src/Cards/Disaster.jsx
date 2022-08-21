@@ -1,11 +1,21 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
-const Disaster = ({ name, location, description }) => {
+const Disaster = ({ name, location, description, contract, severity }) => {
+  console.log(contract);
+  const navigate = useNavigate();
   return (
     <div class="p-6 w-full bg-white rounded-lg border border-gray-200 shadow-md max-h-52">
-      <p class="mb-2 w-full h-10 text-gray-500 dark:text-gray-600 text-lg">
-        Location: {location}
-      </p>
+      <div class="flex flex-col sm:flex-row justify-between items-center">
+        <p class="mb-2 w-full h-10 text-gray-500 dark:text-gray-600 text-lg">
+          Location: {location}
+        </p>
+        <div
+          class={`bg-orange-600 text-xs uppercase px-2 py-1 rounded-full border border-gray-200 text-gray-200 font-bold`}
+        >
+          {severity}
+        </div>
+      </div>
       <h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-footer-darkblue">
         {name}
       </h5>
@@ -13,8 +23,10 @@ const Disaster = ({ name, location, description }) => {
         {description ? description : "No description"}
       </p>
       <a
-        href="#"
-        class="inline-flex items-center text-blue-600 hover:underline"
+        onClick={(e) => {
+          navigate(`/disaster/${contract}`);
+        }}
+        class="inline-flex items-center text-footer-darkblue hover:underline"
       >
         View Disaster
         <svg

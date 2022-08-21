@@ -38,13 +38,13 @@ function App() {
         <Route exact path="/admin" element={<Admin />} />
         <Route path="/ipfs" element={<IpfsUpload />} />
         <Route path="/allcenterdata" element={<AllCenterData />} />
-        <Route path="/disaster" element={<ViewDisaster />} />
         <Route path="/demand" element={<DemandForm />} />
         <Route path="/registerform" element={<RegisterForm />} />
         <Route path="/state" element={<ViewState />} />
         <Route path="/ground" element={<ViewGround />} />
         <Route path="/volunteer" element={<Volunteer />} />
         <Route path="/file-share" element={<FileSharing />} />
+        <Route path="/disaster/:address" element={<ViewDisaster />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       </div>

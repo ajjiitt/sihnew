@@ -4,7 +4,6 @@ import { intializeMasterContract } from "../Utils/connectWallet";
 
 const ViewDisasters = () => {
   const [disasters, setDisasters] = useState([]);
-
   const fetchDisasters = async () => {
     const contract = intializeMasterContract();
     const allDisasters = await contract.methods.getDisasters().call();
@@ -26,11 +25,14 @@ const ViewDisasters = () => {
         <div class="">
           <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {disasters.map((ele, index) => {
+              console.log(ele[0]);
+              console.log(ele.disasterContract);
               return (
                 <Disaster
                   name={ele.disasterName}
                   location={ele.location}
-                  contract={ele.disasterContract}
+                  contract={ele[0]}
+                  severity = {ele.severity}
                   key={index}
                 />
               );
