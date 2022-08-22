@@ -35,7 +35,7 @@ const ViewDisasterGround = () => {
                 href="#link1"
                 role="tablist"
               >
-                Create Supply
+                Supply Request
               </a>
             </li>
             <li className="-mb-px mr-2 last:mr-0 flex-auto text-center ">
@@ -54,7 +54,7 @@ const ViewDisasterGround = () => {
                 href="#link2"
                 role="tablist"
               >
-                Generate Demand
+                Demand Request
               </a>
             </li>
             <li className="-mb-px mr-2 last:mr-0 flex-auto text-center ">

@@ -5,6 +5,7 @@ import { useParams, useSearchParams } from "react-router-dom";
 import DocumentForum from "../Components/DocumentForum";
 const ViewDisasterAdmin = () => {
   const [openTab, setOpenTab] = React.useState(1);
+  let { address } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
   // let { address } = useParams();
   const query = searchParams.get("q");
@@ -86,7 +87,7 @@ const ViewDisasterAdmin = () => {
                   <DemandRequest />
                 </div>
                 <div className={openTab === 3 ? "block" : "hidden"} id="link3">
-                  <DocumentForum contract={query}/>
+                <DocumentForum contract={query}/>
                 </div>
               </div>
             </div>
