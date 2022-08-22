@@ -3,6 +3,8 @@ import { getAccountID, intializeMasterContract } from "../Utils/connectWallet";
 import storeFiles from "../Utils/storeFiles";
 import { toast } from "react-toastify";
 const DocumentForum = (props) => {
+  let id;
+  // toast.update(id, { render: "All is good", type: "success", isLoading: false });
   const contract = intializeMasterContract();
   const [modal, setModal] = useState(false);
   const [file, setFile] = useState(null);
@@ -21,6 +23,10 @@ const DocumentForum = (props) => {
   };
   const sendFile = async () => {
     if (file) {
+      id = toast.loading("Uploading...", {
+        position: "top-center",
+        // closeOnClick: true,
+      });
       await storeFiles(file)
         .then(async (res) => {
           const today = new Date();
@@ -42,9 +48,28 @@ const DocumentForum = (props) => {
           fetchGlobalFiles();
         })
         .then(() => {
+          toast.update(id, {
+            render: "Uploaded",
+            type: "success",
+            isLoading: false,
+            autoClose: 3000,
+          });
+          setFile(null);
+          setDescription("");
           setModal(false);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          toast.update(id, {
+            render: "Failed to Upload",
+            type: "error",
+            isLoading: false,
+            autoClose: 3000,
+          });
+          setFile(null);
+          setDescription("");
+          setModal(false);
+          console.log(err);
+        });
     }
   };
 
@@ -201,6 +226,9 @@ const DocumentForum = (props) => {
             <div className="relative bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-lg sm:w-full">
               <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                 <div className="flex flex-col items-center justify-center gap-5">
+                  <div className="text-2xl">
+                    Share File
+                  </div>
                   <div className="w-3/4">
                     <label
                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
