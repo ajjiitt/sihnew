@@ -2,8 +2,10 @@ import React from "react";
 import SupplyRequest from "../SubComponents/disaster/SupplyRequest";
 import DemandRequest from "../SubComponents/disaster/DemandRequest";
 import AllGroundAuthorities from "../SubComponents/disaster/AllGroundAuthorities";
+import { useParams } from "react-router-dom";
 const ViewDisaster = () => {
   const [openTab, setOpenTab] = React.useState(1);
+  let { address } = useParams();
   const color = "footer-darkblue";
   return (
     <>
@@ -75,13 +77,13 @@ const ViewDisaster = () => {
             <div className="px-4 py-5 flex-auto">
               <div className="tab-content tab-space">
                 <div className={openTab === 1 ? "block" : "hidden"} id="link1">
-                  <SupplyRequest/>
+                  <SupplyRequest />
                 </div>
                 <div className={openTab === 2 ? "block" : "hidden"} id="link2">
-                  <DemandRequest/>
+                  <DemandRequest />
                 </div>
                 <div className={openTab === 3 ? "block" : "hidden"} id="link3">
-                  <AllGroundAuthorities/>
+                  <AllGroundAuthorities />
                 </div>
               </div>
             </div>
