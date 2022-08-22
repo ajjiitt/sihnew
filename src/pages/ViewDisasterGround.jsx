@@ -1,11 +1,15 @@
 import React from "react";
 import SupplyRequest from "../SubComponents/disaster/SupplyRequest";
 import DemandRequest from "../SubComponents/disaster/DemandRequest";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import DocumentForum from "../Components/DocumentForum";
 const ViewDisasterGround = () => {
   const [openTab, setOpenTab] = React.useState(1);
   let { address } = useParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+  // let { address } = useParams();
+  const query = searchParams.get("q");
+  console.log(query);
   const color = "footer-darkblue";
   return (
     <>
@@ -31,7 +35,7 @@ const ViewDisasterGround = () => {
                 href="#link1"
                 role="tablist"
               >
-                Supply Request
+                Create Supply
               </a>
             </li>
             <li className="-mb-px mr-2 last:mr-0 flex-auto text-center ">
@@ -50,7 +54,7 @@ const ViewDisasterGround = () => {
                 href="#link2"
                 role="tablist"
               >
-                Demand Request
+                Generate Demand
               </a>
             </li>
             <li className="-mb-px mr-2 last:mr-0 flex-auto text-center ">
@@ -83,7 +87,7 @@ const ViewDisasterGround = () => {
                   <DemandRequest />
                 </div>
                 <div className={openTab === 3 ? "block" : "hidden"} id="link3">
-                <DocumentForum contract={address}/>
+                <DocumentForum contract={query}/>
                 </div>
               </div>
             </div>
