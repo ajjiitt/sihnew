@@ -17,19 +17,21 @@ export default function FileSharing() {
     if (curIndex == 0) {
       setReceivedFiles(
         receivedFiles.filter((file) => {
-          if (file.name.search(search) != -1) {
+          if (file.name.toLowerCase().search(search.toLowerCase()) != -1) {
             return file;
           }
         })
       );
+      fileNotFoundToast();
     } else {
       setSharedFiles(
         sharedFiles.filter((file) => {
-          if (file.name.search(search) != -1) {
+          if (file.name.toLowerCase().search(search.toLowerCase()) != -1) {
             return file;
           }
         })
       );
+      fileNotFoundToast();
     }
   };
 
@@ -43,11 +45,6 @@ export default function FileSharing() {
   const fetchUserFiles = async () => {
     let accoundId = await getAccountID();
     let userFiles = await contract.methods.fetchUserFiles(accoundId).call();
-    console.log(userFiles);
-    // console.log(userFiles);
-    // accoundId += "";
-    // const temp = userFiles.filter(ele => {ele.from === accoundId; console.log()});
-    // console.log(temp);
     setSharedFiles(
       userFiles.filter(
         (ele) => ele.from.toLowerCase() === accoundId.toLowerCase()
@@ -59,24 +56,11 @@ export default function FileSharing() {
       )
     );
   };
-  // console.log(sharedFiles);
   const sendFile = async () => {
     if (file && address.length > 10) {
       await storeFiles(file)
         .then(async (res) => {
           const today = new Date();
-          console.log({
-            link: res.link,
-            description,
-            sendAddress: address,
-            name: file.name,
-            time:
-              today.getDate() +
-              "-" +
-              (today.getMonth() + 1) +
-              "-" +
-              today.getFullYear(),
-          });
           const accoundId = await getAccountID();
           const sharedFile = await contract.methods
             .shareFile(
@@ -91,12 +75,14 @@ export default function FileSharing() {
               address
             )
             .send({ from: accoundId });
-          console.log(sharedFile);
         })
         .then(() => {
+          fetchUserFiles();
           setModal(false);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          console.log(err);
+        });
     }
   };
   const options = [
@@ -112,8 +98,7 @@ export default function FileSharing() {
 
   useEffect(() => {
     fetchUserFiles();
-  }, []);
-  if (search.length > 0) fileNotFoundToast();
+  }, [curIndex]);
 
   return (
     <>
@@ -175,6 +160,12 @@ export default function FileSharing() {
             class="w-full bg-transparent hover:bg-footer-darkblue text-footer-darkblue font-semibold hover:text-white py-2 px-4 border border-footer-darkblue hover:border-transparent rounded"
           >
             Share File
+          </button>
+          <button
+            onClick={() => fetchUserFiles()}
+            class="w-full bg-transparent hover:bg-footer-darkblue text-footer-darkblue font-semibold hover:text-white py-2 px-4 border border-footer-darkblue hover:border-transparent rounded"
+          >
+            Reset Filter
           </button>
         </div>
       </div>
