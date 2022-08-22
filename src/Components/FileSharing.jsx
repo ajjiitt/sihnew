@@ -11,50 +11,13 @@ export default function FileSharing() {
   const [address, setAddress] = useState("");
   const [search, setSearch] = useState("");
   const [description, setDescription] = useState("");
-  const [sharedFiles, setSharedFiles] = useState([
-    {
-      link: "https://bafybeiac3g2z6jue3fqizgyct733po4kad7sccdh63cr3j5gjbimili2la.ipfs.dweb.link/404.png",
-      description: "123123qaedadad",
-      sendAddress: "123123123123123",
-      fileName: "404-share.png",
-      time: "21-8-2022",
-    },
-  ]);
-  const [receivedFiles, setReceivedFiles] = useState([
-    {
-      link: "https://bafybeiac3g2z6jue3fqizgyct733po4kad7sccdh63cr3j5gjbimili2la.ipfs.dweb.link/404.png",
-      description: "123123qaedadad",
-      sendAddress: "123123123123123",
-      fileName: "404-receive.png",
-      time: "21-8-2022",
-    },
-    {
-      link: "https://bafybeiac3g2z6jue3fqizgyct733po4kad7sccdh63cr3j5gjbimili2la.ipfs.dweb.link/404.png",
-      description: "123123qaedadad",
-      sendAddress: "123123123123123",
-      fileName: "ajit-pvpp.png",
-      time: "21-8-2022",
-    },
-    {
-      link: "https://bafybeiac3g2z6jue3fqizgyct733po4kad7sccdh63cr3j5gjbimili2la.ipfs.dweb.link/404.png",
-      description: "123123qaedadad",
-      sendAddress: "123123123123123",
-      fileName: "rushikesh-allen.jpg",
-      time: "21-8-2022",
-    },
-    {
-      link: "https://bafybeiac3g2z6jue3fqizgyct733po4kad7sccdh63cr3j5gjbimili2la.ipfs.dweb.link/404.png",
-      description: "123123qaedadad",
-      sendAddress: "123123123123123",
-      fileName: "tejas-coder.jpg",
-      time: "21-8-2022",
-    },
-  ]);
+  const [sharedFiles, setSharedFiles] = useState([]);
+  const [receivedFiles, setReceivedFiles] = useState([]);
   const searchFile = () => {
     if (curIndex == 0) {
       setReceivedFiles(
         receivedFiles.filter((file) => {
-          if (file.fileName.search(search) != -1) {
+          if (file.name.search(search) != -1) {
             return file;
           }
         })
@@ -62,12 +25,19 @@ export default function FileSharing() {
     } else {
       setSharedFiles(
         sharedFiles.filter((file) => {
-          if (file.fileName.search(search)) {
+          if (file.name.search(search) != -1) {
             return file;
           }
         })
       );
     }
+  };
+
+  const fileNotFoundToast = () => {
+    if (curIndex == 0 && receivedFiles.length == 0)
+      toast.error("No Received Files Found");
+    else if (curIndex == 1 && sharedFiles.length == 0)
+      toast.error("No Shared Files Found");
   };
 
   const fetchUserFiles = async () => {
@@ -78,25 +48,28 @@ export default function FileSharing() {
     // accoundId += "";
     // const temp = userFiles.filter(ele => {ele.from === accoundId; console.log()});
     // console.log(temp);
-    setSharedFiles(userFiles.filter(ele => ele.from.toLowerCase() === accoundId.toLowerCase()));
-    setReceivedFiles(userFiles.filter(ele => ele.to.toLowerCase() === accoundId.toLowerCase()));
-
-  }
+    setSharedFiles(
+      userFiles.filter(
+        (ele) => ele.from.toLowerCase() === accoundId.toLowerCase()
+      )
+    );
+    setReceivedFiles(
+      userFiles.filter(
+        (ele) => ele.to.toLowerCase() === accoundId.toLowerCase()
+      )
+    );
+  };
   // console.log(sharedFiles);
-  // if (curIndex == 0 && receivedFiles.length == 0)
-  //   toast.error("No Received Files Found");
-  // else if (curIndex == 1 && sharedFiles.length == 0)
-  //   toast.error("No Shared Files Found");
   const sendFile = async () => {
     if (file && address.length > 10) {
       await storeFiles(file)
-        .then( async (res) => {
+        .then(async (res) => {
           const today = new Date();
           console.log({
             link: res.link,
             description,
             sendAddress: address,
-            fileName: file.name,
+            name: file.name,
             time:
               today.getDate() +
               "-" +
@@ -105,10 +78,19 @@ export default function FileSharing() {
               today.getFullYear(),
           });
           const accoundId = await getAccountID();
-          const sharedFile = await contract.methods.shareFile(file.name, description, res.link, today.getDate() +"-" +
-          (today.getMonth() + 1) +
-          "-" +
-          today.getFullYear(), address).send({from : accoundId});
+          const sharedFile = await contract.methods
+            .shareFile(
+              file.name,
+              description,
+              res.link,
+              today.getDate() +
+                "-" +
+                (today.getMonth() + 1) +
+                "-" +
+                today.getFullYear(),
+              address
+            )
+            .send({ from: accoundId });
           console.log(sharedFile);
         })
         .then(() => {
@@ -127,10 +109,11 @@ export default function FileSharing() {
       value: 1,
     },
   ];
-  
+
   useEffect(() => {
     fetchUserFiles();
   }, []);
+  if (search.length > 0) fileNotFoundToast();
 
   return (
     <>
@@ -152,7 +135,7 @@ export default function FileSharing() {
               />
               <button
                 class="btn px-6 py-2.5 bg-footer-darkblue text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-slate-300  hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:bg-slate-500 active:shadow-lg transition duration-150 ease-in-out flex items-center"
-                onClick={searchFile}
+                onClick={() => searchFile()}
                 type="button"
                 id="button-addon2"
               >
@@ -237,9 +220,7 @@ export default function FileSharing() {
                       >
                         {ele.name}
                       </th>
-                      <td class="py-4 px-6 text-footer-darkblue">
-                        {ele.from}
-                      </td>
+                      <td class="py-4 px-6 text-footer-darkblue">{ele.from}</td>
                       <td class="py-4 px-6 text-footer-darkblue">
                         {ele.description}
                       </td>
@@ -279,9 +260,7 @@ export default function FileSharing() {
                       >
                         {ele.name}
                       </th>
-                      <td class="py-4 px-6 text-footer-darkblue">
-                        {ele.to}
-                      </td>
+                      <td class="py-4 px-6 text-footer-darkblue">{ele.to}</td>
                       <td class="py-4 px-6 text-footer-darkblue">
                         {ele.description}
                       </td>
