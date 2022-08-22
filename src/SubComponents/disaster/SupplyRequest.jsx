@@ -39,12 +39,8 @@ const SupplyRequest = () => {
       value: 0,
     },
     {
-      label: "Create Supply",
+      label: "View Created Supplies",
       value: 1,
-    },
-    {
-      label: "View Created",
-      value: 2,
     },
   ];
   const optionsForm = [
@@ -225,7 +221,7 @@ const SupplyRequest = () => {
         </div>
         {/* main */}
         <div className="mx-5 my-5">
-          <div className="sm:hidden">
+          <div className="sm:hidden flex justify-between gap-2">
             <label htmlFor="tabs" className="sr-only">
               Select Option
             </label>
@@ -239,6 +235,15 @@ const SupplyRequest = () => {
                 <option value={option.value}>{option.label}</option>
               ))}
             </select>
+            <button
+              className="text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal text-white bg-footer-darkblue hover:text-footer-darkblue hover:bg-white "
+              onClick={(e) => {
+                e.preventDefault();
+                setModal(true);
+              }}
+            >
+              Create Supply
+            </button>
           </div>
           <ul className="hidden text-xs h-16  font-medium text-center text-gray-500 rounded-lg divide-x divide-gray-200 shadow sm:flex dark:divide-gray-700 dark:text-gray-400">
             <li className="w-full h-full">

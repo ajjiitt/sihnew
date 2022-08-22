@@ -78,7 +78,7 @@ const DocumentForum = (props) => {
                 aria-describedby="button-addon2"
               />
               <button
-                class="btn px-6 py-2.5 bg-footer-darkblue text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-slate-300  hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:bg-slate-500 active:shadow-lg transition duration-150 ease-in-out flex items-center"
+                class="btn px-6 py-2.5 bg-footer-darkblue text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-slate-300  hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0  transition duration-150 ease-in-out flex items-center"
                 onClick={() => searchFile()}
                 type="button"
                 id="button-addon2"

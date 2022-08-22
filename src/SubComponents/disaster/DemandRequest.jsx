@@ -1,57 +1,287 @@
 import React, { useState, useEffect } from "react";
+import { toast } from "react-toastify";
 import { intializeDisasterContract } from "../../Utils/connectWallet";
 const DemandRequest = () => {
   //just set supplies called from contract
-  const [supplies, setSupplies] = useState([
+  const [modal, setModal] = useState(false);
+  const [demandDescription, setDemandDescription] = useState("");
+  const [requestedBy, setRequestedBy] = useState("");
+  const [location, setLocation] = useState("");
+  const [demands, setDemands] = useState([
     {
       location: "Mumbai",
       demandDescription: "XYZ",
-      name: "Ajit",
-      state: "Created",
+      requestedBy: "Ajit",
     },
   ]);
-  const fetchSupplies = async () => {
+  const [viewCreateDemands, setViewDemandsSupplies] = useState([
+    {
+      location: "Mumbai-Goa",
+      demandDescription: "XYZ",
+      requestedBy: "Ajit",
+    },
+  ]);
+  const fetchDemands = async () => {
     const contract = intializeDisasterContract();
-    const s = await contract.methods.getAllDemands().call();
+    const s = await contract.methods.getAllRequest().call();
     console.log(s);
   };
+  const [curIndex, setCurIndex] = useState(0);
+  const options = [
+    {
+      label: "View Demands",
+      value: 0,
+    },
+    {
+      label: "View Created Demands",
+      value: 1,
+    },
+  ];
+  const tabComponents = [
+    <ViewDemand demands={demands} />,
+    <ViewCreatedDemand demands={viewCreateDemands} />,
+  ];
+  const createSupply = () => {
+    if (
+      location.length >= 2 &&
+      demandDescription.length >= 2 &&
+      requestedBy.length >= 2
+    ) {
+      console.log({
+        location,
+        requestedBy,
+        demandDescription,
+      });
+      setLocation("");
+      setRequestedBy("");
+      setDemandDescription("");
+      setModal(false);
+    } else {
+      toast.info("Please Fill Valid Details");
+    }
+  };
   useEffect(() => {
-    fetchSupplies();
+    fetchDemands();
   }, []);
   return (
-    <div className="flex items-center justify-center gap-5 flex-wrap">
-      {supplies.length !== 0 ? (
-        supplies.map((props, index) => (
-          <SupplyCard
+    <>
+      <div>
+        {/* modal */}
+        <div
+          className={modal ? "relative z-10" : "relative z-10 hidden"}
+          id="fileUploadModal"
+          aria-labelledby="modal-title"
+          role="dialog"
+          aria-modal="true"
+        >
+          <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+
+          <div className="fixed z-10 inset-0 overflow-y-auto">
+            <div className="flex items-center sm:items-center justify-center min-h-full p-4 text-center sm:p-0">
+              <div className="relative bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-lg sm:w-full">
+                <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                  <div className="flex flex-col items-center justify-center gap-5">
+                    <div className="text-2xl">Create Demand</div>
+                    <div className="w-3/4">
+                      <label
+                        for="first_name"
+                        class="block mb-2 text-sm font-medium text-gray-900 "
+                      >
+                        Supply Type
+                      </label>
+                      <textarea
+                        maxLength={250}
+                        type="text"
+                        id="demandDescription"
+                        value={demandDescription}
+                        onChange={(e) => setDemandDescription(e.target.value)}
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                        placeholder="Demand Description - max.length 250"
+                        required
+                      />
+                    </div>
+                    <div className="w-3/4">
+                      <label
+                        for="first_name"
+                        class="block mb-2 text-sm font-medium text-gray-900 "
+                      >
+                        Requested By
+                      </label>
+                      <input
+                        type="text"
+                        id="receiverAddress"
+                        value={requestedBy}
+                        onChange={(e) => setRequestedBy(e.target.value)}
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                        placeholder="Requested By"
+                        required
+                      />
+                    </div>
+                    <div className="w-3/4">
+                      <label
+                        for="first_name"
+                        class="block mb-2 text-sm font-medium text-gray-900 "
+                      >
+                        Delivery Address
+                      </label>
+                      <input
+                        type="text"
+                        id="receiverAddress"
+                        value={location}
+                        onChange={(e) => setLocation(e.target.value)}
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                        placeholder="Delivery Address"
+                        required
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                  <button
+                    type="button"
+                    onClick={createSupply}
+                    className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                  >
+                    Send
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setModal(false)}
+                    className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* main */}
+        <div className="mx-5 my-5">
+          <div className="sm:hidden flex justify-between gap-2">
+            <label htmlFor="tabs" className="sr-only">
+              Select Option
+            </label>
+            <select
+              value={curIndex}
+              onChange={(e) => setCurIndex(e.target.value)}
+              id="tabs"
+              className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            >
+              {options.map((option) => (
+                <option value={option.value}>{option.label}</option>
+              ))}
+            </select>
+            <button
+              className="text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal text-white bg-footer-darkblue hover:text-footer-darkblue hover:bg-white "
+              onClick={(e) => {
+                e.preventDefault();
+                setModal(true);
+              }}
+            >
+              Create Demand
+            </button>
+          </div>
+          <ul className="hidden text-xs h-16  font-medium text-center text-gray-500 rounded-lg divide-x divide-gray-200 shadow sm:flex dark:divide-gray-700 dark:text-gray-400">
+            <li className="w-full h-full">
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  setCurIndex(0);
+                }}
+                className="inline-block p-4 w-full h-full bg-white hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700 rounded-l-lg"
+                aria-current="page"
+              >
+                View Demand
+              </button>
+            </li>
+            <li className="w-full h-full">
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  setModal(true);
+                }}
+                className="inline-block p-4 w-full h-full bg-white hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
+                aria-current="page"
+              >
+                Create Demand
+              </button>
+            </li>
+            <li className="w-full h-full rounded-r-md">
+              <a
+                onClick={(e) => {
+                  e.preventDefault();
+                  setCurIndex(1);
+                }}
+                // className="inline-block  w-full h-full bg-white hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700 "
+              >
+                <button className="inline-block p-4 w-full bg-white h-full hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700 rounded-r-lg">
+                  View Created Demand
+                </button>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div className="px-3 md:px-12">{tabComponents[curIndex]}</div>
+      </div>
+    </>
+  );
+};
+
+export default DemandRequest;
+
+const ViewDemand = ({ demands }) => {
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      {demands.length !== 0 ? (
+        demands.map((props, index) => (
+          <DemandCard
             location={props.location}
             demandDescription={props.demandDescription}
-            name={props.name}
-            state={props.state}
-            index={index}
+            requestedBy={props.requestedBy}
+            key={index}
           />
         ))
       ) : (
         <div className="flex items-center justify-center text-black">
-          No Supplies Found
+          No Demands Found
+        </div>
+      )}
+    </div>
+  );
+};
+const ViewCreatedDemand = ({ demands }) => {
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      {demands.length !== 0 ? (
+        demands.map((props, index) => (
+          <DemandCard
+            location={props.location}
+            demandDescription={props.demandDescription}
+            requestedBy={props.requestedBy}
+            key={index}
+          />
+        ))
+      ) : (
+        <div className="flex items-center justify-center text-black">
+          No Demand Found
         </div>
       )}
     </div>
   );
 };
 
-export default DemandRequest;
-
-function SupplyCard({ location, demandDescription, name, state }) {
+function DemandCard({ location, demandDescription, requestedBy, state }) {
   return (
-    <div class="w-8/12 md:w-4/12 flex flex-col bg-white shadow-lg rounded-lg overflow-hidden">
+    <div class="w-full flex flex-col bg-white shadow-lg rounded-lg overflow-hidden">
       <div class="bg-gray-200 text-gray-700 text-lg px-6 py-4">
         Description : {demandDescription}
       </div>
 
       <div class="flex flex-col sm:flex-row justify-between items-center sm:px-6 py-4">
-        <div class="bg-orange-600 text-xs uppercase px-2 py-1 rounded-full border border-gray-200 text-gray-200 font-bold">
+        {/* <div class="bg-orange-600 text-xs uppercase px-2 py-1 rounded-full border border-gray-200 text-gray-200 font-bold">
           {state}
-        </div>
+        </div> */}
         {/* <div class="text-sm">Amount : {amount}</div> */}
       </div>
 
@@ -68,10 +298,10 @@ function SupplyCard({ location, demandDescription, name, state }) {
 
         <div class="flex items-center pt-3">
           <div class="bg-blue-700 w-12 h-12 flex justify-center items-center rounded-full uppercase font-bold text-white">
-            {name.charAt(0)}
+            {requestedBy.charAt(0)}
           </div>
           <div class="ml-4">
-            <p class="font-bold">{name}</p>
+            <p class="font-bold">{requestedBy}</p>
           </div>
         </div>
       </div>
