@@ -1,8 +1,10 @@
 import { setRef } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import storeFiles from "../Utils/storeFiles";
 import { toast } from "react-toastify";
+import { getAccountID, intializeMasterContract } from "../Utils/connectWallet";
 export default function FileSharing() {
+  const contract = intializeMasterContract();
   const [curIndex, setCurIndex] = useState(0);
   const [modal, setModal] = useState(false);
   const [file, setFile] = useState(null);
@@ -67,6 +69,20 @@ export default function FileSharing() {
       );
     }
   };
+
+  const fetchUserFiles = async () => {
+    let accoundId = await getAccountID();
+    let userFiles = await contract.methods.fetchUserFiles(accoundId).call();
+    console.log(userFiles);
+    // console.log(userFiles);
+    // accoundId += "";
+    // const temp = userFiles.filter(ele => {ele.from === accoundId; console.log()});
+    // console.log(temp);
+    setSharedFiles(userFiles.filter(ele => ele.from.toLowerCase() === accoundId.toLowerCase()));
+    setReceivedFiles(userFiles.filter(ele => ele.to.toLowerCase() === accoundId.toLowerCase()));
+
+  }
+  // console.log(sharedFiles);
   // if (curIndex == 0 && receivedFiles.length == 0)
   //   toast.error("No Received Files Found");
   // else if (curIndex == 1 && sharedFiles.length == 0)
@@ -74,7 +90,7 @@ export default function FileSharing() {
   const sendFile = async () => {
     if (file && address.length > 10) {
       await storeFiles(file)
-        .then((res) => {
+        .then( async (res) => {
           const today = new Date();
           console.log({
             link: res.link,
@@ -88,6 +104,12 @@ export default function FileSharing() {
               "-" +
               today.getFullYear(),
           });
+          const accoundId = await getAccountID();
+          const sharedFile = await contract.methods.shareFile(file.name, description, res.link, today.getDate() +"-" +
+          (today.getMonth() + 1) +
+          "-" +
+          today.getFullYear(), address).send({from : accoundId});
+          console.log(sharedFile);
         })
         .then(() => {
           setModal(false);
@@ -105,6 +127,11 @@ export default function FileSharing() {
       value: 1,
     },
   ];
+  
+  useEffect(() => {
+    fetchUserFiles();
+  }, []);
+
   return (
     <>
       {/* <button onClick={() => setModal(true)}>Toggle</button> */}
@@ -208,10 +235,10 @@ export default function FileSharing() {
                         scope="row"
                         class="py-4 px-6 font-medium text-footer-darkblue whitespace-nowrap truncate"
                       >
-                        {ele.fileName}
+                        {ele.name}
                       </th>
                       <td class="py-4 px-6 text-footer-darkblue">
-                        {ele.sendAddress}
+                        {ele.from}
                       </td>
                       <td class="py-4 px-6 text-footer-darkblue">
                         {ele.description}
@@ -250,10 +277,10 @@ export default function FileSharing() {
                         scope="row"
                         class="py-4 px-6 font-medium text-footer-darkblue whitespace-nowrap truncate"
                       >
-                        {ele.fileName}
+                        {ele.name}
                       </th>
                       <td class="py-4 px-6 text-footer-darkblue">
-                        {ele.sendAddress}
+                        {ele.to}
                       </td>
                       <td class="py-4 px-6 text-footer-darkblue">
                         {ele.description}

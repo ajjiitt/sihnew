@@ -89,6 +89,42 @@
             "name": "",
             "type": "uint256"
         }],
+        "name": "allFiles",
+        "outputs": [{
+                "internalType": "string",
+                "name": "name",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "description",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "link",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "time",
+                "type": "string"
+            },
+            {
+                "internalType": "address",
+                "name": "from",
+                "type": "address"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+        }],
         "name": "allRequests",
         "outputs": [{
                 "internalType": "string",
@@ -332,6 +368,43 @@
     },
     {
         "inputs": [],
+        "name": "getAllFiles",
+        "outputs": [{
+            "components": [{
+                    "internalType": "string",
+                    "name": "name",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "description",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "link",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "time",
+                    "type": "string"
+                },
+                {
+                    "internalType": "address",
+                    "name": "from",
+                    "type": "address"
+                }
+            ],
+            "internalType": "struct Disaster.File[]",
+            "name": "",
+            "type": "tuple[]"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
         "name": "getAllRequest",
         "outputs": [{
             "components": [{
@@ -453,6 +526,33 @@
             "type": "tuple[]"
         }],
         "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+                "internalType": "string",
+                "name": "_name",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_description",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_link",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_time",
+                "type": "string"
+            }
+        ],
+        "name": "shareFileGlobal",
+        "outputs": [],
+        "stateMutability": "nonpayable",
         "type": "function"
     }
 ]

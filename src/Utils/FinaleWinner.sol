@@ -85,6 +85,13 @@ contract Disaster {
         string demandDescription;
         DemandState state;
     }
+    struct File {
+        string name;
+        string description;
+        string link;
+        string time;
+        address from;
+    }
 
     //Mappings
     mapping(address => Request[]) public authorityRequest;
@@ -94,7 +101,7 @@ contract Disaster {
     //Arrays
     Request[] public allRequests;
     Demand[] public allDemands;
-
+    File[] public allFiles;
     //Access Modifiers
     modifier onlyMasterContract {
         require(msg.sender == MasterContractAddress);
@@ -181,13 +188,30 @@ contract Disaster {
         return authorityDemand[demandCreator];
     }
 
+    //Share File Globally
+    function shareFileGlobal(string memory _name, string memory _description, string memory _link, string memory _time) external {
+
+        File memory newFile;
+        newFile.name = _name;
+        newFile.description = _description;
+        newFile.link = _link;
+        newFile.time = _time;
+        newFile.from = msg.sender;
+
+        allFiles.push(newFile);
+    }
+
+    //Get all files
+    function getAllFiles() external view returns (File[] memory) {
+        return allFiles;
+    }
     
 
     
 }
 
 
-contract MasterContract is RegisterData{
+contract MasterContract is RegisterData {
     address private ownerMaster;
 
     //mappings
@@ -195,6 +219,7 @@ contract MasterContract is RegisterData{
     mapping(address => bool) public isCenter;
     mapping(address => bool) public isState;
     mapping(address => bool) public isGround;
+    mapping(address => File[]) public personalShare;
 
     //Arrays
     CenterData[] public allCenterData;
@@ -220,6 +245,16 @@ contract MasterContract is RegisterData{
         string location;
         string severity;
     }
+    struct File {
+        string name;
+        string description;
+        string link;
+        string time;
+        address from;
+        address to;
+    }
+
+    
 
     Disasters[] public allDisasters;
 
@@ -228,6 +263,7 @@ contract MasterContract is RegisterData{
         isCenter[msg.sender] = true;
     }
 
+    //Create a new disaster 
     function CreateDisaster(string memory _disasterName, string memory _location, string memory _severity) public {
         Disaster new_Disaster_address = new Disaster(msg.sender, _disasterName);
         Disasters memory newDisaster;
@@ -244,6 +280,7 @@ contract MasterContract is RegisterData{
         allCenterData.push(newCenter);
     }
 
+    //Fetch all Disasters
     function getDisasters() external view returns(Disasters[] memory){
         return allDisasters;
     }
@@ -328,9 +365,69 @@ contract MasterContract is RegisterData{
 
     }
 
+    //Share File With Other Person
+    function shareFile(string memory _name, string memory _description, string memory _link, string memory _time, address _to) external {
+        File memory newFile;
+        newFile.name = _name;
+        newFile.description = _description;
+        newFile.link = _link;
+        newFile.time = _time;
+        newFile.from = msg.sender;
+        newFile.to = _to;
+
+        personalShare[_to].push(newFile);
+        personalShare[msg.sender].push(newFile);
+    }
+
+    //Fetch all files of that specific Person
+    function fetchUserFiles(address user) external view returns (File[] memory) {
+        return personalShare[user];
+    }
+
+    //sample
     function getDisasterName(Disaster curDisaster) external view returns(string memory) {
         return curDisaster.getDisasterName();
     }
 
+}
+
+contract FileStorage {
+    
+    //Struct
+    struct file {
+        string name;
+        string description;
+        string link;
+        string time;
+        address from;
+        address to;
+    }
+
+    //mapping
+    mapping(address => file[]) public personalShare;
+    
+
+    //Share File With Other Person
+    function shareFile(string memory _name, string memory _description, string memory _link, string memory _time, address _to) external {
+        file memory newFile;
+        newFile.name = _name;
+        newFile.description = _description;
+        newFile.link = _link;
+        newFile.time = _time;
+        newFile.from = msg.sender;
+        newFile.to = _to;
+
+        personalShare[_to].push(newFile);
+        personalShare[msg.sender].push(newFile);
+    }
+
+
+
+
+
+
+
+    //Array goes inside smart Contract
+    file[] public globalShare; 
     
 }
