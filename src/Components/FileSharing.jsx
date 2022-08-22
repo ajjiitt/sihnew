@@ -15,31 +15,23 @@ export default function FileSharing() {
   const [receivedFiles, setReceivedFiles] = useState([]);
   const searchFile = () => {
     if (curIndex == 0) {
-      setReceivedFiles(
-        receivedFiles.filter((file) => {
-          if (file.name.toLowerCase().search(search.toLowerCase()) != -1) {
-            return file;
-          }
-        })
-      );
-      fileNotFoundToast();
+      let temp = receivedFiles.filter((file) => {
+        if (file.name.toLowerCase().search(search.toLowerCase()) != -1) {
+          return file;
+        }
+      });
+      if (temp.length == 0) toast.error("No Received Files Found");
+      setReceivedFiles(temp);
     } else {
-      setSharedFiles(
-        sharedFiles.filter((file) => {
-          if (file.name.toLowerCase().search(search.toLowerCase()) != -1) {
-            return file;
-          }
-        })
-      );
+      let temp = sharedFiles.filter((file) => {
+        if (file.name.toLowerCase().search(search.toLowerCase()) != -1) {
+          return file;
+        }
+      });
+      setSharedFiles(temp);
+      if (temp.length == 0) toast.error("No Shared Files Found");
       fileNotFoundToast();
     }
-  };
-
-  const fileNotFoundToast = () => {
-    if (curIndex == 0 && receivedFiles.length == 0)
-      toast.error("No Received Files Found");
-    else if (curIndex == 1 && sharedFiles.length == 0)
-      toast.error("No Shared Files Found");
   };
 
   const fetchUserFiles = async () => {
