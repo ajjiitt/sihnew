@@ -6,7 +6,7 @@ import { Route, Routes } from "react-router-dom";
 import Footer from "./Components/Footer";
 import NotFound from "./pages/NotFound";
 import Admin from "./pages/Admin";
-import ViewDisaster from "./pages/ViewDisaster";
+import ViewDisasterAdmin from "./pages/ViewDisasterAdmin";
 import DemandForm from "./pages/DemandForm";
 import RegisterForm from "./pages/RegisterForm";
 import ViewState from "./pages/ViewState";
@@ -15,6 +15,8 @@ import "react-toastify/dist/ReactToastify.css";
 import Volunteer from "./pages/Volunteer";
 import FileSharing from "./Components/FileSharing";
 import ViewGround from "./pages/ViewGround";
+import ViewDisasterState from "./pages/ViewDisasterState";
+import ViewDisasterGround from "./pages/ViewDisasterGround";
 function App() {
   // const notify = () => toast.info("Hello World !");
   return (
@@ -44,7 +46,9 @@ function App() {
         <Route path="/ground" element={<ViewGround />} />
         <Route path="/volunteer" element={<Volunteer />} />
         <Route path="/file-share" element={<FileSharing />} />
-        <Route path="/disaster/:address" element={<ViewDisaster />} />
+        <Route path="/disaster-admin" element={<ViewDisasterAdmin />} />
+        <Route path="/disaster-state" element={<ViewDisasterState />} />
+        <Route path="/disaster-ground" element={<ViewDisasterGround />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       </div>

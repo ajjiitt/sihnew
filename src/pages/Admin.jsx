@@ -40,7 +40,7 @@ const Admin = () => {
     },
   ];
   const tabComponents = [
-    <ViewDisasters />,
+    <ViewDisasters authority="admin"/>,
     <CreateDisaster />,
     <AuthorizeCentral />,
     <AuthorizeState />,

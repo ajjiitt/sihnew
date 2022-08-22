@@ -396,7 +396,7 @@
                     "type": "address"
                 }
             ],
-            "internalType": "struct Disaster.File[]",
+            "internalType": "struct commonStruct.FileDisaster[]",
             "name": "",
             "type": "tuple[]"
         }],

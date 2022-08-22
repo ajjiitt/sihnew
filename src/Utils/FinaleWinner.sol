@@ -59,8 +59,17 @@ contract RegisterData {
     }
 
 }
+contract commonStruct {
+    struct FileDisaster {
+        string name;
+        string description;
+        string link;
+        string time;
+        address from;
+    }
+}
 
-contract Disaster {
+contract Disaster is commonStruct{
     //Contract Variables
     address private owner;
     address public MasterContractAddress;
@@ -85,13 +94,13 @@ contract Disaster {
         string demandDescription;
         DemandState state;
     }
-    struct File {
-        string name;
-        string description;
-        string link;
-        string time;
-        address from;
-    }
+    // struct FileDisaster {
+    //     string name;
+    //     string description;
+    //     string link;
+    //     string time;
+    //     address from;
+    // }
 
     //Mappings
     mapping(address => Request[]) public authorityRequest;
@@ -101,7 +110,7 @@ contract Disaster {
     //Arrays
     Request[] public allRequests;
     Demand[] public allDemands;
-    File[] public allFiles;
+    FileDisaster[] public allFiles;
     //Access Modifiers
     modifier onlyMasterContract {
         require(msg.sender == MasterContractAddress);
@@ -191,7 +200,7 @@ contract Disaster {
     //Share File Globally
     function shareFileGlobal(string memory _name, string memory _description, string memory _link, string memory _time) external {
 
-        File memory newFile;
+        FileDisaster memory newFile;
         newFile.name = _name;
         newFile.description = _description;
         newFile.link = _link;
@@ -202,8 +211,8 @@ contract Disaster {
     }
 
     //Get all files
-    function getAllFiles() external view returns (File[] memory) {
-        return allFiles;
+    function getAllFiles() external view returns (FileDisaster[] memory) {
+        return allFiles; 
     }
     
 
@@ -211,7 +220,7 @@ contract Disaster {
 }
 
 
-contract MasterContract is RegisterData {
+contract MasterContract is RegisterData, commonStruct {
     address private ownerMaster;
 
     //mappings
@@ -253,6 +262,14 @@ contract MasterContract is RegisterData {
         address from;
         address to;
     }
+    // struct FileDisaster {
+    //     string name;
+    //     string description;
+    //     string link;
+    //     string time;
+    //     address from;
+    // }
+
 
     
 
@@ -374,9 +391,8 @@ contract MasterContract is RegisterData {
         newFile.time = _time;
         newFile.from = msg.sender;
         newFile.to = _to;
-
-        personalShare[_to].push(newFile);
         personalShare[msg.sender].push(newFile);
+        personalShare[_to].push(newFile);
     }
 
     //Fetch all files of that specific Person
@@ -389,9 +405,22 @@ contract MasterContract is RegisterData {
         return curDisaster.getDisasterName();
     }
 
+    //share files to all
+    function shareFileGlobal(Disaster curDisaster, string memory _name, string memory _description, string memory _link, string memory _time) external {
+        return curDisaster.shareFileGlobal(_name, _description, _link, _time);
+    }
+
+    //fetch Global Files
+    function getFilesGlobally(Disaster curDisaster) external view returns(FileDisaster[] memory){
+        
+        return curDisaster.getAllFiles();
+        
+    }
+
 }
 
 contract FileStorage {
+    
     
     //Struct
     struct file {

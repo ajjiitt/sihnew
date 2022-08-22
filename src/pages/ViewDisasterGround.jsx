@@ -1,9 +1,9 @@
 import React from "react";
 import SupplyRequest from "../SubComponents/disaster/SupplyRequest";
 import DemandRequest from "../SubComponents/disaster/DemandRequest";
-import AllGroundAuthorities from "../SubComponents/disaster/AllGroundAuthorities";
 import { useParams } from "react-router-dom";
-const ViewDisaster = () => {
+import DocumentForum from "../Components/DocumentForum";
+const ViewDisasterGround = () => {
   const [openTab, setOpenTab] = React.useState(1);
   let { address } = useParams();
   const color = "footer-darkblue";
@@ -69,7 +69,7 @@ const ViewDisaster = () => {
                 href="#link3"
                 role="tablist"
               >
-                Ground Authorities
+                Document Forum
               </a>
             </li>
           </ul>
@@ -83,7 +83,7 @@ const ViewDisaster = () => {
                   <DemandRequest />
                 </div>
                 <div className={openTab === 3 ? "block" : "hidden"} id="link3">
-                  <AllGroundAuthorities />
+                <DocumentForum contract={address}/>
                 </div>
               </div>
             </div>
@@ -94,4 +94,4 @@ const ViewDisaster = () => {
   );
 };
 
-export default ViewDisaster;
+export default ViewDisasterGround;

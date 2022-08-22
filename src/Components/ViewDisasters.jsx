@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Disaster from "../Cards/Disaster";
 import { intializeMasterContract } from "../Utils/connectWallet";
 
-const ViewDisasters = () => {
+const ViewDisasters = ({ authority }) => {
   const [disasters, setDisasters] = useState([]);
   const fetchDisasters = async () => {
     const contract = intializeMasterContract();
@@ -34,6 +34,7 @@ const ViewDisasters = () => {
                   contract={ele[0]}
                   severity = {ele.severity}
                   key={index}
+                  authority={authority}
                 />
               );
             })}

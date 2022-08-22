@@ -1,42 +1,36 @@
 import React, { useState } from "react";
-import StateDemandRequest from "../SubComponents/State/StateDemandRequest";
-import StateSupplyRequest from "../SubComponents/State/StateSupplyRequest";
 import FileSharing from "../Components/FileSharing";
 import AllGroundAuthorities from "../SubComponents/State/AllGroundAuthorities";
-import AllStateAuthorities from "../SubComponents/State/AllStateAuthorities";
 import StateAuthorities from "../Components/StateAuthorities";
 import AuthorizeGround from "../Components/AuthorizeGround";
+import ViewDisasters from "../Components/ViewDisasters";
+
 export default function ViewState() {
   const [curIndex, setCurIndex] = useState(0);
   const options = [
     {
-      label: "Supply Request",
+      label: "View Disasters",
       value: 0,
     },
     {
-      label: "Demand Request",
-      value: 1,
-    },
-    {
       label: "Approve Ground",
-      value : 2
+      value : 1
     },
     {
       label: "State Authorities",
-      value: 3,
+      value: 2,
     },
     {
       label: "Ground Authorities",
-      value: 4,
+      value: 3,
     },
     {
       label: "File Storage",
-      value: 5,
+      value: 4,
     },
   ];
   const tabComponents = [
-    <StateSupplyRequest />,
-    <StateDemandRequest />,
+    <ViewDisasters authority="state" />,
     <AuthorizeGround />,
     <StateAuthorities />,
     <AllGroundAuthorities />,
@@ -70,7 +64,7 @@ export default function ViewState() {
               className="inline-block p-4 w-full h-full bg-white hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700 rounded-l-lg"
               aria-current="page"
             >
-              Supply Request
+              View Disaster
             </button>
           </li>
           <li className="w-full h-full">
@@ -78,18 +72,6 @@ export default function ViewState() {
               onClick={(e) => {
                 e.preventDefault();
                 setCurIndex(1);
-              }}
-              className="inline-block p-4 w-full h-full bg-white hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
-              aria-current="page"
-            >
-              Demand Request
-            </button>
-          </li>
-          <li className="w-full h-full">
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                setCurIndex(2);
               }}
               className="inline-block p-4 w-full h-full bg-white hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
             >
@@ -100,7 +82,7 @@ export default function ViewState() {
             <button
               onClick={(e) => {
                 e.preventDefault();
-                setCurIndex(3);
+                setCurIndex(2);
               }}
               className="inline-block p-4 w-full h-full bg-white hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
             >
@@ -111,7 +93,7 @@ export default function ViewState() {
             <button
               onClick={(e) => {
                 e.preventDefault();
-                setCurIndex(4);
+                setCurIndex(3);
               }}
               className="inline-block p-4 w-full h-full bg-white hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
             >
@@ -122,7 +104,7 @@ export default function ViewState() {
             <button
               onClick={(e) => {
                 e.preventDefault();
-                setCurIndex(5);
+                setCurIndex(4);
               }}
               className="rounded-r-lg inline-block p-4 w-full h-full bg-white hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
             >

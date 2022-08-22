@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-const Disaster = ({ name, location, description, contract, severity }) => {
+const Disaster = ({ name, location, description, contract, severity, authority }) => {
   console.log(contract);
   const navigate = useNavigate();
   return (
@@ -24,7 +24,7 @@ const Disaster = ({ name, location, description, contract, severity }) => {
       </p>
       <a
         onClick={(e) => {
-          navigate(`/disaster/${contract}`);
+          navigate(`/disaster-${authority}?q=${contract}`);
         }}
         class="inline-flex items-center text-footer-darkblue hover:underline"
       >

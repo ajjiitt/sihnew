@@ -301,6 +301,47 @@
         "type": "function"
     },
     {
+        "inputs": [{
+            "internalType": "contract Disaster",
+            "name": "curDisaster",
+            "type": "address"
+        }],
+        "name": "getFilesGlobally",
+        "outputs": [{
+            "components": [{
+                    "internalType": "string",
+                    "name": "name",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "description",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "link",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "time",
+                    "type": "string"
+                },
+                {
+                    "internalType": "address",
+                    "name": "from",
+                    "type": "address"
+                }
+            ],
+            "internalType": "struct commonStruct.FileDisaster[]",
+            "name": "",
+            "type": "tuple[]"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
         "inputs": [],
         "name": "getGroundData",
         "outputs": [{
@@ -659,6 +700,38 @@
             }
         ],
         "name": "shareFile",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+                "internalType": "contract Disaster",
+                "name": "curDisaster",
+                "type": "address"
+            },
+            {
+                "internalType": "string",
+                "name": "_name",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_description",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_link",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_time",
+                "type": "string"
+            }
+        ],
+        "name": "shareFileGlobal",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"
