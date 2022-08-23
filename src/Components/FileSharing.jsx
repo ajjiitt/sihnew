@@ -4,6 +4,7 @@ import storeFiles from "../Utils/storeFiles";
 import { toast } from "react-toastify";
 import { getAccountID, intializeMasterContract } from "../Utils/connectWallet";
 export default function FileSharing() {
+  let id;
   const contract = intializeMasterContract();
   const [curIndex, setCurIndex] = useState(0);
   const [modal, setModal] = useState(false);
@@ -50,6 +51,10 @@ export default function FileSharing() {
   };
   const sendFile = async () => {
     if (file && address.length > 10) {
+      id = toast.loading("Uploading...", {
+        position: "top-center",
+        // closeOnClick: true,
+      });
       await storeFiles(file)
         .then(async (res) => {
           const today = new Date();
@@ -71,8 +76,27 @@ export default function FileSharing() {
         .then(() => {
           fetchUserFiles();
           setModal(false);
+        }).then(() => {
+          toast.update(id, {
+            render: "Uploaded",
+            type: "success",
+            isLoading: false,
+            autoClose: 3000,
+          });
+          setFile(null);
+          setDescription("");
+          setModal(false);
         })
         .catch((err) => {
+          toast.update(id, {
+            render: "Failed to Upload",
+            type: "error",
+            isLoading: false,
+            autoClose: 3000,
+          });
+          setFile(null);
+          setDescription("");
+          setModal(false);
           console.log(err);
         });
     }
