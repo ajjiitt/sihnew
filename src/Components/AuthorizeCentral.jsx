@@ -54,7 +54,7 @@ const AuthorizeCentral = () => {
     const accoundId = await getAccountID();
     id = toast.loading("Approving...", {
       position: "top-center",
-      // closeOnClick: true,
+      closeOnClick: true,
     });
     await contract.methods
       .createCenterLevel(address, name)
