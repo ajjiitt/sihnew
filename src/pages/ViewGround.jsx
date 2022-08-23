@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import FileSharing from "../Components/FileSharing";
 import StateAuthorities from "../Components/StateAuthorities";
+import ViewDisasters from "../Components/ViewDisasters";
 import CreateDemand from "../SubComponents/Ground/CreateDemand";
 import ManageSupplies from "../SubComponents/Ground/ManageSupplies";
 import AllGroundAuthorities from "../SubComponents/State/AllGroundAuthorities";
@@ -8,34 +9,39 @@ import AllGroundAuthorities from "../SubComponents/State/AllGroundAuthorities";
 const ViewGround = () => {
   const [curIndex, setCurIndex] = useState(0);
   const options = [
+    // {
+    //   label: "Create Demand",
+    //   value: 0,
+    // },
+    // {
+    //   label: "Manage Supplies",
+    //   value: 1,
+    // },
+    // {
+    //   label: "Manage Volunteers",
+    //   value: 2,
+    // },
     {
-      label: "Create Demand",
-      value: 0,
-    },
-    {
-      label: "Manage Supplies",
-      value: 1,
-    },
-    {
-      label: "Manage Volunteers",
-      value: 2,
+      label: "View Disasters",
+      value: 0
     },
     {
       label: "State Authorities",
-      value: 3,
+      value: 1,
     },
     {
       label: "Ground Authorities",
-      value: 4,
+      value: 2,
     },
     {
       label: "File Storage",
-      value: 5,
+      value: 3,
     },
   ];
   const tabComponents = [
-    <CreateDemand />,
-    <ManageSupplies />,
+    <ViewDisasters authority="ground"/>,
+    // <CreateDemand />,
+    // <ManageSupplies />,
     <div></div>,
     <StateAuthorities />,
     <AllGroundAuthorities />,
@@ -69,26 +75,15 @@ const ViewGround = () => {
               className="inline-block p-4 w-full h-full bg-white hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700 rounded-l-lg"
               aria-current="page"
             >
-              Create Demand
+              View Disasters
             </button>
           </li>
+          
           <li className="w-full h-full">
             <button
               onClick={(e) => {
                 e.preventDefault();
                 setCurIndex(1);
-              }}
-              className="inline-block p-4 w-full h-full bg-white hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
-              aria-current="page"
-            >
-              Manage Supplies
-            </button>
-          </li>
-          <li className="w-full h-full">
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                setCurIndex(2);
               }}
               className="inline-block p-4 w-full h-full bg-white hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
               aria-current="page"
@@ -100,7 +95,7 @@ const ViewGround = () => {
             <button
               onClick={(e) => {
                 e.preventDefault();
-                setCurIndex(3);
+                setCurIndex(2);
               }}
               className="inline-block p-4 w-full h-full bg-white hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
               aria-current="page"
@@ -112,7 +107,7 @@ const ViewGround = () => {
             <button
               onClick={(e) => {
                 e.preventDefault();
-                setCurIndex(4);
+                setCurIndex(3);
               }}
               className="inline-block p-4 w-full h-full bg-white hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
               aria-current="page"
@@ -124,7 +119,7 @@ const ViewGround = () => {
             <button
               onClick={(e) => {
                 e.preventDefault();
-                setCurIndex(5);
+                setCurIndex(4);
               }}
               className="rounded-r-lg inline-block p-4 w-full h-full bg-white hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
             >
