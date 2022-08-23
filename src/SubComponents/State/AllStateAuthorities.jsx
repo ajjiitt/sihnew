@@ -59,7 +59,7 @@ export default function AllStateAuthorities({ name, address }) {
         </div>
       ) : (
         <div className="flex items-center justify-center text-black">
-          No Ground Authorities Found
+          No State Authorities Found
         </div>
       )}
     </div>
