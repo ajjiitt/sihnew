@@ -40,17 +40,14 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route exact path="/admin" element={<Admin />} />
-        {/* <Route path="/ipfs" element={<IpfsUpload />} /> */}
-        <Route path="/allcenterdata" element={<AllCenterData />} />
-        {/* <Route path="/demand" element={<DemandForm />} /> */}
         <Route path="/registerform" element={<RegisterForm />} />
         <Route path="/state" element={<ViewState />} />
         <Route path="/ground" element={<ViewGround />} />
         <Route path="/volunteer" element={<Volunteer />} />
-        <Route path="/file-share" element={<FileSharing />} />
         <Route path="/disaster-admin" element={<ViewDisasterAdmin />} />
         <Route path="/disaster-state" element={<ViewDisasterState />} />
         <Route path="/disaster-ground" element={<ViewDisasterGround />} />
+        <Route path="/file-share" element={<FileSharing />} />
         <Route path="/contactus" element={<Contactus/>} />
         <Route path="/aboutus" element={<AboutUs/>} />
         <Route path="*" element={<NotFound />} />
