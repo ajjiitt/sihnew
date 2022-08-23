@@ -146,7 +146,7 @@ const DocumentForum = (props) => {
 
       <div className="flex md:w-full justify-center items-center px-3 md:px-0 overflow-scroll md:overflow-hidden">
         <div class="overflow-x-auto shadow-xl sm:rounded-lg mb-5">
-          <table class="w-full text-sm text-left text-gray-500">
+          <table class="w-full text-sm text-left text-gray-500 table-fixed">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50">
               <tr>
                 <th scope="col" class="py-3 px-6">

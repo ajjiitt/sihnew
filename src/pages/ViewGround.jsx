@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import FileSharing from "../Components/FileSharing";
-import StateAuthorities from "../Components/StateAuthorities";
 import ViewDisasters from "../Components/ViewDisasters";
 import CreateDemand from "../SubComponents/Ground/CreateDemand";
 import ManageSupplies from "../SubComponents/Ground/ManageSupplies";
 import AllGroundAuthorities from "../SubComponents/State/AllGroundAuthorities";
-
+import AllStateAuthorities from "../SubComponents/State/AllStateAuthorities";
+import ManageVolunteer from "../Components/ManageVolunteer";
 const ViewGround = () => {
   const [curIndex, setCurIndex] = useState(0);
   const options = [
@@ -23,7 +23,7 @@ const ViewGround = () => {
     // },
     {
       label: "View Disasters",
-      value: 0
+      value: 0,
     },
     {
       label: "State Authorities",
@@ -39,11 +39,11 @@ const ViewGround = () => {
     },
   ];
   const tabComponents = [
-    <ViewDisasters authority="ground"/>,
+    <ViewDisasters authority="ground" />,
     // <CreateDemand />,
     // <ManageSupplies />,
-    <div></div>,
-    <StateAuthorities />,
+    <ManageVolunteer />,
+    <AllStateAuthorities />,
     <AllGroundAuthorities />,
     <FileSharing />,
   ];
@@ -78,7 +78,7 @@ const ViewGround = () => {
               View Disasters
             </button>
           </li>
-          
+
           <li className="w-full h-full">
             <button
               onClick={(e) => {
