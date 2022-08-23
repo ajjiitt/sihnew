@@ -21,9 +21,9 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="flex justify-center items-center flex-col bg-orange-100 rounded-md pt-10">
+      <div className="flex justify-center items-center flex-col bg-orange-100 rounded-md py-8 mb-10">
         {/* title */}
-        <div className='flex flex-row items-center justify-start pb-3'>
+        <div className='flex flex-row items-center justify-start pb-3 pl-6 sm:pl-0'>
           <div className='w-11 h-0' style={{ borderTop: "3px solid #c5b58f" }}>
           </div>
           <div className='pl-1 tracking-wider text-2xl font-semibold text-buttonOrange' >
