@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 import { getAccountID, intializeMasterContract } from "../Utils/connectWallet";
 
 export default function RegisterForm() {
@@ -7,26 +8,32 @@ export default function RegisterForm() {
   const registerUser = async (e) => {
     console.log("cow");
     e.preventDefault();
+    if (role == "Select") toast.warning("Please select a role");
     console.log({ authorityName, role });
     const accountId = await getAccountID();
     const contract = intializeMasterContract();
     let user;
 
-    if(role === "Central"){
-      user = await contract.methods.regCenter(authorityName, accountId).send({from: accountId});
-    }else if(role === "State"){
-      user = await contract.methods.regState(authorityName, accountId).send({from: accountId});
-    }else if(role === "Ground"){
-      user = await contract.methods.regGround(authorityName, accountId).send({from: accountId});
+    if (role === "Central") {
+      user = await contract.methods
+        .regCenter(authorityName, accountId)
+        .send({ from: accountId });
+    } else if (role === "State") {
+      user = await contract.methods
+        .regState(authorityName, accountId)
+        .send({ from: accountId });
+    } else if (role === "Ground") {
+      user = await contract.methods
+        .regGround(authorityName, accountId)
+        .send({ from: accountId });
     }
 
     console.log(user);
 
     setAuthorityName("");
     setRole("");
-
   };
-  
+
   return (
     <div className="bg-main h-screen w-screen my-5">
       <div className="flex flex-col items-center flex-1 h-full justify-center px-4 sm:px-0">
@@ -64,6 +71,7 @@ export default function RegisterForm() {
                       <option>Central</option>
                       <option>State</option>
                       <option>Ground</option>
+                      <option>Volunteer</option>
                     </select>
                   </div>
                   <div className="flex flex-col mt-8">
