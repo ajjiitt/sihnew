@@ -18,6 +18,7 @@ import ViewGround from "./pages/ViewGround";
 import ViewDisasterState from "./pages/ViewDisasterState";
 import ViewDisasterGround from "./pages/ViewDisasterGround";
 import Contactus from "./pages/Contactus";
+import AboutUs from "./pages/AboutUs";
 function App() {
   // const notify = () => toast.info("Hello World !");
   return (
@@ -51,6 +52,7 @@ function App() {
         <Route path="/disaster-state" element={<ViewDisasterState />} />
         <Route path="/disaster-ground" element={<ViewDisasterGround />} />
         <Route path="/contactus" element={<Contactus/>} />
+        <Route path="/aboutus" element={<AboutUs/>} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       </div>
