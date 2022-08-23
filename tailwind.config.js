@@ -18,7 +18,13 @@ module.exports = {
       backgroundImage: {
         "home-banner": "url('/assets/homebanner.png')",
       },
+      height: {
+        '450': '28rem',
+        '500': '31rem',
+      }
     },
   },
-  plugins: [],
+  plugins: [
+    require('tailwind-scrollbar')
+  ],
 };

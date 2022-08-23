@@ -3,7 +3,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a lo
 import { Carousel } from 'react-responsive-carousel';
 const ImageSlider = () => {
     return (
-        <div className='pt-4'>
+        <div className='pt-4 ' >
             <Carousel>
                 <div >
                     <img src="https://ndrf.gov.in/sites/default/files/Slider%202%20Banner%20Mixed%201500%C3%97500.png" />
