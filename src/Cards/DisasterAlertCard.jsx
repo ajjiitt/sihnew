@@ -3,7 +3,7 @@ import React from 'react'
 const DisasterAlertCard = () => {
     return (
         <div>
-            <section className="basis-3/4 flex flex-col md:flex-row box-border  md:pr-9 pt-11  mb-14" >
+            <section className="basis-3/4 flex flex-col md:flex-row box-border  md:pr-9 md:pt-11 pt-4 mb-14" >
                 <div className="basis-1/2 box-border md:pr-0 flex justify-center items-center overflow-hidden h-96 sm:h-[28rem] p-3 md:p-0"  >
                     <img src="https://ndrf.gov.in/sites/default/files/Dk5e-FhUwAAn5qT.jpg" style={{ width: "100%", height: "100%" }} alt='' />
                 </div>

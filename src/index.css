@@ -23,3 +23,8 @@ code {
   justify-content: center;
   align-items: center;
 }
+@media screen and (max-width: 550px) {
+  .carousel .slide img{
+    height: 220px;
+  }
+}
