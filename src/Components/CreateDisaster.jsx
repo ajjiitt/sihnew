@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { getAccountID, intializeMasterContract } from "../Utils/connectWallet";
-
+import { toast } from "react-toastify";
 const CreateDisaster = () => {
+  let id;
   const [inputs, setInputs] = useState({
     type_of_disaster: "",
     location_of_disaster: "",
@@ -30,19 +31,39 @@ const CreateDisaster = () => {
     e.preventDefault();
     const contract = intializeMasterContract();
     const accountId = await getAccountID();
-    const createDisaster = await contract.methods
+    id = toast.loading("Creating Disaster", {
+      position: "top-center",
+      // closeOnClick: true,
+    });
+    await contract.methods
       .CreateDisaster(
         inputs.type_of_disaster,
         inputs.location_of_disaster,
         inputs.severity
       )
-      .send({ from: accountId });
-    console.log(createDisaster);
-    setInputs({
-      type_of_disaster: "",
-      location_of_disaster: "",
-      severity: "",
-    });
+      .send({ from: accountId })
+      .then((res) => {
+        toast.update(id, {
+          render: "Disaster created successfully",
+          type: "success",
+          isLoading: false,
+          autoClose: 3000,
+        });
+        setInputs({
+          type_of_disaster: "",
+          location_of_disaster: "",
+          severity: "",
+        });
+        console.log(res);
+      })
+      .catch((err) => {
+        toast.update(id, {
+          render: "Failed to create disaster",
+          type: "error",
+          isLoading: false,
+          autoClose: 3000,
+        });
+      });
   };
 
   return (

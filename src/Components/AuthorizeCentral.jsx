@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { getAccountID, intializeMasterContract } from "../Utils/connectWallet";
-
+import { toast } from "react-toastify";
 const AuthorizeCentral = () => {
+  let id;
   const [buttoncolor, setButtonColor] = useState(0);
   const [centralArr, setCentralArr] = useState([]);
   const [contract] = useState(intializeMasterContract());
@@ -51,10 +52,31 @@ const AuthorizeCentral = () => {
   const createCenterLevel = async (events, name, address) => {
     events.preventDefault();
     const accoundId = await getAccountID();
-    const newCenter = await contract.methods
+    id = toast.loading("Approving...", {
+      position: "top-center",
+      // closeOnClick: true,
+    });
+    await contract.methods
       .createCenterLevel(address, name)
-      .send({ from: accoundId });
-    console.log(newCenter);
+      .send({ from: accoundId })
+      .then((res) => {
+        toast.update(id, {
+          render: "Approving User",
+          type: "success",
+          isLoading: false,
+          autoClose: 3000,
+        });
+        setAuthorityName("");
+        setRole("");
+      })
+      .catch((err) => {
+        toast.update(id, {
+          render: "Failed to approve user",
+          type: "error",
+          isLoading: false,
+          autoClose: 3000,
+        });
+      });
   };
 
   useEffect(() => {

@@ -76,7 +76,11 @@ export default function FileSharing() {
         .then(() => {
           fetchUserFiles();
           setModal(false);
-        }).then(() => {
+          setAddress("");
+          setDescription("");
+          setFile(null);
+        })
+        .then(() => {
           toast.update(id, {
             render: "Uploaded",
             type: "success",

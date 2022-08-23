@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import { getAccountID, intializeMasterContract } from "../Utils/connectWallet";
 
 export default function RegisterForm() {
+  let id;
   const [authorityName, setAuthorityName] = useState("");
   const [role, setRole] = useState("");
   const registerUser = async (e) => {
@@ -10,10 +11,35 @@ export default function RegisterForm() {
     e.preventDefault();
     if (role == "Select") toast.warning("Please select a role");
     console.log({ authorityName, role });
+    id = toast.loading("Registering", {
+      position: "top-center",
+      // closeOnClick: true,
+    });
+
+    register()
+      .then((res) => {
+        toast.update(id, {
+          render: "User registered successfully",
+          type: "success",
+          isLoading: false,
+          autoClose: 3000,
+        });
+        setAuthorityName("");
+        setRole("");
+      })
+      .catch((err) => {
+        toast.update(id, {
+          render: "Failed to register user  ",
+          type: "error",
+          isLoading: false,
+          autoClose: 3000,
+        });
+      });
+  };
+  const register = async () => {
     const accountId = await getAccountID();
     const contract = intializeMasterContract();
     let user;
-
     if (role === "Central") {
       user = await contract.methods
         .regCenter(authorityName, accountId)
@@ -27,11 +53,7 @@ export default function RegisterForm() {
         .regGround(authorityName, accountId)
         .send({ from: accountId });
     }
-
-    console.log(user);
-
-    setAuthorityName("");
-    setRole("");
+    return user;
   };
 
   return (
