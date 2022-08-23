@@ -40,9 +40,9 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route exact path="/admin" element={<Admin />} />
-        <Route path="/ipfs" element={<IpfsUpload />} />
+        {/* <Route path="/ipfs" element={<IpfsUpload />} /> */}
         <Route path="/allcenterdata" element={<AllCenterData />} />
-        <Route path="/demand" element={<DemandForm />} />
+        {/* <Route path="/demand" element={<DemandForm />} /> */}
         <Route path="/registerform" element={<RegisterForm />} />
         <Route path="/state" element={<ViewState />} />
         <Route path="/ground" element={<ViewGround />} />
