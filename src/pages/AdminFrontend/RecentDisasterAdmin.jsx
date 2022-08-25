@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { db } from "../../Utils/firebaseConfig";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, limit, query } from "firebase/firestore";
 const RecentDisasterAdmin = () => {
   const [newsDisaster, setNewsDisaster] = useState([]);
   const getData = async () => {
-    await getDocs(collection(db, "disasters"))
+    const querySapshoot = await getDocs(
+      query(collection(db, "disasters"), limit(2))
+    )
       .then((res) => {
         let tempARr = [];
         res.forEach((doc) => {
           console.log(doc.data());
           tempARr.push(doc.data());
         });
+        console.log(tempARr);
         setNewsDisaster(tempARr);
       })
       .catch((err) => {
@@ -20,8 +23,8 @@ const RecentDisasterAdmin = () => {
   };
   useEffect(() => {
     getData();
+    console.log(newsDisaster);
   }, []);
-  getData();
   return <div>RecentDisasterAdmin</div>;
 };
 
