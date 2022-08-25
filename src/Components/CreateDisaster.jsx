@@ -36,7 +36,7 @@ const CreateDisaster = () => {
       // closeOnClick: true,
     });
     await contract.methods
-      .CreateDisaster(
+      .createDisaster(
         inputs.type_of_disaster,
         inputs.location_of_disaster,
         inputs.severity

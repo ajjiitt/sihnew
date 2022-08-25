@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { getAccountID, intializeDisasterContract } from "../../Utils/connectWallet";
+import { getAccountID, intializeMasterContract } from "../../Utils/connectWallet";
 const DemandRequest = () => {
-  const contract = intializeDisasterContract();
+  const contract = intializeMasterContract();
   const [searchParams, setSearchParams] = useSearchParams();
   //just set supplies called from contract
   const [modal, setModal] = useState(false);
@@ -25,7 +25,8 @@ const DemandRequest = () => {
     },
   ]);
   const fetchAllDemands = async () => {
-    const demands = await contract.methods.getAllDemands().call();
+    const contractAddress = searchParams.get("q");
+    const demands = await contract.methods.getAllDemands(contractAddress).call();
     console.log(demands);
     setDemands(demands)
   };
@@ -318,7 +319,7 @@ function DemandCard({ location, demandDescription, requestedBy, state }) {
 
         <div class="flex items-center pt-3">
           <div class="bg-blue-700 w-12 h-12 flex justify-center items-center rounded-full uppercase font-bold text-white">
-            {requestedBy.charAt(0)}
+            {requestedBy}
           </div>
           <div class="ml-4">
             <p class="font-bold">{requestedBy}</p>

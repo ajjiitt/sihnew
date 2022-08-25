@@ -7,7 +7,7 @@ const CentralAuthorities = () => {
   const contract = intializeMasterContract();
 
   const fetchCentralAuthorities = async () => {
-    const central = await contract.methods.getCenterData().call();
+    const central = await contract.methods.getAuthData(0).call();
     console.log(central);
     setAuthorities(central);
   };

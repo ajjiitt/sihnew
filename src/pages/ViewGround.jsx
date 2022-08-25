@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import FileSharing from "../Components/FileSharing";
 import ViewDisasters from "../Components/ViewDisasters";
-import CreateDemand from "../SubComponents/Ground/CreateDemand";
-import ManageSupplies from "../SubComponents/Ground/ManageSupplies";
 import AllGroundAuthorities from "../SubComponents/State/AllGroundAuthorities";
-import AllStateAuthorities from "../SubComponents/State/AllStateAuthorities";
 import ManageVolunteer from "../Components/ManageVolunteer";
+import StateAuthorities from "../Components/StateAuthorities";
 const ViewGround = () => {
   const [curIndex, setCurIndex] = useState(0);
   const options = [
@@ -43,7 +41,7 @@ const ViewGround = () => {
     // <CreateDemand />,
     // <ManageSupplies />,
     <ManageVolunteer />,
-    <AllStateAuthorities />,
+    <StateAuthorities />,
     <AllGroundAuthorities />,
     <FileSharing />,
   ];

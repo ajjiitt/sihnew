@@ -7,7 +7,7 @@ const StateAuthorities = () => {
   const contract = intializeMasterContract();
 
   const fetchState = async () => {
-    const state = await contract.methods.getStateData().call();
+    const state = await contract.methods.getAuthData(1).call();
     setStateArr(state);
     console.log(state);
   };

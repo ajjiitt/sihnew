@@ -3,7 +3,8 @@ import MasterContractABI from './MasterContractABI.json';
 import DisasterContractABI from './DisasterContractABI.json';
 // import RegisterDataABI from './RegisterDataABI.json';
 
-const MasterContractAddress = "0xdd28763CEf20664047Bb08a1eB457d56b0FCef49";
+// const MasterContractAddress = "0xdd28763CEf20664047Bb08a1eB457d56b0FCef49";
+const MasterContractAddress = "0x4d5009DA3cE05D7dC1692c7caeA2A1a34Dc7533A";
 // const RegisterDataContractAddress = "0xcDb089c1B785Db76C607Ce4C4C8C1eD6EB4c50B8";
 // const DisasterContractAddress = "0xb8EC8BA2Be1781C3Ac6B9cF7B5204FFe9f34885C";
 
