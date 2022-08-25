@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { getAccountID, intializeMasterContract } from "../../Utils/connectWallet";
+import { generatePdf } from "../../Utils/generatePdf";
 const SupplyRequest = () => {
   //just set supplies called from contract
   const [modal, setModal] = useState(false);
@@ -362,6 +363,17 @@ function SupplyCard({
         <div class="bg-orange-600 text-xs uppercase px-2 py-1 rounded-full border border-gray-200 text-gray-200 font-bold">
           {state}
         </div>
+        <button className='rounded-xl text-black p-3 font-semibold' style={{backgroundColor: "#42c642d6"}}
+                            onClick={ async (events)=>{
+                               const data = {
+                                supplyType: supplyType,
+                                requestedBy: requestedBy,
+                                deliveryAddress: deliveryAddress,
+                                amount: amount,
+                               }
+                               await generatePdf("Hey there testing stuff", data);
+                            }}
+                          > Generate Pdf </ button>
         <div class="text-sm">Amount : {amount}</div>
       </div>
 

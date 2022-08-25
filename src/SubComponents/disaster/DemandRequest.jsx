@@ -17,6 +17,7 @@ const DemandRequest = () => {
   const [quantity, setQuantity] = useState(0);
   const [location, setLocation] = useState("");
   const [demands, setDemands] = useState([]);
+  const [senderName, setSenderName] = useState("")
   const [viewCreateDemands, setViewDemandsSupplies] = useState([]);
   const fetchAllDemands = async () => {
     const contractAddress = searchParams.get("q");
@@ -60,15 +61,25 @@ const DemandRequest = () => {
       position: "top-center",
       // closeOnClick: true,
     });
+    // location={props.location}
+    // supplyType={props.supplyType}
+    // requestedBy={props.creatorName}
+    // quantity={props.quantity}
+    // disasterDetails={props.disasterDetails}
     if (location.length >= 2 && supplyType.length >= 2) {
       console.log(supplyType)
       const generateSupply = await contract.methods
-        .createDemand(contractAddress, location, supplyType)
+        .createDemand(contractAddress, location, supplyType, quantity)
         .send({ from: accoundId })
         .then((res) => {
-          sendDemandMessage(disasterName, supplyType, location, quantity);
+          console.log(res);
+          
           fetchAllDemands();
-          fetchUserDemands();
+          fetchUserDemands().then((cur) => {
+            let sz = demands.length;
+            sendDemandMessage(demands[sz - 1].disasterDetails, demands[sz - 1].supplyType, demands[sz - 1].location, demands[sz - 1].quantity, demands[sz - 1].creatorName);
+          } );
+          setQuantity(0);
           setLocation("");
           setSupplyType("");
           toast.update(id, {
@@ -80,6 +91,7 @@ const DemandRequest = () => {
           setModal(false);
         })
         .catch((err) => {
+          console.log(err);
           setLocation("");
           setSupplyType("");
           toast.update(id, {
@@ -271,8 +283,10 @@ const ViewDemand = ({ demands }) => {
         demands.map((props, index) => (
           <DemandCard
             location={props.location}
-            supplyType={props.demandDescription}
-            requestedBy={props.requestedBy}
+            supplyType={props.supplyType}
+            requestedBy={props.creatorName}
+            quantity={props.quantity}
+            disasterDetails={props.disasterDetails}
             key={index}
           />
         ))
@@ -290,10 +304,12 @@ const ViewCreatedDemand = ({ demands }) => {
       {demands.length !== 0 ? (
         demands.map((props, index) => (
           <DemandCard
-            location={props.location}
-            supplyType={props.demandDescription}
-            requestedBy={props.requestedBy}
-            key={index}
+          location={props.location}
+          supplyType={props.supplyType}
+          requestedBy={props.creatorName}
+          quantity={props.quantity}
+          disasterDetails={props.disasterDetails}
+          key={index}
           />
         ))
       ) : (
@@ -305,9 +321,12 @@ const ViewCreatedDemand = ({ demands }) => {
   );
 };
 
-function DemandCard({ location, supplyType, requestedBy, state }) {
+function DemandCard({ location, supplyType, requestedBy, quantity, disasterDetails }) {
   return (
     <div class="w-full flex flex-col bg-white shadow-lg rounded-lg overflow-hidden">
+      <div class="bg-gray-200 text-gray-700 text-lg px-6 py-4">
+        Disaster : {disasterDetails}
+      </div>
       <div class="bg-gray-200 text-gray-700 text-lg px-6 py-4">
         Description : {supplyType}
       </div>
@@ -332,7 +351,7 @@ function DemandCard({ location, supplyType, requestedBy, state }) {
 
         <div class="flex items-center pt-3">
           <div class="bg-blue-700 w-12 h-12 flex justify-center items-center rounded-full uppercase font-bold text-white">
-            {requestedBy}
+            {quantity}
           </div>
           <div class="ml-4">
             <p class="font-bold">{requestedBy}</p>

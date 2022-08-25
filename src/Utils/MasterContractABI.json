@@ -113,6 +113,11 @@
                 "internalType": "string",
                 "name": "_demandDesc",
                 "type": "string"
+            },
+            {
+                "internalType": "uint256",
+                "name": "_quantity",
+                "type": "uint256"
             }
         ],
         "name": "createDemand",
@@ -247,7 +252,12 @@
         "outputs": [{
             "components": [{
                     "internalType": "string",
-                    "name": "name",
+                    "name": "creatorName",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "disasterDetails",
                     "type": "string"
                 },
                 {
@@ -257,8 +267,13 @@
                 },
                 {
                     "internalType": "string",
-                    "name": "demandDescription",
+                    "name": "supplyType",
                     "type": "string"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "quantity",
+                    "type": "uint256"
                 },
                 {
                     "internalType": "enum commonStruct.DemandState",
@@ -356,7 +371,12 @@
         "outputs": [{
             "components": [{
                     "internalType": "string",
-                    "name": "name",
+                    "name": "creatorName",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "disasterDetails",
                     "type": "string"
                 },
                 {
@@ -366,8 +386,13 @@
                 },
                 {
                     "internalType": "string",
-                    "name": "demandDescription",
+                    "name": "supplyType",
                     "type": "string"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "quantity",
+                    "type": "uint256"
                 },
                 {
                     "internalType": "enum commonStruct.DemandState",
