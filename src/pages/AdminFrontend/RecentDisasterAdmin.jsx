@@ -24,7 +24,7 @@ const RecentDisasterAdmin = () => {
             .then((res) => {
                 let tempARr = [];
                 res.forEach((doc) => {
-                    tempARr.push({...doc.data(),id:data.id});
+                    tempARr.push({ ...doc.data(), id: data.id });
                     console.log(doc.data());
                 });
                 tempARr.reverse();
@@ -60,7 +60,7 @@ const RecentDisasterAdmin = () => {
                 toast.info("News Deleted Successfully.");
             })
             .catch((err) => {
-                toast.error("Something went wrong while Deleting"); 
+                toast.error("Something went wrong while Deleting");
             });
     };
     const updateData = async (id, link, description) => {
@@ -91,17 +91,18 @@ const RecentDisasterAdmin = () => {
 
     return (
         <div>
+            <div className="flex items-center pt-4 justify-center pb-8">
+                <button
+                    onClick={() => setModal(true)}
+                    className="px-4 py-2 bg-green-600 text-white rounded-md">
+                    Add
+                </button>
+            </div>
             <div className="px-11 md:px-24 mb-5 py-5">
                 <div class="flex flex-col">
                     <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
                         <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
-                            <div className="flex items-center justify-center pb-8">
-                                <button 
-                                     onClick={() => setModal(true)}                              
-                                className="px-4 py-2 bg-green-600 text-white rounded-md">
-                                    Add
-                                </button>
-                            </div>
+
                             <div class="overflow-hidden">
                                 <table class="min-w-full">
                                     <thead class="bg-white border-b">
@@ -139,10 +140,10 @@ const RecentDisasterAdmin = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {newsDisaster.map((data, key) => { 
+                                        {newsDisaster.map((data, key) => {
                                             return (
                                                 <tr key={key} class="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
-                                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{key+1}</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{key + 1}</td>
                                                     <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                                         <input type="text" className='p-2 ' value={data.description} disabled />
                                                     </td>
@@ -155,7 +156,7 @@ const RecentDisasterAdmin = () => {
                                                         </button>
                                                     </td>
                                                     <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                                        <button onClick={()=>{
+                                                        <button onClick={() => {
                                                             deleteData();
                                                         }} className='bg-red-600 py-2 text-white px-4 rounded-lg'>
                                                             Delete
@@ -226,7 +227,7 @@ const RecentDisasterAdmin = () => {
                             <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                                 <button
                                     type="button"
-                                    onClick={()=>{
+                                    onClick={() => {
                                         addData();
 
                                     }}

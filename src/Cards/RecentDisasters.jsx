@@ -48,7 +48,7 @@ const RecentDisasters = () => {
           <>
             <div
               onClick={() => window.open(d.link, "_blank")}
-              className="flex flex-row items-center hover:text-buttonOrange hover:pl-1 justify-center cursor-pointer "
+              className="flex flex-row items-start hover:text-buttonOrange hover:pl-1 justify-start cursor-pointer"
             >
               <KeyboardDoubleArrowRightIcon
                 className=""
