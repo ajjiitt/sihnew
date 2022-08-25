@@ -23,6 +23,7 @@ const RecentDisasterAdmin = () => {
                     console.log(doc.data());
                     tempARr.push(doc.data());
                 });
+                tempARr.reverse();
                 console.log(tempARr);
                 setNewsDisaster(tempARr);
             })
@@ -79,6 +80,9 @@ const RecentDisasterAdmin = () => {
         // addData("https://github.com/machadop1407/firebase-react-crud/blob/main/src/firebase-config.js","Learn Firebase");
         console.log(newsDisaster);
     }, []);
+
+    
+    
     return (
         <div>
             <div className="flex justify-center items-center mb-5 py-5">
