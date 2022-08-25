@@ -1,5 +1,5 @@
 import axios from "axios";
-export const sendMessage = async (message,bot) => {
+export const sendMessage = async (message, bot) => {
   let token;
   if (bot == "alert") {
     token = "5631914850:AAEW9VB3wtWHm9Ws4nBxXWKNOczovsJawrw";
@@ -11,4 +11,10 @@ export const sendMessage = async (message,bot) => {
     chat_id: "-731360208",
     text: message,
   });
+};
+export const demandMsg = (disasterName, supplyType, location, quantity) => {
+  return `New Demand for ${disasterName} \nSupply Type: ${supplyType} \nLocation: ${location} \nQuantity: ${quantity}`;
+};
+export const alertMsg = (type, location, severity) => {
+  return `${type} Disaster happend in ${location} with severity of ${severity}`;
 };
