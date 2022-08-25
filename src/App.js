@@ -19,6 +19,7 @@ import ViewDisasterState from "./pages/ViewDisasterState";
 import ViewDisasterGround from "./pages/ViewDisasterGround";
 import Contactus from "./pages/Contactus";
 import AboutUs from "./pages/AboutUs";
+import RecentDisasterAdmin from "./pages/AdminFrontend/RecentDisasterAdmin";
 function App() {
   // const notify = () => toast.info("Hello World !");
   return (
@@ -50,6 +51,7 @@ function App() {
         <Route path="/file-share" element={<FileSharing />} />
         <Route path="/contactus" element={<Contactus/>} />
         <Route path="/aboutus" element={<AboutUs/>} />
+        <Route path="/admin/recentdisasteradmin" element={<RecentDisasterAdmin/>} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       </div>
