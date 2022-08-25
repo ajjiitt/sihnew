@@ -33,8 +33,8 @@ export default function Home() {
         <div className="flex flex-col md:flex-row">
             <div className=" ">
               <div className="flex justify-center items-center flex-col p-5 ">
-                <div className="rounded-full bg-buttonOrange flex items-center justify-center p-9 " style={{boxShadow: "10px 10px 10px #80808085"}}>
-                  <StoreIcon className="text-gray-700 " style={{height:"45px",width:"45px"}} />
+                <div className="rounded-full bg-orange-500 to-bg-yellow-500 flex items-center justify-center p-9 " style={{boxShadow: "10px 10px 10px #80808085"}}>
+                  <StoreIcon className="text-white " style={{height:"45px",width:"45px"}} />
                 </div>
                 <div className="flex flex-col text-center p-4 items-center justify-center">
                   <p className="font-bold ">Find Metamask in webstore</p>
@@ -47,8 +47,8 @@ export default function Home() {
             </div>
             <div className="">
               <div className="flex justify-center items-center flex-col p-5">
-                <div className="rounded-full bg-buttonOrange flex items-center justify-center p-9" style={{boxShadow: "10px 10px 10px #80808085"}}>
-                  <PlaylistAddIcon className="text-gray-700" style={{height:"45px",width:"45px"}} />
+                <div className="rounded-full bg-orange-500 to-bg-yellow-500 flex items-center justify-center p-9" style={{boxShadow: "10px 10px 10px #80808085"}}>
+                  <PlaylistAddIcon className="text-white" style={{height:"45px",width:"45px"}} />
                 </div>
                 <div className="flex flex-col text-center p-4">
                   <p className="font-bold ">Find Metamask in webstore</p>
@@ -61,8 +61,8 @@ export default function Home() {
             </div>
             <div className="">
               <div className="flex justify-center items-center flex-col p-5">
-                <div className="rounded-full bg-buttonOrange flex items-center justify-center p-9" style={{boxShadow: "10px 10px 10px #80808085"}}>
-                  <AssignmentTurnedInIcon className="text-gray-700" style={{height:"45px",width:"45px"}} />
+                <div className="rounded-full bg-orange-500 to-bg-yellow-500 flex items-center justify-center p-9" style={{boxShadow: "10px 10px 10px #80808085"}}>
+                  <AssignmentTurnedInIcon className="text-white" style={{height:"45px",width:"45px"}} />
                 </div>
                 <div className="flex flex-col text-center p-4">
                   <p className="font-bold ">Find Metamask in webstore</p>

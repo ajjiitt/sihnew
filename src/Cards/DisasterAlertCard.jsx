@@ -5,7 +5,7 @@ const DisasterAlertCard = () => {
         <div>
             <section className="basis-3/4 flex flex-col md:flex-row box-border  md:pr-9 md:pt-11 pt-4 mb-14" >
                 <div className="basis-1/2 box-border md:pr-0 flex justify-center items-center overflow-hidden h-96 sm:h-[28rem] p-3 md:p-0"  >
-                    <img src="https://ndrf.gov.in/sites/default/files/Dk5e-FhUwAAn5qT.jpg" style={{ width: "100%", height: "100%" }} alt='' />
+                    <img src="https://ndrf.gov.in/sites/default/files/Dk5e-FhUwAAn5qT.jpg" style={{ width: "100%" }} alt='' />
                 </div>
                 <div className="basis-1/2 flex flex-col sm:flex-row px-5 sm:pl-0 ">
                     <div className="basis-1/6 ">
@@ -27,13 +27,13 @@ const DisasterAlertCard = () => {
                         </div>
                         <div className=" font-thin text-left text-xl flex flex-row justify-start items-center">
                             {/* <LocationOnOutlinedIcon className="m-2" /> */}
-                            <p className='text-base from-neutral-800 font-thin text-left'>lorem ipsum dolopr awd anwl dawn lda wdlka wd lakwdalkw<br></br> life at! We pawdaw dawdawwd d awd awd awd awd aw<br></br>aw wadCalifornia andwd awd wjd wd awkdwkd aw dk</p>
+                            <p className='text-xs from-neutral-800 font-thin text-left '>  NDRF has always led from the front, displayed high level of dedication & commitment, fulfilling our motto आपदा सेवा सदैव सर्वत्र which implies Sustained Disaster Response Service under all circumstances. The sincerity, professionalism and devotion displayed by the Rescuers during disasters have popularized NDRF so much among citizens that the NDRF Rescuers have been named “Angels in Disaster” by our fellow citizens.</p>
                         </div>
                         <div className="flex flex-start items-center justify-start mt-7"
 
                         >
                             <button
-                                style={{ boxShadow: "10px 10px 10px #80808085", cursor: "pointer" }} className="ml-0 h-12 w-36 border-2 text-md font-semibold  leading-normal text-gray-800 hover:bg-amber-500 bg-buttonOrange m-2">
+                                 className="flex  mt-6 text-white  bg-gradient-to-tr from bg-orange-500 to-bg-yellow-500 border-0 py-2 px-5 focus:outline-none hover:bg-buttonOrange shadow-md hover:shadow rounded">
                                 Read More
                             </button>
                         </div>
