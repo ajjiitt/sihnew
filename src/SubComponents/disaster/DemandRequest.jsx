@@ -7,6 +7,7 @@ import {
 } from "../../Utils/connectWallet";
 import { sendDemandMessage } from "../../Utils/telegramMessage";
 const DemandRequest = () => {
+  let id;
   const contract = intializeMasterContract();
   const [searchParams, setSearchParams] = useSearchParams();
   //just set supplies called from contract
@@ -55,18 +56,39 @@ const DemandRequest = () => {
     const contractAddress = searchParams.get("q");
     const accoundId = await getAccountID();
 
+    id = toast.loading("Creating Demand", {
+      position: "top-center",
+      // closeOnClick: true,
+    });
     if (location.length >= 2 && supplyType.length >= 2) {
+      console.log(supplyType)
       const generateSupply = await contract.methods
-        .createDemand(contractAddress, location, demandDescription)
-        .send({ from: accoundId });
-      console.log(generateSupply);
-      sendDemandMessage(disasterName, supplyType, location, quantity);
-      fetchAllDemands();
-      fetchUserDemands();
-      setLocation("");
-      setRequestedBy("");
-      setDemandDescription("");
-      setModal(false);
+        .createDemand(contractAddress, location, supplyType)
+        .send({ from: accoundId })
+        .then((res) => {
+          sendDemandMessage(disasterName, supplyType, location, quantity);
+          fetchAllDemands();
+          fetchUserDemands();
+          setLocation("");
+          setSupplyType("");
+          toast.update(id, {
+            render: "Demands created successfully",
+            type: "success",
+            isLoading: false,
+            autoClose: 3000,
+          });
+          setModal(false);
+        })
+        .catch((err) => {
+          setLocation("");
+          setSupplyType("");
+          toast.update(id, {
+            render: "Failed to create Demand",
+            type: "error",
+            isLoading: false,
+            autoClose: 3000,
+          });
+        });
     } else {
       toast.info("Please Fill Valid Details");
     }
@@ -249,7 +271,7 @@ const ViewDemand = ({ demands }) => {
         demands.map((props, index) => (
           <DemandCard
             location={props.location}
-            demandDescription={props.demandDescription}
+            supplyType={props.demandDescription}
             requestedBy={props.requestedBy}
             key={index}
           />
@@ -269,7 +291,7 @@ const ViewCreatedDemand = ({ demands }) => {
         demands.map((props, index) => (
           <DemandCard
             location={props.location}
-            demandDescription={props.demandDescription}
+            supplyType={props.demandDescription}
             requestedBy={props.requestedBy}
             key={index}
           />
@@ -283,11 +305,11 @@ const ViewCreatedDemand = ({ demands }) => {
   );
 };
 
-function DemandCard({ location, demandDescription, requestedBy, state }) {
+function DemandCard({ location, supplyType, requestedBy, state }) {
   return (
     <div class="w-full flex flex-col bg-white shadow-lg rounded-lg overflow-hidden">
       <div class="bg-gray-200 text-gray-700 text-lg px-6 py-4">
-        Description : {demandDescription}
+        Description : {supplyType}
       </div>
 
       <div class="flex flex-col sm:flex-row justify-between items-center sm:px-6 py-4">

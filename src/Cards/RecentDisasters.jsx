@@ -13,7 +13,7 @@ const RecentDisasters = () => {
   const [newsDisaster, setNewsDisaster] = useState([]);
   const getData = async () => {
     const querySapshoot = await getDocs(
-      query(collection(db, "disasters"), limit(10))
+      query(collection(db, "disasters"), limit(30))
     )
       .then((res) => {
         let tempARr = [];
