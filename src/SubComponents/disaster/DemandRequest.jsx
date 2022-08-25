@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { intializeDisasterContract } from "../../Utils/connectWallet";
+import { getAccountID, intializeDisasterContract } from "../../Utils/connectWallet";
 const DemandRequest = () => {
+  const contract = intializeDisasterContract();
+  const [searchParams, setSearchParams] = useSearchParams();
   //just set supplies called from contract
   const [modal, setModal] = useState(false);
   const [demandDescription, setDemandDescription] = useState("");
@@ -21,11 +24,20 @@ const DemandRequest = () => {
       requestedBy: "Ajit",
     },
   ]);
-  const fetchDemands = async () => {
-    const contract = intializeDisasterContract();
-    const s = await contract.methods.getAllRequest().call();
-    console.log(s);
+  const fetchAllDemands = async () => {
+    const demands = await contract.methods.getAllDemands().call();
+    console.log(demands);
+    setDemands(demands)
   };
+
+  const fetchUserDemands = async () => {
+    const contractAddress = searchParams.get("q");
+    const accountId = await getAccountID();
+    const userDemands = await contract.methods.getDemands(contractAddress, accountId).call();
+    console.log(userDemands);
+    setViewDemandsSupplies(userDemands);
+  }
+
   const [curIndex, setCurIndex] = useState(0);
   const options = [
     {
@@ -41,12 +53,19 @@ const DemandRequest = () => {
     <ViewDemand demands={demands} />,
     <ViewCreatedDemand demands={viewCreateDemands} />,
   ];
-  const createSupply = () => {
+  const createSupply = async () => {
+    const contractAddress = searchParams.get("q");
+    const accoundId = await getAccountID();
+    
     if (
       location.length >= 2 &&
       demandDescription.length >= 2 &&
       requestedBy.length >= 2
     ) {
+      const generateSupply = await contract.methods.createDemand(contractAddress, location, demandDescription).send({from: accoundId});
+    console.log(generateSupply);
+    fetchAllDemands();
+    fetchUserDemands();
       console.log({
         location,
         requestedBy,
@@ -61,7 +80,8 @@ const DemandRequest = () => {
     }
   };
   useEffect(() => {
-    fetchDemands();
+    fetchAllDemands();
+    fetchUserDemands();
   }, []);
   return (
     <>

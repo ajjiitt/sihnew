@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { intializeDisasterContract } from "../../Utils/connectWallet";
+import { getAccountID, intializeDisasterContract, intializeMasterContract } from "../../Utils/connectWallet";
 const SupplyRequest = () => {
   //just set supplies called from contract
   const [modal, setModal] = useState(false);
@@ -29,9 +30,17 @@ const SupplyRequest = () => {
   ]);
   const fetchSupplies = async () => {
     const contract = intializeDisasterContract();
-    const s = await contract.methods.getAllRequest().call();
-    console.log(s);
+    const allRequests = await contract.methods.getAllRequest().call();
+    console.log(allRequests);
+    setSupplies(allRequests);
   };
+  const fetchUserSupply = async () => {
+    const contract = intializeMasterContract();
+    const userSupply = await contract.methods.getRequest().call();
+    console.log(userSupply);
+    viewCreateSupplies(userSupply);
+  }
+
   const [curIndex, setCurIndex] = useState(0);
   const options = [
     {
@@ -65,13 +74,20 @@ const SupplyRequest = () => {
     <ViewSupplies supplies={supplies} />,
     <ViewCreated supplies={viewCreateSupplies} />,
   ];
-  const createSupply = () => {
+  const createSupply = async () => {
     if (
       supplyType.length >= 2 &&
       requestedBy.length >= 2 &&
       deliveryAddress.length >= 2 &&
       amount >= 1
     ) {
+      const contract = intializeMasterContract();
+      const accountId = await getAccountID();
+      const contractAddress = searchParams.get("q");
+      const generateSupply = await contract.methods.createRequest(contractAddress, supplyType, deliveryAddress, amount).send({from: accountId});
+      console.log(generateSupply);
+      fetchSupplies();
+      fetchUserSupply();
       console.log({
         supplyType,
         requestedBy,
@@ -91,6 +107,7 @@ const SupplyRequest = () => {
   };
   useEffect(() => {
     fetchSupplies();
+    fetchUserSupply();
   }, []);
   return (
     <>
