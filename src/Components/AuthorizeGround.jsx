@@ -8,7 +8,7 @@ const AuthorizeGround = () => {
   const contract = intializeMasterContract();
 
   const fetchGroundAuthorities = async () => {
-    const ground = await contract.methods.getRegGround().call();
+    const ground = await contract.methods.getRegCenter(2).call();
     setGroundArr(ground);
     console.log(ground);
   }
@@ -16,7 +16,7 @@ const AuthorizeGround = () => {
   const createGroundLevel = async (events, name, address) => {
     events.preventDefault();
     const accoundId = await getAccountID();
-    const newCenter = await contract.methods.createGroundLevel(address, name).send({from: accoundId});
+    const newCenter = await contract.methods.createLevel(address, name, 2).send({from: accoundId});
     console.log(newCenter);
   }
   
@@ -27,7 +27,7 @@ const AuthorizeGround = () => {
   return (
     <div>
       <div >
-        <p className='font-semibold text-center text-2xl'>GROUND AUTHORITIES</p>
+        <p className='font-semibold text-center text-2xl'>Ground Authorities</p>
         <div class="flex flex-col">
           <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">

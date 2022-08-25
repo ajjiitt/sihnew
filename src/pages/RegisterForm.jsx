@@ -42,15 +42,15 @@ export default function RegisterForm() {
     let user;
     if (role === "Central") {
       user = await contract.methods
-        .regCenter(authorityName, accountId)
+        .regAuth(authorityName, accountId, 0)
         .send({ from: accountId });
     } else if (role === "State") {
       user = await contract.methods
-        .regState(authorityName, accountId)
+        .regAuth(authorityName, accountId, 1)
         .send({ from: accountId });
     } else if (role === "Ground") {
       user = await contract.methods
-        .regGround(authorityName, accountId)
+        .regAuth(authorityName, accountId, 2)
         .send({ from: accountId });
     }
     return user;

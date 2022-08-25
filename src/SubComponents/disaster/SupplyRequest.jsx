@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { getAccountID, intializeDisasterContract, intializeMasterContract } from "../../Utils/connectWallet";
+import { getAccountID, intializeMasterContract } from "../../Utils/connectWallet";
 const SupplyRequest = () => {
   //just set supplies called from contract
   const [modal, setModal] = useState(false);
@@ -10,6 +10,7 @@ const SupplyRequest = () => {
   const [deliveryAddress, setDeliveryAddress] = useState("");
   const [amount, setAmount] = useState(0);
   const [state, setState] = useState("");
+  const [searchParams, setSearchParams] = useSearchParams();
   const [supplies, setSupplies] = useState([
     {
       supplyType: "Home",
@@ -29,16 +30,20 @@ const SupplyRequest = () => {
     },
   ]);
   const fetchSupplies = async () => {
-    const contract = intializeDisasterContract();
-    const allRequests = await contract.methods.getAllRequest().call();
+    const contract = intializeMasterContract();
+    const contractAddress = searchParams.get("q");
+    const allRequests = await contract.methods.getAllRequest(contractAddress).call();
     console.log(allRequests);
     setSupplies(allRequests);
   };
   const fetchUserSupply = async () => {
     const contract = intializeMasterContract();
-    const userSupply = await contract.methods.getRequest().call();
+    const contractAddress = searchParams.get("q");
+    const accountId = await getAccountID();
+   
+    const userSupply = await contract.methods.getRequest(contractAddress, accountId).call();
     console.log(userSupply);
-    viewCreateSupplies(userSupply);
+    setViewCreateSupplies(userSupply);
   }
 
   const [curIndex, setCurIndex] = useState(0);
@@ -77,13 +82,13 @@ const SupplyRequest = () => {
   const createSupply = async () => {
     if (
       supplyType.length >= 2 &&
-      requestedBy.length >= 2 &&
       deliveryAddress.length >= 2 &&
       amount >= 1
     ) {
       const contract = intializeMasterContract();
       const accountId = await getAccountID();
       const contractAddress = searchParams.get("q");
+      console.log(contractAddress, "cow");
       const generateSupply = await contract.methods.createRequest(contractAddress, supplyType, deliveryAddress, amount).send({from: accountId});
       console.log(generateSupply);
       fetchSupplies();
@@ -145,23 +150,7 @@ const SupplyRequest = () => {
                         required
                       />
                     </div>
-                    <div className="w-3/4">
-                      <label
-                        for="first_name"
-                        class="block mb-2 text-sm font-medium text-gray-900 "
-                      >
-                        Requested By
-                      </label>
-                      <input
-                        type="text"
-                        id="receiverAddress"
-                        value={requestedBy}
-                        onChange={(e) => setRequestedBy(e.target.value)}
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                        placeholder="Requested By"
-                        required
-                      />
-                    </div>
+                    
                     <div className="w-3/4">
                       <label
                         for="first_name"

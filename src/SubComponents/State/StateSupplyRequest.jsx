@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { intializeDisasterContract } from "../../Utils/connectWallet";
+import { intializeMasterContract } from "../../Utils/connectWallet";
 const StateSupplyRequest = () => {
   //just set supplies called from contract
   const [supplies, setSupplies] = useState([
@@ -35,7 +35,7 @@ const StateSupplyRequest = () => {
     // },
   ]);
   const fetchSupplies = async () => {
-    const contract = intializeDisasterContract();
+    const contract = intializeMasterContract();
     const s = await contract.methods.getAllRequest().call();
     console.log(s);
   };

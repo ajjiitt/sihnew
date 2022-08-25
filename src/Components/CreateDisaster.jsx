@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { getAccountID, intializeMasterContract } from "../Utils/connectWallet";
 import { toast } from "react-toastify";
+import { sendAlert } from "../Utils/telegramMessage";
 const CreateDisaster = () => {
   let id;
   const [inputs, setInputs] = useState({
@@ -36,13 +37,18 @@ const CreateDisaster = () => {
       // closeOnClick: true,
     });
     await contract.methods
-      .CreateDisaster(
+      .createDisaster(
         inputs.type_of_disaster,
         inputs.location_of_disaster,
         inputs.severity
       )
       .send({ from: accountId })
       .then((res) => {
+        sendAlert(
+          inputs.type_of_disaster,
+          inputs.location_of_disaster,
+          inputs.severity
+        );
         toast.update(id, {
           render: "Disaster created successfully",
           type: "success",

@@ -1,5 +1,5 @@
 //SPDX-License-Identifier: GPL-3.0
-
+// import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 pragma solidity >= 0.5.0 < 0.9.0;
 
 contract RegisterData {
@@ -12,50 +12,24 @@ contract RegisterData {
 
     //mapping
     mapping(address => bool) public hasRegistered;
-
-    //Arrays
-    Register[] public registerCenter;
-    Register[] public registerState;
-    Register[] public registerGround;
-
-    //Register for Center Authority
-    function regCenter(string memory _name, address _registerAddress) external {
-        require(hasRegistered[msg.sender] == false, "already registered");
+    mapping(uint => Register[]) public registerAuth;
+    
+    //Register for Specific Authority
+    function regAuth(string memory _name, address _registerAddress, uint curAuthority) external {
+        require(hasRegistered[msg.sender] == false);
         Register memory newRegister;
         newRegister.name = _name;
         newRegister.registerAddress = _registerAddress;
-        registerCenter.push(newRegister);
-    }
-    //Register for State Authority
-    function regState(string memory _name, address _registerAddress) external {
-        require(hasRegistered[msg.sender] == false, "already registered");
-        Register memory newRegister;
-        newRegister.name = _name;
-        newRegister.registerAddress = _registerAddress;
-        registerState.push(newRegister);
-    }
-    //Register for Ground Authority
-    function regGround(string memory _name, address _registerAddress) external {
-        require(hasRegistered[msg.sender] == false, "already registered");
-        Register memory newRegister;
-        newRegister.name = _name;
-        newRegister.registerAddress = _registerAddress;
-        registerGround.push(newRegister);
+        
+        registerAuth[curAuthority].push(newRegister);
+
     }
 
-    //Fetch all registered Center
-    function getRegCenter() external view returns (Register[] memory) {
-        return registerCenter;
-    }
+    //Fetch Registered Array
+    function getRegCenter(uint curAuthority) external view returns(Register[] memory){
+        
+        return registerAuth[curAuthority];
 
-    //Fetch all registered Center
-    function getRegState() external view returns (Register[] memory) {
-        return registerState;
-    }
-
-    //Fetch all registered Center
-    function getRegGround() external view returns (Register[] memory) {
-        return registerGround;
     }
 
 }
@@ -67,20 +41,6 @@ contract commonStruct {
         string time;
         address from;
     }
-}
-
-contract Disaster is commonStruct{
-    //Contract Variables
-    address private owner;
-    address public MasterContractAddress;
-    string public DisasterName;
-
-    
-
-    //Enums
-    enum RequestState { Initiated, Dispatched, Delivered, Cancelled }
-    enum DemandState { Unfulfilled, Fulfilled }
-    //Structs
     struct Request {
         string supplyType;
         string requestedBy;
@@ -94,13 +54,20 @@ contract Disaster is commonStruct{
         string demandDescription;
         DemandState state;
     }
-    // struct FileDisaster {
-    //     string name;
-    //     string description;
-    //     string link;
-    //     string time;
-    //     address from;
-    // }
+
+    //Enums
+    enum RequestState { Initiated, Dispatched, Delivered, Cancelled }
+    enum DemandState { Unfulfilled, Fulfilled }
+
+    mapping(address => string) public AuthorityName;
+}
+
+contract Disaster is commonStruct{
+    //Contract Variables
+    address private owner;
+    address public MasterContractAddress;
+    string public DisasterName;
+
 
     //Mappings
     mapping(address => Request[]) public authorityRequest;
@@ -126,22 +93,17 @@ contract Disaster is commonStruct{
     
 
     //Create a new Supply Request
-    function createRequest(string memory _supplyType, string memory _deliveryAddress, string memory AuthorityName, uint _amount) external {
+    function createRequest(string memory _supplyType, string memory _deliveryAddress, address sender, uint _amount) external {
 
         Request memory newRequest;
         newRequest.supplyType = _supplyType;
-        newRequest.requestedBy = AuthorityName;
+        newRequest.requestedBy = AuthorityName[sender];
         newRequest.deliveryAddress = _deliveryAddress;
         newRequest.amount = _amount;
         newRequest.state = RequestState.Initiated;
         allRequests.push(newRequest);
-        authorityRequest[msg.sender].push(newRequest);
+        authorityRequest[sender].push(newRequest);
 
-    }
-
-    //Gets Disaster Name
-    function getDisasterName() external view returns(string memory) {
-        return DisasterName;
     }
 
     //Gets All Requests for this particular disastar
@@ -154,36 +116,33 @@ contract Disaster is commonStruct{
         return authorityRequest[supplyCreator];
     }
 
-    //Dispatch Supply
-    function dispatchSupply(address supplyCreator, uint index) external {
-        authorityRequest[supplyCreator][index].state = RequestState.Dispatched;
-    }
-
-    //Supply Delivered
-    function deliveredSupply(address supplyCreator, uint index) external {
-        authorityRequest[supplyCreator][index].state = RequestState.Delivered;
-    }
-
-    //Supply Cancelled
-    function cancelSupply(address supplyCreator, uint index) external {
-        authorityRequest[supplyCreator][index].state = RequestState.Cancelled;
+    //Supply state change
+    function supplyStateChange(address supplyCreator, uint index, bool isCancelled) external {
+       if(isCancelled == true){
+            authorityRequest[supplyCreator][index].state = RequestState.Cancelled;
+        }else if(authorityRequest[supplyCreator][index].state == RequestState.Initiated){
+            authorityRequest[supplyCreator][index].state = RequestState.Dispatched;
+        }else if(authorityRequest[supplyCreator][index].state == RequestState.Dispatched){
+            authorityRequest[supplyCreator][index].state = RequestState.Delivered;
+        }
     }
 
     //Create Demand
-    function createDemand(string memory _location, string memory _demandDescription, string memory AuthorityName) external  {
+    function createDemand(string memory _location, string memory _demandDescription, address sender) external  {
 
         Demand memory newDemand;
         newDemand.location = _location;
         newDemand.demandDescription = _demandDescription;
-        newDemand.name = AuthorityName;
+        newDemand.name = AuthorityName[sender];
         newDemand.state = DemandState.Unfulfilled;
         allDemands.push(newDemand);
-        authorityDemand[msg.sender].push(newDemand);
+        authorityDemand[sender].push(newDemand);
 
     }
 
     //Accept Demand
     function acceptDemand(address demandCreator, uint index) external  {
+        require(authorityDemand[demandCreator][index].state == DemandState.Unfulfilled);
         authorityDemand[demandCreator][index].state = DemandState.Fulfilled;
     }
 
@@ -198,14 +157,14 @@ contract Disaster is commonStruct{
     }
 
     //Share File Globally
-    function shareFileGlobal(string memory _name, string memory _description, string memory _link, string memory _time) external {
+    function shareFileGlobal(string memory _name, string memory _description, string memory _link, string memory _time, address _sender) external {
 
         FileDisaster memory newFile;
         newFile.name = _name;
         newFile.description = _description;
         newFile.link = _link;
         newFile.time = _time;
-        newFile.from = msg.sender;
+        newFile.from = _sender;
 
         allFiles.push(newFile);
     }
@@ -219,35 +178,30 @@ contract Disaster is commonStruct{
     
 }
 
+contract VOL is ERC20 {
+    constructor() ERC20("HELP", "VOL") {
+        _mint(msg.sender, 1000000000000000000000);
+    }
+}
 
 contract MasterContract is RegisterData, commonStruct {
     address private ownerMaster;
 
     //mappings
-    mapping(address => string) public AuthorityName;
     mapping(address => bool) public isCenter;
     mapping(address => bool) public isState;
     mapping(address => bool) public isGround;
+    mapping(uint => mapping(address => bool)) public isAuth;
     mapping(address => File[]) public personalShare;
+    mapping(uint => authData[]) public allAuth;
 
-    //Arrays
-    CenterData[] public allCenterData;
-    StateData[] public allStateData;
-    GroundData[] public allGroundData;
 
     //structs
-     struct CenterData {
+     struct authData {
         address centerAddress;
         string name;
     }
-    struct StateData {
-        address stateAddress;
-        string name;
-    }
-    struct GroundData {
-        address groundAddress;
-        string name;
-    }
+
     struct Disasters {
         address disastarContract;
         string disasterName;
@@ -262,26 +216,20 @@ contract MasterContract is RegisterData, commonStruct {
         address from;
         address to;
     }
-    // struct FileDisaster {
-    //     string name;
-    //     string description;
-    //     string link;
-    //     string time;
-    //     address from;
-    // }
-
-
-    
 
     Disasters[] public allDisasters;
-
+    
     constructor () {
         ownerMaster = msg.sender;
-        isCenter[msg.sender] = true;
+        isAuth[0][msg.sender] = true;
+        authData memory newCenter;
+        newCenter.centerAddress = msg.sender;
+        newCenter.name = "Admin";
+        allAuth[0].push(newCenter);
     }
 
     //Create a new disaster 
-    function CreateDisaster(string memory _disasterName, string memory _location, string memory _severity) public {
+    function createDisaster(string memory _disasterName, string memory _location, string memory _severity)  public onlyAdmin {
         Disaster new_Disaster_address = new Disaster(msg.sender, _disasterName);
         Disasters memory newDisaster;
         newDisaster.disastarContract = address(new_Disaster_address);
@@ -289,13 +237,9 @@ contract MasterContract is RegisterData, commonStruct {
         newDisaster.location = _location;
         newDisaster.severity = _severity;
         allDisasters.push(newDisaster);
-
-        isCenter[msg.sender] = true;
-        CenterData memory newCenter;
-        newCenter.centerAddress = msg.sender;
-        newCenter.name = "Admin";
-        allCenterData.push(newCenter);
+        
     }
+    
 
     //Fetch all Disasters
     function getDisasters() external view returns(Disasters[] memory){
@@ -304,83 +248,49 @@ contract MasterContract is RegisterData, commonStruct {
 
     //Access Modifiers
     modifier onlyAdmin{
-        require(ownerMaster == msg.sender, "Not an Admin");
+        require(ownerMaster == msg.sender);
         _;
     }
 
     modifier onlyCenter{
-        require(isCenter[msg.sender] == true, "Only Center");
+        require(isAuth[0][msg.sender] == true);
         _;
     }
 
     modifier onlyState{
-        require(isState[msg.sender] == true, "Only State");
+        require(isAuth[1][msg.sender] == true);
         _;
     }
 
     modifier onlyStateOrCenter {
-        require(isState[msg.sender] == true || isCenter[msg.sender] == true, "Only Center or State");
+        require(isAuth[1][msg.sender] == true || isAuth[2][msg.sender] == true);
         _;
     }
 
     modifier onlyInvolvedAuthorities {
-        require(isState[msg.sender] == true || isCenter[msg.sender] == true || isGround[msg.sender] == true, "Only Involved");
+        require(isAuth[0][msg.sender] == true || isAuth[1][msg.sender] == true || isAuth[2][msg.sender] == true);
         _;
     }
 
     //Gets all Center Data 
-    function getCenterData() external view returns (CenterData[] memory) {
-        return allCenterData;
+    function getAuthData(uint index) external view returns (authData[] memory) {
+        return allAuth[index];
     }
 
-    //Gets all State Data 
-    function getStateData() external view returns (StateData[] memory) {
-        return allStateData;
-    }
-
-    //gets all Ground Data
-    function getGroundData() external view returns (GroundData[] memory) {
-        return allGroundData;
-    }
 
     //create Center Level 
-    function createCenterLevel(address toGrant, string memory centerName) external onlyCenter {
+    function createLevel(address toGrant, string memory centerName, uint index) external onlyCenter {
 
-        require(isCenter[toGrant] == false, "Already registered");
+        require(isAuth[index][toGrant] == false);
         AuthorityName[toGrant] = centerName;
         isCenter[toGrant] = true;
-        CenterData memory newCenter;
+        authData memory newCenter;
         newCenter.centerAddress = toGrant;
         newCenter.name = centerName;
-        allCenterData.push(newCenter);
+        allAuth[index].push(newCenter);
 
     }
 
-    //create State level
-    function createStateLevel(address toGrant, string memory stateName) external onlyCenter {
-
-        require(isState[toGrant] == false, "Already registered");
-        AuthorityName[toGrant] = stateName;
-        isState[toGrant] = true;
-        StateData memory newState;
-        newState.stateAddress = toGrant;
-        newState.name = stateName;
-        allStateData.push(newState);
-
-    }
-
-    //create Ground Level
-    function createGroundLevel(address toGrant, string memory GroundName) external onlyStateOrCenter {
-
-        require(isGround[toGrant] == false, "Already registered");
-        AuthorityName[toGrant] = GroundName;
-        isGround[toGrant] = true;
-        GroundData memory newGround;
-        newGround.groundAddress = toGrant;
-        newGround.name = GroundName;
-        allGroundData.push(newGround);
-
-    }
 
     //Share File With Other Person
     function shareFile(string memory _name, string memory _description, string memory _link, string memory _time, address _to) external {
@@ -395,68 +305,73 @@ contract MasterContract is RegisterData, commonStruct {
         personalShare[_to].push(newFile);
     }
 
-    //Fetch all files of that specific Person
+    // //Fetch all files of that specific Person
     function fetchUserFiles(address user) external view returns (File[] memory) {
         return personalShare[user];
     }
 
-    //sample
-    function getDisasterName(Disaster curDisaster) external view returns(string memory) {
-        return curDisaster.getDisasterName();
-    }
-
-    //share files to all
+    // //share files to all
     function shareFileGlobal(Disaster curDisaster, string memory _name, string memory _description, string memory _link, string memory _time) external {
-        return curDisaster.shareFileGlobal(_name, _description, _link, _time);
+        return curDisaster.shareFileGlobal(_name, _description, _link, _time, msg.sender);
     }
 
-    //fetch Global Files
-    function getFilesGlobally(Disaster curDisaster) external view returns(FileDisaster[] memory){
-        
+    // //fetch Global Files
+    function getFilesGlobally(Disaster curDisaster) external view returns(FileDisaster[] memory){        
         return curDisaster.getAllFiles();
+    }
+
+    function createDemand(Disaster curDisaster, string memory _loc, string memory _demandDesc) external  {
         
+        curDisaster.createDemand(_loc, _demandDesc, msg.sender);
+
     }
 
+ 
+    // //Accept Demand
+    function acceptDemand(Disaster curDisaster, address demandCreator, uint index) external  {
+        curDisaster.acceptDemand(demandCreator, index);
+    }
+
+    // //Get All Demands
+    function getAllDemands(Disaster curDisaster) external view returns (Demand[] memory) {
+        return curDisaster.getAllDemands();
+    }
+
+    // //Get Authority Specific Demands
+    function getDemands(Disaster curDisaster, address demandCreator) external view returns (Demand[] memory) {
+        return curDisaster.getDemands(demandCreator);
+    }
+
+    function getAllRequest(Disaster curDisaster) external view returns(Request[] memory){
+        return curDisaster.getAllRequest();
+    }
+
+    // //Gets Specific User Supply Requests
+    function getRequest(Disaster curDisaster, address supplyCreator) external view returns (Request[] memory){
+        return curDisaster.getRequest(supplyCreator);
+    }
+
+    //  //Create a new Supply Request
+    function createRequest(Disaster curDisaster, string memory _supplyType, string memory _deliveryAddress, uint _amount) external {
+
+       curDisaster.createRequest(_supplyType, _deliveryAddress, msg.sender, _amount);
+
+    }
+
+    // //Dispatch Supply
+    // function dispatchSupply(Disaster curDisaster, address supplyCreator, uint index) external {
+    //     curDisaster.dispatchSupply(supplyCreator, index);
+    // }
+
+    //Supply Delivered
+    // function deliveredSupply(Disaster curDisaster, address supplyCreator, uint index) external {
+    //     curDisaster.deliveredSupply(supplyCreator, index);
+    // }
+
+    // // //Supply Cancelled
+    // function cancelSupply(Disaster curDisaster, address supplyCreator, uint index) external {
+    //     curDisaster.cancelSupply(supplyCreator, index);
+    // }
 }
 
-contract FileStorage {
-    
-    
-    //Struct
-    struct file {
-        string name;
-        string description;
-        string link;
-        string time;
-        address from;
-        address to;
-    }
 
-    //mapping
-    mapping(address => file[]) public personalShare;
-    
-
-    //Share File With Other Person
-    function shareFile(string memory _name, string memory _description, string memory _link, string memory _time, address _to) external {
-        file memory newFile;
-        newFile.name = _name;
-        newFile.description = _description;
-        newFile.link = _link;
-        newFile.time = _time;
-        newFile.from = msg.sender;
-        newFile.to = _to;
-
-        personalShare[_to].push(newFile);
-        personalShare[msg.sender].push(newFile);
-    }
-
-
-
-
-
-
-
-    //Array goes inside smart Contract
-    file[] public globalShare; 
-    
-}

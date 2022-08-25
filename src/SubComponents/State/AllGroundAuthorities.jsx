@@ -8,7 +8,7 @@ export default function AllGroundAuthorities() {
   const contract = intializeMasterContract();
 
   const fetchGroundAuthorities = async () => {
-    const ground = await contract.methods.getGroundData().call();
+    const ground = await contract.methods.getAuthData(2).call();
     console.log(ground);
     setAuthorities(ground);
   }
@@ -57,7 +57,7 @@ export default function AllGroundAuthorities() {
                       {authority.name}
                     </td>
                     <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                      {authority.groundAddress}
+                      {authority.centerAddress}
                     </td>
                   </tr>
                 ))}

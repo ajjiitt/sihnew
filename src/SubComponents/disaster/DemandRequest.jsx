@@ -1,42 +1,40 @@
 import React, { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { getAccountID, intializeDisasterContract } from "../../Utils/connectWallet";
+import {
+  getAccountID,
+  intializeMasterContract,
+} from "../../Utils/connectWallet";
+import { sendDemandMessage } from "../../Utils/telegramMessage";
 const DemandRequest = () => {
-  const contract = intializeDisasterContract();
+  const contract = intializeMasterContract();
   const [searchParams, setSearchParams] = useSearchParams();
   //just set supplies called from contract
   const [modal, setModal] = useState(false);
-  const [demandDescription, setDemandDescription] = useState("");
-  const [requestedBy, setRequestedBy] = useState("");
+  const [supplyType, setSupplyType] = useState("");
+  const [disasterName, setDisasterName] = useState("Flood-Pune");
+  const [quantity, setQuantity] = useState(0);
   const [location, setLocation] = useState("");
-  const [demands, setDemands] = useState([
-    {
-      location: "Mumbai",
-      demandDescription: "XYZ",
-      requestedBy: "Ajit",
-    },
-  ]);
-  const [viewCreateDemands, setViewDemandsSupplies] = useState([
-    {
-      location: "Mumbai-Goa",
-      demandDescription: "XYZ",
-      requestedBy: "Ajit",
-    },
-  ]);
+  const [demands, setDemands] = useState([]);
+  const [viewCreateDemands, setViewDemandsSupplies] = useState([]);
   const fetchAllDemands = async () => {
-    const demands = await contract.methods.getAllDemands().call();
+    const contractAddress = searchParams.get("q");
+    const demands = await contract.methods
+      .getAllDemands(contractAddress)
+      .call();
     console.log(demands);
-    setDemands(demands)
+    setDemands(demands);
   };
 
   const fetchUserDemands = async () => {
     const contractAddress = searchParams.get("q");
     const accountId = await getAccountID();
-    const userDemands = await contract.methods.getDemands(contractAddress, accountId).call();
+    const userDemands = await contract.methods
+      .getDemands(contractAddress, accountId)
+      .call();
     console.log(userDemands);
     setViewDemandsSupplies(userDemands);
-  }
+  };
 
   const [curIndex, setCurIndex] = useState(0);
   const options = [
@@ -56,21 +54,15 @@ const DemandRequest = () => {
   const createSupply = async () => {
     const contractAddress = searchParams.get("q");
     const accoundId = await getAccountID();
-    
-    if (
-      location.length >= 2 &&
-      demandDescription.length >= 2 &&
-      requestedBy.length >= 2
-    ) {
-      const generateSupply = await contract.methods.createDemand(contractAddress, location, demandDescription).send({from: accoundId});
-    console.log(generateSupply);
-    fetchAllDemands();
-    fetchUserDemands();
-      console.log({
-        location,
-        requestedBy,
-        demandDescription,
-      });
+
+    if (location.length >= 2 && supplyType.length >= 2) {
+      const generateSupply = await contract.methods
+        .createDemand(contractAddress, location, demandDescription)
+        .send({ from: accoundId });
+      console.log(generateSupply);
+      sendDemandMessage(disasterName, supplyType, location, quantity);
+      fetchAllDemands();
+      fetchUserDemands();
       setLocation("");
       setRequestedBy("");
       setDemandDescription("");
@@ -109,12 +101,12 @@ const DemandRequest = () => {
                       >
                         Supply Type
                       </label>
-                      <textarea
+                      <input
                         maxLength={250}
                         type="text"
                         id="demandDescription"
-                        value={demandDescription}
-                        onChange={(e) => setDemandDescription(e.target.value)}
+                        value={supplyType}
+                        onChange={(e) => setSupplyType(e.target.value)}
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                         placeholder="Demand Description - max.length 250"
                         required
@@ -125,15 +117,15 @@ const DemandRequest = () => {
                         for="first_name"
                         class="block mb-2 text-sm font-medium text-gray-900 "
                       >
-                        Requested By
+                        Quantity
                       </label>
                       <input
-                        type="text"
+                        type="number"
                         id="receiverAddress"
-                        value={requestedBy}
-                        onChange={(e) => setRequestedBy(e.target.value)}
+                        value={quantity}
+                        onChange={(e) => setQuantity(e.target.value)}
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                        placeholder="Requested By"
+                        placeholder="Quantity"
                         required
                       />
                     </div>
@@ -318,7 +310,7 @@ function DemandCard({ location, demandDescription, requestedBy, state }) {
 
         <div class="flex items-center pt-3">
           <div class="bg-blue-700 w-12 h-12 flex justify-center items-center rounded-full uppercase font-bold text-white">
-            {requestedBy.charAt(0)}
+            {requestedBy}
           </div>
           <div class="ml-4">
             <p class="font-bold">{requestedBy}</p>

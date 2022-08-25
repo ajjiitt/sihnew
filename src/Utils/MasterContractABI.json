@@ -20,33 +20,39 @@
     },
     {
         "inputs": [{
-                "internalType": "string",
-                "name": "_disasterName",
-                "type": "string"
+                "internalType": "contract Disaster",
+                "name": "curDisaster",
+                "type": "address"
             },
             {
-                "internalType": "string",
-                "name": "_location",
-                "type": "string"
+                "internalType": "address",
+                "name": "demandCreator",
+                "type": "address"
             },
             {
-                "internalType": "string",
-                "name": "_severity",
-                "type": "string"
+                "internalType": "uint256",
+                "name": "index",
+                "type": "uint256"
             }
         ],
-        "name": "CreateDisaster",
+        "name": "acceptDemand",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"
     },
     {
         "inputs": [{
-            "internalType": "uint256",
-            "name": "",
-            "type": "uint256"
-        }],
-        "name": "allCenterData",
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "name": "allAuth",
         "outputs": [{
                 "internalType": "address",
                 "name": "centerAddress",
@@ -94,44 +100,46 @@
     },
     {
         "inputs": [{
-            "internalType": "uint256",
-            "name": "",
-            "type": "uint256"
-        }],
-        "name": "allGroundData",
-        "outputs": [{
-                "internalType": "address",
-                "name": "groundAddress",
+                "internalType": "contract Disaster",
+                "name": "curDisaster",
                 "type": "address"
             },
             {
                 "internalType": "string",
-                "name": "name",
+                "name": "_loc",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_demandDesc",
                 "type": "string"
             }
         ],
-        "stateMutability": "view",
+        "name": "createDemand",
+        "outputs": [],
+        "stateMutability": "nonpayable",
         "type": "function"
     },
     {
         "inputs": [{
-            "internalType": "uint256",
-            "name": "",
-            "type": "uint256"
-        }],
-        "name": "allStateData",
-        "outputs": [{
-                "internalType": "address",
-                "name": "stateAddress",
-                "type": "address"
+                "internalType": "string",
+                "name": "_disasterName",
+                "type": "string"
             },
             {
                 "internalType": "string",
-                "name": "name",
+                "name": "_location",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_severity",
                 "type": "string"
             }
         ],
-        "stateMutability": "view",
+        "name": "createDisaster",
+        "outputs": [],
+        "stateMutability": "nonpayable",
         "type": "function"
     },
     {
@@ -144,43 +152,41 @@
                 "internalType": "string",
                 "name": "centerName",
                 "type": "string"
+            },
+            {
+                "internalType": "uint256",
+                "name": "index",
+                "type": "uint256"
             }
         ],
-        "name": "createCenterLevel",
+        "name": "createLevel",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"
     },
     {
         "inputs": [{
-                "internalType": "address",
-                "name": "toGrant",
+                "internalType": "contract Disaster",
+                "name": "curDisaster",
                 "type": "address"
             },
             {
                 "internalType": "string",
-                "name": "GroundName",
+                "name": "_supplyType",
                 "type": "string"
-            }
-        ],
-        "name": "createGroundLevel",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [{
-                "internalType": "address",
-                "name": "toGrant",
-                "type": "address"
             },
             {
                 "internalType": "string",
-                "name": "stateName",
+                "name": "_deliveryAddress",
                 "type": "string"
+            },
+            {
+                "internalType": "uint256",
+                "name": "_amount",
+                "type": "uint256"
             }
         ],
-        "name": "createStateLevel",
+        "name": "createRequest",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"
@@ -232,21 +238,35 @@
         "type": "function"
     },
     {
-        "inputs": [],
-        "name": "getCenterData",
+        "inputs": [{
+            "internalType": "contract Disaster",
+            "name": "curDisaster",
+            "type": "address"
+        }],
+        "name": "getAllDemands",
         "outputs": [{
             "components": [{
-                    "internalType": "address",
-                    "name": "centerAddress",
-                    "type": "address"
-                },
-                {
                     "internalType": "string",
                     "name": "name",
                     "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "location",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "demandDescription",
+                    "type": "string"
+                },
+                {
+                    "internalType": "enum commonStruct.DemandState",
+                    "name": "state",
+                    "type": "uint8"
                 }
             ],
-            "internalType": "struct MasterContract.CenterData[]",
+            "internalType": "struct commonStruct.Demand[]",
             "name": "",
             "type": "tuple[]"
         }],
@@ -259,11 +279,105 @@
             "name": "curDisaster",
             "type": "address"
         }],
-        "name": "getDisasterName",
+        "name": "getAllRequest",
         "outputs": [{
-            "internalType": "string",
+            "components": [{
+                    "internalType": "string",
+                    "name": "supplyType",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "requestedBy",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "deliveryAddress",
+                    "type": "string"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "amount",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "enum commonStruct.RequestState",
+                    "name": "state",
+                    "type": "uint8"
+                }
+            ],
+            "internalType": "struct commonStruct.Request[]",
             "name": "",
-            "type": "string"
+            "type": "tuple[]"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+            "internalType": "uint256",
+            "name": "index",
+            "type": "uint256"
+        }],
+        "name": "getAuthData",
+        "outputs": [{
+            "components": [{
+                    "internalType": "address",
+                    "name": "centerAddress",
+                    "type": "address"
+                },
+                {
+                    "internalType": "string",
+                    "name": "name",
+                    "type": "string"
+                }
+            ],
+            "internalType": "struct MasterContract.authData[]",
+            "name": "",
+            "type": "tuple[]"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+                "internalType": "contract Disaster",
+                "name": "curDisaster",
+                "type": "address"
+            },
+            {
+                "internalType": "address",
+                "name": "demandCreator",
+                "type": "address"
+            }
+        ],
+        "name": "getDemands",
+        "outputs": [{
+            "components": [{
+                    "internalType": "string",
+                    "name": "name",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "location",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "demandDescription",
+                    "type": "string"
+                },
+                {
+                    "internalType": "enum commonStruct.DemandState",
+                    "name": "state",
+                    "type": "uint8"
+                }
+            ],
+            "internalType": "struct commonStruct.Demand[]",
+            "name": "",
+            "type": "tuple[]"
         }],
         "stateMutability": "view",
         "type": "function"
@@ -342,29 +456,11 @@
         "type": "function"
     },
     {
-        "inputs": [],
-        "name": "getGroundData",
-        "outputs": [{
-            "components": [{
-                    "internalType": "address",
-                    "name": "groundAddress",
-                    "type": "address"
-                },
-                {
-                    "internalType": "string",
-                    "name": "name",
-                    "type": "string"
-                }
-            ],
-            "internalType": "struct MasterContract.GroundData[]",
-            "name": "",
-            "type": "tuple[]"
+        "inputs": [{
+            "internalType": "uint256",
+            "name": "curAuthority",
+            "type": "uint256"
         }],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
         "name": "getRegCenter",
         "outputs": [{
             "components": [{
@@ -386,65 +482,46 @@
         "type": "function"
     },
     {
-        "inputs": [],
-        "name": "getRegGround",
+        "inputs": [{
+                "internalType": "contract Disaster",
+                "name": "curDisaster",
+                "type": "address"
+            },
+            {
+                "internalType": "address",
+                "name": "supplyCreator",
+                "type": "address"
+            }
+        ],
+        "name": "getRequest",
         "outputs": [{
             "components": [{
                     "internalType": "string",
-                    "name": "name",
+                    "name": "supplyType",
                     "type": "string"
-                },
-                {
-                    "internalType": "address",
-                    "name": "registerAddress",
-                    "type": "address"
-                }
-            ],
-            "internalType": "struct RegisterData.Register[]",
-            "name": "",
-            "type": "tuple[]"
-        }],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "getRegState",
-        "outputs": [{
-            "components": [{
-                    "internalType": "string",
-                    "name": "name",
-                    "type": "string"
-                },
-                {
-                    "internalType": "address",
-                    "name": "registerAddress",
-                    "type": "address"
-                }
-            ],
-            "internalType": "struct RegisterData.Register[]",
-            "name": "",
-            "type": "tuple[]"
-        }],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "getStateData",
-        "outputs": [{
-            "components": [{
-                    "internalType": "address",
-                    "name": "stateAddress",
-                    "type": "address"
                 },
                 {
                     "internalType": "string",
-                    "name": "name",
+                    "name": "requestedBy",
                     "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "deliveryAddress",
+                    "type": "string"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "amount",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "enum commonStruct.RequestState",
+                    "name": "state",
+                    "type": "uint8"
                 }
             ],
-            "internalType": "struct MasterContract.StateData[]",
+            "internalType": "struct commonStruct.Request[]",
             "name": "",
             "type": "tuple[]"
         }],
@@ -458,6 +535,27 @@
             "type": "address"
         }],
         "name": "hasRegistered",
+        "outputs": [{
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            },
+            {
+                "internalType": "address",
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "name": "isAuth",
         "outputs": [{
             "internalType": "bool",
             "name": "",
@@ -568,96 +666,31 @@
                 "internalType": "address",
                 "name": "_registerAddress",
                 "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "curAuthority",
+                "type": "uint256"
             }
         ],
-        "name": "regCenter",
+        "name": "regAuth",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"
     },
     {
         "inputs": [{
-                "internalType": "string",
-                "name": "_name",
-                "type": "string"
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
             },
             {
-                "internalType": "address",
-                "name": "_registerAddress",
-                "type": "address"
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
             }
         ],
-        "name": "regGround",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [{
-                "internalType": "string",
-                "name": "_name",
-                "type": "string"
-            },
-            {
-                "internalType": "address",
-                "name": "_registerAddress",
-                "type": "address"
-            }
-        ],
-        "name": "regState",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [{
-            "internalType": "uint256",
-            "name": "",
-            "type": "uint256"
-        }],
-        "name": "registerCenter",
-        "outputs": [{
-                "internalType": "string",
-                "name": "name",
-                "type": "string"
-            },
-            {
-                "internalType": "address",
-                "name": "registerAddress",
-                "type": "address"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [{
-            "internalType": "uint256",
-            "name": "",
-            "type": "uint256"
-        }],
-        "name": "registerGround",
-        "outputs": [{
-                "internalType": "string",
-                "name": "name",
-                "type": "string"
-            },
-            {
-                "internalType": "address",
-                "name": "registerAddress",
-                "type": "address"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [{
-            "internalType": "uint256",
-            "name": "",
-            "type": "uint256"
-        }],
-        "name": "registerState",
+        "name": "registerAuth",
         "outputs": [{
                 "internalType": "string",
                 "name": "name",

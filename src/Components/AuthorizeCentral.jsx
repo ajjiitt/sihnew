@@ -8,7 +8,7 @@ const AuthorizeCentral = () => {
   const [contract] = useState(intializeMasterContract());
   // const contract = intializeMasterContract();
   const fetchCentralAuthorities = async () => {
-    let central = await contract.methods.getRegCenter().call();
+    let central = await contract.methods.getRegCenter(0).call();
     setCentralArr(central);
     // let arr = [];
     // central.forEach((ele) => {
@@ -57,7 +57,7 @@ const AuthorizeCentral = () => {
       closeOnClick: true,
     });
     await contract.methods
-      .createCenterLevel(address, name)
+      .createLevel(address, name, 0)
       .send({ from: accoundId })
       .then((res) => {
         toast.update(id, {
@@ -85,7 +85,7 @@ const AuthorizeCentral = () => {
   }, []);
   return (
     <div>
-      <p className="font-semibold text-center text-2xl">ALL AUTHORITIES</p>
+      <p className="font-semibold text-center text-2xl">Central Authorities</p>
       <div className="flex md:w-full justify-center items-center px-3 md:px-0 overflow-scroll md:overflow-hidden">
         <div class="overflow-x-auto shadow-xl sm:rounded-lg mb-5">
           <table class="w-full text-sm text-left text-gray-500 ">
