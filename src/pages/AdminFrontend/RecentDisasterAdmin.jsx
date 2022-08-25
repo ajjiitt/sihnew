@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { db } from "../../Utils/firebaseConfig";
-import { collection, getDocs, limit, query } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  limit,
+  query,
+  addDoc,
+  doc,
+} from "firebase/firestore";
+import { toast } from "react-toastify";
 const RecentDisasterAdmin = () => {
   const [newsDisaster, setNewsDisaster] = useState([]);
   const getData = async () => {
@@ -21,8 +29,25 @@ const RecentDisasterAdmin = () => {
       });
     console.log(newsDisaster);
   };
+  const addData = async (link, description) => {
+    if (link.length > 5 && description.length > 0) {
+      await addDoc(collection(db, "disasters"), {
+        link,
+        description,
+      })
+        .then((res) => {
+          console.log(res.id);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      toast.error("Please fill all fields");
+    }
+  };
   useEffect(() => {
     getData();
+    // addData("https://github.com/machadop1407/firebase-react-crud/blob/main/src/firebase-config.js","Learn Firebase");
     console.log(newsDisaster);
   }, []);
   return <div>RecentDisasterAdmin</div>;
