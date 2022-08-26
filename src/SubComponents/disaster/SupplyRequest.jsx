@@ -23,6 +23,7 @@ const SupplyRequest = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [supplies, setSupplies] = useState([]);
   const [viewCreateSupplies, setViewCreateSupplies] = useState([]);
+  const [inputOther, setInputOther] = useState(false);
   const fetchSupplies = async () => {
     const contract = intializeMasterContract();
     const contractAddress = searchParams.get("q");
@@ -133,7 +134,8 @@ const SupplyRequest = () => {
           contractAddress,
           multipleSelectValuesOption,
           deliveryAddress,
-          amount
+          amount,
+          description
         )
         .send({ from: accountId })
         .then((res) => {
@@ -180,7 +182,7 @@ const SupplyRequest = () => {
       setMultipleSelectTag(temp);
     }
   };
-
+console.log(supplies)
   return (
     <>
       <div>
@@ -213,6 +215,8 @@ const SupplyRequest = () => {
                       <select
                         onChange={(e) => {
                           supplyTypeOptionValueTemp = e.target.value;
+                          if (e.target.value == "other") setInputOther(true);
+                          else setInputOther(false);
                           setSupplyTypeOptionValue(e.target.value);
                           updateOptionTypeBased();
                         }}
@@ -225,11 +229,28 @@ const SupplyRequest = () => {
                       </select>
                     </div>
                     <div className="w-3/4">
-                      <MultiSelect
-                        className="multi-select"
-                        onChange={handleOnchange}
-                        options={multipleSelectTag}
-                      />
+                      {inputOther ? (
+                        <input
+                          type="text"
+                          id="description"
+                          maxLength={250}
+                          value={multipleSelectValuesOption}
+                          onChange={(e) =>
+                            setMultipleSelectValuesOption(e.target.value)
+                          }
+                          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                          placeholder="Please add Products"
+                          required
+                        />
+                      ) : (
+                        <>
+                          <MultiSelect
+                            className="multi-select"
+                            onChange={handleOnchange}
+                            options={multipleSelectTag}
+                          />
+                        </>
+                      )}
                     </div>
                     <div className="w-3/4">
                       <label
@@ -404,12 +425,13 @@ const ViewSupplies = ({ supplies }) => {
       {supplies.length !== 0 ? (
         supplies.map((props, index) => (
           <SupplyCard
-            supplyType={props.supplyType}
-            requestedBy={props.requestedBy}
-            deliveryAddress={props.deliveryAddress}
-            amount={props.amount}
-            state={props.state}
-            key={index}
+          supplyType={props.supplyType}
+          requestedBy={props.requestedBy}
+          deliveryAddress={props.deliveryAddress}
+          amount={props.amount}
+          disasterDetails = {props.disasterDetails}
+          state={props.state}
+          key={index}
           />
         ))
       ) : (
@@ -430,6 +452,7 @@ const ViewCreated = ({ supplies }) => {
             requestedBy={props.requestedBy}
             deliveryAddress={props.deliveryAddress}
             amount={props.amount}
+            disasterDetails = {props.disasterDetails}
             state={props.state}
             key={index}
           />
@@ -448,6 +471,7 @@ function SupplyCard({
   requestedBy,
   deliveryAddress,
   amount,
+  disasterDetails,
   state,
 }) {
   return (
@@ -469,10 +493,12 @@ function SupplyCard({
               supplyType: supplyType,
               requestedBy: requestedBy,
               deliveryAddress: deliveryAddress,
+              disasterDetails:disasterDetails,
               amount: amount,
             };
+            console.log(data)
             await generatePdf(
-              `SupplyType: ${data.supplyType} \n RequestedBy : ${data.requestedBy} \n Address : ${data.deliveryAddress} \n Amount : ${data.amount}`,
+              `SupplyType: ${data.supplyType} \n RequestedBy : ${data.requestedBy} \n Address : ${data.deliveryAddress} \n Amount : ${data.amount} \n Description : ${data.disasterDetails}`,
               data
             );
           }}

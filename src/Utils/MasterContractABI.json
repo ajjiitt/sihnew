@@ -1,4 +1,9 @@
 [{
+        "inputs": [],
+        "stateMutability": "nonpayable",
+        "type": "constructor"
+    },
+    {
         "inputs": [{
                 "internalType": "contract Disaster",
                 "name": "curDisaster",
@@ -18,6 +23,79 @@
         "name": "acceptDemand",
         "outputs": [],
         "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "name": "allAuth",
+        "outputs": [{
+                "internalType": "address",
+                "name": "centerAddress",
+                "type": "address"
+            },
+            {
+                "internalType": "string",
+                "name": "name",
+                "type": "string"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+        }],
+        "name": "allDisasters",
+        "outputs": [{
+                "internalType": "address",
+                "name": "disastarContract",
+                "type": "address"
+            },
+            {
+                "internalType": "string",
+                "name": "disasterName",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "location",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "severity",
+                "type": "string"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+        }],
+        "name": "cName",
+        "outputs": [{
+            "internalType": "string",
+            "name": "",
+            "type": "string"
+        }],
+        "stateMutability": "view",
         "type": "function"
     },
     {
@@ -111,190 +189,16 @@
                 "internalType": "uint256",
                 "name": "_amount",
                 "type": "uint256"
+            },
+            {
+                "internalType": "string",
+                "name": "_disasterDetails",
+                "type": "string"
             }
         ],
         "name": "createRequest",
         "outputs": [],
         "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [{
-                "internalType": "string",
-                "name": "_name",
-                "type": "string"
-            },
-            {
-                "internalType": "address",
-                "name": "_registerAddress",
-                "type": "address"
-            },
-            {
-                "internalType": "uint256",
-                "name": "curAuthority",
-                "type": "uint256"
-            }
-        ],
-        "name": "regAuth",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [{
-                "internalType": "string",
-                "name": "_name",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "_description",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "_link",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "_time",
-                "type": "string"
-            },
-            {
-                "internalType": "address",
-                "name": "_to",
-                "type": "address"
-            }
-        ],
-        "name": "shareFile",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [{
-                "internalType": "contract Disaster",
-                "name": "curDisaster",
-                "type": "address"
-            },
-            {
-                "internalType": "string",
-                "name": "_name",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "_description",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "_link",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "_time",
-                "type": "string"
-            }
-        ],
-        "name": "shareFileGlobal",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "stateMutability": "nonpayable",
-        "type": "constructor"
-    },
-    {
-        "inputs": [{
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            },
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "name": "allAuth",
-        "outputs": [{
-                "internalType": "address",
-                "name": "centerAddress",
-                "type": "address"
-            },
-            {
-                "internalType": "string",
-                "name": "name",
-                "type": "string"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [{
-            "internalType": "uint256",
-            "name": "",
-            "type": "uint256"
-        }],
-        "name": "allDisasters",
-        "outputs": [{
-                "internalType": "address",
-                "name": "disastarContract",
-                "type": "address"
-            },
-            {
-                "internalType": "string",
-                "name": "disasterName",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "location",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "severity",
-                "type": "string"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [{
-            "internalType": "address",
-            "name": "",
-            "type": "address"
-        }],
-        "name": "AuthorityName",
-        "outputs": [{
-            "internalType": "string",
-            "name": "",
-            "type": "string"
-        }],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [{
-            "internalType": "address",
-            "name": "",
-            "type": "address"
-        }],
-        "name": "cName",
-        "outputs": [{
-            "internalType": "string",
-            "name": "",
-            "type": "string"
-        }],
-        "stateMutability": "view",
         "type": "function"
     },
     {
@@ -405,6 +309,11 @@
                 {
                     "internalType": "string",
                     "name": "requestedBy",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "disasterDetails",
                     "type": "string"
                 },
                 {
@@ -633,6 +542,11 @@
                 },
                 {
                     "internalType": "string",
+                    "name": "disasterDetails",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
                     "name": "deliveryAddress",
                     "type": "string"
                 },
@@ -739,6 +653,28 @@
     },
     {
         "inputs": [{
+                "internalType": "string",
+                "name": "_name",
+                "type": "string"
+            },
+            {
+                "internalType": "address",
+                "name": "_registerAddress",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "curAuthority",
+                "type": "uint256"
+            }
+        ],
+        "name": "regAuth",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [{
                 "internalType": "uint256",
                 "name": "",
                 "type": "uint256"
@@ -765,8 +701,103 @@
         "type": "function"
     },
     {
-        "inputs": [],
-        "name": "uniqueId",
+        "inputs": [{
+                "internalType": "string",
+                "name": "_name",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_description",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_link",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_time",
+                "type": "string"
+            },
+            {
+                "internalType": "address",
+                "name": "_to",
+                "type": "address"
+            }
+        ],
+        "name": "shareFile",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+                "internalType": "contract Disaster",
+                "name": "curDisaster",
+                "type": "address"
+            },
+            {
+                "internalType": "string",
+                "name": "_name",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_description",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_link",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_time",
+                "type": "string"
+            }
+        ],
+        "name": "shareFileGlobal",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+                "internalType": "contract VOL",
+                "name": "tokenContract",
+                "type": "address"
+            },
+            {
+                "internalType": "address",
+                "name": "_volunteer",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "amt",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "state",
+                "type": "uint256"
+            }
+        ],
+        "name": "volunteerManage",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+        }],
+        "name": "volunteerhours",
         "outputs": [{
             "internalType": "uint256",
             "name": "",
