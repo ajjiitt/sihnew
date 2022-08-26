@@ -13,13 +13,13 @@ export const generatePdf = async(message, data) => {
             //     amount: 100,
             //     state: "Dispatched",
             //   });
-            doc.text(`Supply Type: ${data.supplyType}`, 10, 10);
-            doc.text(`Requested By: ${data.requestedBy}`, 10, 20);
-            doc.text(`Address: ${data.deliveryAddress}`, 10, 30);
-            doc.text(`Amount: ${data.amount}`, 10, 40);
+            doc.text(`Supply Type: ${data.supplyType}`, 10, 20);
+            doc.text(`Requested By: ${data.requestedBy}`, 10, 30);
+            doc.text(`Address: ${data.deliveryAddress}`, 10, 40);
             // doc.text(`State: ${data.state}`, 10, 50);
-            doc.text(`State: Initiated`, 10, 50);
-            doc.addImage(res, "png", 90, 10, 90, 80);
+            doc.text(`State: Initiated`, 10, 80);
+            doc.text(`Amount: ${data.amount}`, 10, 90);
+            doc.addImage(res, "png", 100, 5, 90, 90);
             doc.text(`Code : XYZ`, 130, 100);
             doc.save(`reciept_${data.supplyType}.pdf`);
         });
