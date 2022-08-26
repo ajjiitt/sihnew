@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const sendAlert = async(type, location, severity) => {
-    const message = `${type} Disaster happend in ${location} with ${severity} severity`
+    const message = `${type} Disaster happened in ${location} with ${severity} severity`
     let token = "5631914850:AAEW9VB3wtWHm9Ws4nBxXWKNOczovsJawrw";
     let api = `https://api.telegram.org/bot${token}`;
     await axios.post(`${api}/sendMessage`, {

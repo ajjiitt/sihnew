@@ -7,10 +7,12 @@ const CreateDisaster = () => {
   const [inputs, setInputs] = useState({
     type_of_disaster: "",
     location_of_disaster: "",
+    otherName: "",
     severity: "",
   });
 
   const handleChange = (e) => {
+    console.log(e.target.value);
     setInputs({ ...inputs, [e.target.name]: e.target.value });
   };
   const options = [
@@ -27,11 +29,44 @@ const CreateDisaster = () => {
       value: "High",
     },
   ];
-
+  const optionsD = [
+    {
+      label: "Flood",
+      value: "Flood",
+    },
+    {
+      label: "Cyclone",
+      value: "Cyclone",
+    },
+    {
+      label: "Fire",
+      value: "Fire",
+    },
+    {
+      label: "Fire",
+      value: "Fire",
+    },
+    {
+      label: "Earthquake",
+      value: "Earthquake",
+    },
+    {
+      label: "Building Collapse",
+      value: "Building Collapse",
+    },
+    {
+      label: "Other",
+      value: "other",
+    },
+  ];
+  console.log(inputs);
   const onSubmit = async (e) => {
     e.preventDefault();
     const contract = intializeMasterContract();
     const accountId = await getAccountID();
+    if (inputs.type_of_disaster === "other") {
+      inputs.type_of_disaster = inputs.otherName;
+    }
     id = toast.loading("Creating Disaster", {
       position: "top-center",
       // closeOnClick: true,
@@ -44,11 +79,20 @@ const CreateDisaster = () => {
       )
       .send({ from: accountId })
       .then((res) => {
-        sendAlert(
-          inputs.type_of_disaster,
-          inputs.location_of_disaster,
-          inputs.severity
-        );
+        if (inputs.type_of_disaster === "other") {
+          sendAlert(
+            inputs.otherName,
+            inputs.location_of_disaster,
+            inputs.severity
+          );
+        }else{
+
+          sendAlert(
+            inputs.type_of_disaster,
+            inputs.location_of_disaster,
+            inputs.severity
+          );
+        }
         toast.update(id, {
           render: "Disaster created successfully",
           type: "success",
@@ -96,16 +140,42 @@ const CreateDisaster = () => {
                     >
                       Type of Disaster
                     </label>
-                    <input
-                      type="text"
-                      id="name"
-                      name="type_of_disaster"
-                      value={inputs.type_of_disaster}
-                      onChange={(e) => handleChange(e)}
-                      className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                    />
+                    <select
+                      onChange={(e) =>
+                        setInputs({
+                          ...inputs,
+                          type_of_disaster: e.target.value,
+                        })
+                      }
+                      id="tabs"
+                      className="w-full bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 "
+                    >
+                      {optionsD.map((option) => (
+                        <option value={option.value}>{option.label}</option>
+                      ))}
+                    </select>
                   </div>
                 </div>
+                {inputs.type_of_disaster === "other" && (
+                  <div className="p-2 w-full">
+                    <div className="relative">
+                      <label
+                        htmlFor="name"
+                        className="leading-7 text-sm text-gray-600"
+                      >
+                        Name of Disaster
+                      </label>
+                      <input
+                        type="text"
+                        id="name"
+                        name="otherName"
+                        value={inputs.otherName}
+                        onChange={(e) => handleChange(e)}
+                        className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                      />
+                    </div>
+                  </div>
+                )}
                 <div className="p-2 w-full">
                   <div className="relative">
                     <label
