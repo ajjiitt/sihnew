@@ -23,6 +23,7 @@ const SupplyRequest = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [supplies, setSupplies] = useState([]);
   const [viewCreateSupplies, setViewCreateSupplies] = useState([]);
+  const [inputOther, setInputOther] = useState(false);
   const fetchSupplies = async () => {
     const contract = intializeMasterContract();
     const contractAddress = searchParams.get("q");
@@ -213,6 +214,8 @@ const SupplyRequest = () => {
                       <select
                         onChange={(e) => {
                           supplyTypeOptionValueTemp = e.target.value;
+                          if (e.target.value == "other") setInputOther(true);
+                          else setInputOther(false);
                           setSupplyTypeOptionValue(e.target.value);
                           updateOptionTypeBased();
                         }}
@@ -225,11 +228,28 @@ const SupplyRequest = () => {
                       </select>
                     </div>
                     <div className="w-3/4">
-                      <MultiSelect
-                        className="multi-select"
-                        onChange={handleOnchange}
-                        options={multipleSelectTag}
-                      />
+                      {inputOther ? (
+                        <input
+                          type="text"
+                          id="description"
+                          maxLength={250}
+                          value={multipleSelectValuesOption}
+                          onChange={(e) =>
+                            setMultipleSelectValuesOption(e.target.value)
+                          }
+                          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                          placeholder="Please add Products"
+                          required
+                        />
+                      ) : (
+                        <>
+                          <MultiSelect
+                            className="multi-select"
+                            onChange={handleOnchange}
+                            options={multipleSelectTag}
+                          />
+                        </>
+                      )}
                     </div>
                     <div className="w-3/4">
                       <label
