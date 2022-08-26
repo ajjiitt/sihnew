@@ -33,7 +33,7 @@ export default function Home() {
         <div className="flex flex-col md:flex-row">
             <div className=" ">
               <div className="flex justify-center items-center flex-col p-5 ">
-                <div className="rounded-full bg-orange-500 to-bg-yellow-500 flex items-center justify-center p-9 " style={{boxShadow: "10px 10px 10px #80808085"}}>
+                <div className="rounded-full bg-orange-500 to-bg-yellow-500 flex items-center justify-center p-9 " style={{boxShadow: "rgb(128 128 128 / 50%) 0.5px 3px 10px"}}>
                   <StoreIcon className="text-white " style={{height:"45px",width:"45px"}} />
                 </div>
                 <div className="flex flex-col text-center p-4 items-center justify-center">
@@ -47,7 +47,7 @@ export default function Home() {
             </div>
             <div className="">
               <div className="flex justify-center items-center flex-col p-5">
-                <div className="rounded-full bg-orange-500 to-bg-yellow-500 flex items-center justify-center p-9" style={{boxShadow: "10px 10px 10px #80808085"}}>
+                <div className="rounded-full bg-orange-500 to-bg-yellow-500 flex items-center justify-center p-9" style={{boxShadow: "rgb(128 128 128 / 50%) 0.5px 3px 10px"}}>
                   <PlaylistAddIcon className="text-white" style={{height:"45px",width:"45px"}} />
                 </div>
                 <div className="flex flex-col text-center p-4">
@@ -61,7 +61,7 @@ export default function Home() {
             </div>
             <div className="">
               <div className="flex justify-center items-center flex-col p-5">
-                <div className="rounded-full bg-orange-500 to-bg-yellow-500 flex items-center justify-center p-9" style={{boxShadow: "10px 10px 10px #80808085"}}>
+                <div className="rounded-full bg-orange-500 to-bg-yellow-500 flex items-center justify-center p-9" style={{boxShadow: "rgb(128 128 128 / 50%) 0.5px 3px 10px"}}>
                   <AssignmentTurnedInIcon className="text-white" style={{height:"45px",width:"45px"}} />
                 </div>
                 <div className="flex flex-col text-center p-4">
