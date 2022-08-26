@@ -134,7 +134,8 @@ const SupplyRequest = () => {
           contractAddress,
           multipleSelectValuesOption,
           deliveryAddress,
-          amount
+          amount,
+          description
         )
         .send({ from: accountId })
         .then((res) => {
@@ -181,7 +182,7 @@ const SupplyRequest = () => {
       setMultipleSelectTag(temp);
     }
   };
-
+console.log(supplies)
   return (
     <>
       <div>
@@ -424,12 +425,13 @@ const ViewSupplies = ({ supplies }) => {
       {supplies.length !== 0 ? (
         supplies.map((props, index) => (
           <SupplyCard
-            supplyType={props.supplyType}
-            requestedBy={props.requestedBy}
-            deliveryAddress={props.deliveryAddress}
-            amount={props.amount}
-            state={props.state}
-            key={index}
+          supplyType={props.supplyType}
+          requestedBy={props.requestedBy}
+          deliveryAddress={props.deliveryAddress}
+          amount={props.amount}
+          disasterDetails = {props.disasterDetails}
+          state={props.state}
+          key={index}
           />
         ))
       ) : (
@@ -450,6 +452,7 @@ const ViewCreated = ({ supplies }) => {
             requestedBy={props.requestedBy}
             deliveryAddress={props.deliveryAddress}
             amount={props.amount}
+            disasterDetails = {props.disasterDetails}
             state={props.state}
             key={index}
           />
@@ -468,6 +471,7 @@ function SupplyCard({
   requestedBy,
   deliveryAddress,
   amount,
+  disasterDetails,
   state,
 }) {
   return (
@@ -489,10 +493,12 @@ function SupplyCard({
               supplyType: supplyType,
               requestedBy: requestedBy,
               deliveryAddress: deliveryAddress,
+              disasterDetails:disasterDetails,
               amount: amount,
             };
+            console.log(data)
             await generatePdf(
-              `SupplyType: ${data.supplyType} \n RequestedBy : ${data.requestedBy} \n Address : ${data.deliveryAddress} \n Amount : ${data.amount}`,
+              `SupplyType: ${data.supplyType} \n RequestedBy : ${data.requestedBy} \n Address : ${data.deliveryAddress} \n Amount : ${data.amount} \n Description : ${data.disasterDetails}`,
               data
             );
           }}

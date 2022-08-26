@@ -2,6 +2,7 @@ import { jsPDF } from "jspdf";
 import QRCode from "qrcode";
 const generateQR = async(msg) => await QRCode.toDataURL(msg);
 export const generatePdf = async(message, data) => {
+    console.log(data)
     try {
         await generateQR(message).then((res) => {
             console.log(res);
@@ -19,6 +20,7 @@ export const generatePdf = async(message, data) => {
             // doc.text(`State: ${data.state}`, 10, 50);
             doc.text(`State: Initiated`, 10, 80);
             doc.text(`Amount: ${data.amount}`, 10, 90);
+            doc.text(`Description: ${data.disasterDetails}`, 10, 100);
             doc.addImage(res, "png", 100, 5, 90, 90);
             doc.text(`Code : XYZ`, 130, 100);
             doc.save(`reciept_${data.supplyType}.pdf`);
