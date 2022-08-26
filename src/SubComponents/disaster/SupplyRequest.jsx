@@ -186,7 +186,7 @@ const SupplyRequest = () => {
                         required
                       />
                     </div>
-                    <div className="w-3/4">
+                    {/* <div className="w-3/4">
                       <label
                         for="first_name"
                         class="block mb-2 text-sm font-medium text-gray-900 "
@@ -203,7 +203,7 @@ const SupplyRequest = () => {
                           <option value={option.value}>{option.label}</option>
                         ))}
                       </select>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
                 <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
