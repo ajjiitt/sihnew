@@ -9,6 +9,8 @@ const navigation = [
   { name: "About Us", href: "/aboutus", current: false },
   { name: "Contact US", href: "/contactus", current: false },
   { name: "Register Form", href: "/registerform", current: false },
+
+
 ];
 
 function classNames(...classes) {
@@ -24,10 +26,12 @@ export default function Example() {
     <Disclosure as="nav" className="bg-white shadow-md">
       {({ open }) => (
         <>
-          <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8" id="google_translate_element">
             <div className="relative flex items-center justify-between h-16">
               <div className="flex-1 flex items-center justify-start sm:items-stretch sm:justify-start">
+
                 <div className="flex-shrink-0 flex items-center">
+
                   {/* <img
                     className="block lg:hidden h-8 w-auto"
                     src="https://tailwindui.com/img/logos/workflow-mark.svg?color=indigo&shade=500"
@@ -55,6 +59,7 @@ export default function Example() {
                     </div> */}
                   </div>
                 </div>
+
                 <div className="hidden sm:ml-3 md:flex md:ml-20 lg:ml-64  md:justify-center  md:items-center">
                   <div className="flex space-x-4">
                     {navigation.map((item) => (
@@ -73,7 +78,10 @@ export default function Example() {
                 </div>
               </div>
 
+              <div id="google_translate_element"></div>
+
               <div className="w-52  sm:w-60  absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 ">
+
                 <button
                   className="bg-gray-900 hidden belowSm:block  text-white p-2 sm:px-3 sm:py-2 rounded-md text-sm font-medium"
                   aria-current="page"
@@ -217,6 +225,7 @@ export default function Example() {
                     </div>
                   )}
                 </button>
+
                 <div className="absolute inset-y-0 right-0 flex items-center md:hidden">
                   {/* Mobile menu button*/}
                   <Disclosure.Button className="inline-flex items-center justify-center p-2 rounded-md text-footer-darkblue hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
@@ -229,6 +238,7 @@ export default function Example() {
                   </Disclosure.Button>
                 </div>
               </div>
+
             </div>
           </div>
 

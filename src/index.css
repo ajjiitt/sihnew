@@ -28,3 +28,17 @@ code {
     height: 220px;
   }
 }
+
+.goog-te-combo {
+  padding: 4px 9px;
+}
+
+.goog-te-gadget .goog-te-combo {
+  margin: 10px 0;
+  margin-bottom: 4px;
+  border: 1px solid;
+}
+
+.goog-logo-link {
+  display: none;
+}
