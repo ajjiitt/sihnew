@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { getAccountID, intializeMasterContract } from "../../Utils/connectWallet";
+import {
+  getAccountID,
+  intializeMasterContract,
+} from "../../Utils/connectWallet";
 import { generatePdf } from "../../Utils/generatePdf";
 const SupplyRequest = () => {
   let id;
@@ -34,7 +37,9 @@ const SupplyRequest = () => {
   const fetchSupplies = async () => {
     const contract = intializeMasterContract();
     const contractAddress = searchParams.get("q");
-    const allRequests = await contract.methods.getAllRequest(contractAddress).call();
+    const allRequests = await contract.methods
+      .getAllRequest(contractAddress)
+      .call();
     console.log(allRequests);
     setSupplies(allRequests);
   };
@@ -42,11 +47,13 @@ const SupplyRequest = () => {
     const contract = intializeMasterContract();
     const contractAddress = searchParams.get("q");
     const accountId = await getAccountID();
-   
-    const userSupply = await contract.methods.getRequest(contractAddress, accountId).call();
+
+    const userSupply = await contract.methods
+      .getRequest(contractAddress, accountId)
+      .call();
     console.log(userSupply);
     setViewCreateSupplies(userSupply);
-  }
+  };
 
   const [curIndex, setCurIndex] = useState(0);
   const options = [
@@ -82,11 +89,7 @@ const SupplyRequest = () => {
     <ViewCreated supplies={viewCreateSupplies} />,
   ];
   const createSupply = async () => {
-    if (
-      supplyType.length >= 2 &&
-      deliveryAddress.length >= 2 &&
-      amount >= 1
-    ) {
+    if (supplyType.length >= 2 && deliveryAddress.length >= 2 && amount >= 1) {
       const contract = intializeMasterContract();
       const accountId = await getAccountID();
       id = toast.loading("Creating Supply", {
@@ -95,26 +98,27 @@ const SupplyRequest = () => {
       });
       const contractAddress = searchParams.get("q");
       console.log(contractAddress, "cow");
-      await contract.methods.createRequest(contractAddress, supplyType, deliveryAddress, amount).send({from: accountId}).then(res=>{
-
-        console.log(res);
-        fetchSupplies();
-        fetchUserSupply();
-        setAmount(0);
-        setDeliveryAddress("");
-        setRequestedBy("");
-        setSupplyType("");
-        setState("");
-        setModal(false);
-        toast.update(id, {
-          render: "Supply Created successfully",
-          type: "success",
-          isLoading: false,
-          autoClose: 3000,
-        });
-      }).catch(err=>{
-
-      })
+      await contract.methods
+        .createRequest(contractAddress, supplyType, deliveryAddress, amount)
+        .send({ from: accountId })
+        .then((res) => {
+          console.log(res);
+          fetchSupplies();
+          fetchUserSupply();
+          setAmount(0);
+          setDeliveryAddress("");
+          setRequestedBy("");
+          setSupplyType("");
+          setState("");
+          setModal(false);
+          toast.update(id, {
+            render: "Supply Created successfully",
+            type: "success",
+            isLoading: false,
+            autoClose: 3000,
+          });
+        })
+        .catch((err) => {});
     } else {
       toast.info("Please Fill Valid Details");
     }
@@ -159,7 +163,7 @@ const SupplyRequest = () => {
                         required
                       />
                     </div>
-                    
+
                     <div className="w-3/4">
                       <label
                         for="first_name"
@@ -368,20 +372,25 @@ function SupplyCard({
       </div>
 
       <div class="flex flex-col sm:flex-row justify-between items-center sm:px-6 py-4">
-        <div class="bg-orange-600 text-xs uppercase px-2 py-1 rounded-full border border-gray-200 text-gray-200 font-bold">
+        {/* <div class="bg-orange-600 text-xs uppercase px-2 py-1 rounded-full border border-gray-200 text-gray-200 font-bold">
           {state}
-        </div>
-        <button className='rounded-xl text-black p-3 font-semibold' style={{backgroundColor: "#42c642d6"}}
-                            onClick={ async (events)=>{
-                               const data = {
-                                supplyType: supplyType,
-                                requestedBy: requestedBy,
-                                deliveryAddress: deliveryAddress,
-                                amount: amount,
-                               }
-                               await generatePdf("Hey there testing stuff", data);
-                            }}
-                          > Generate Pdf </ button>
+        </div> */}
+        <button
+          className="rounded-xl text-black p-3 font-semibold"
+          style={{ backgroundColor: "#42c642d6" }}
+          onClick={async (events) => {
+            const data = {
+              supplyType: supplyType,
+              requestedBy: requestedBy,
+              deliveryAddress: deliveryAddress,
+              amount: amount,
+            };
+            await generatePdf("Hey there testing stuff", data);
+          }}
+        >
+          {" "}
+          Generate Receipt{" "}
+        </button>
         <div class="text-sm">Amount : {amount}</div>
       </div>
 
