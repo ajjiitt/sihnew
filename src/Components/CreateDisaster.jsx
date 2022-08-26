@@ -8,7 +8,7 @@ const CreateDisaster = () => {
     type_of_disaster: "",
     location_of_disaster: "",
     otherName: "",
-    severity: "",
+    severity: "Low",
   });
 
   const handleChange = (e) => {
