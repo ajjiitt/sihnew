@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { getAccountID, intializeMasterContract } from "../../Utils/connectWallet";
 import { generatePdf } from "../../Utils/generatePdf";
 const SupplyRequest = () => {
+  let id;
   //just set supplies called from contract
   const [modal, setModal] = useState(false);
   const [supplyType, setSupplyType] = useState("");
@@ -88,25 +89,32 @@ const SupplyRequest = () => {
     ) {
       const contract = intializeMasterContract();
       const accountId = await getAccountID();
+      id = toast.loading("Creating Supply", {
+        position: "top-center",
+        closeOnClick: true,
+      });
       const contractAddress = searchParams.get("q");
       console.log(contractAddress, "cow");
-      const generateSupply = await contract.methods.createRequest(contractAddress, supplyType, deliveryAddress, amount).send({from: accountId});
-      console.log(generateSupply);
-      fetchSupplies();
-      fetchUserSupply();
-      console.log({
-        supplyType,
-        requestedBy,
-        deliveryAddress,
-        amount,
-        state,
-      });
-      setAmount(0);
-      setDeliveryAddress("");
-      setRequestedBy("");
-      setSupplyType("");
-      setState("");
-      setModal(false);
+      await contract.methods.createRequest(contractAddress, supplyType, deliveryAddress, amount).send({from: accountId}).then(res=>{
+
+        console.log(res);
+        fetchSupplies();
+        fetchUserSupply();
+        setAmount(0);
+        setDeliveryAddress("");
+        setRequestedBy("");
+        setSupplyType("");
+        setState("");
+        setModal(false);
+        toast.update(id, {
+          render: "Supply Created successfully",
+          type: "success",
+          isLoading: false,
+          autoClose: 3000,
+        });
+      }).catch(err=>{
+
+      })
     } else {
       toast.info("Please Fill Valid Details");
     }
