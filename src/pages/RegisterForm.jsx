@@ -113,7 +113,7 @@ export default function RegisterForm() {
             className="hidden md:block md:w-1/2 rounded-r-lg"
             style={{
               // backgroundImage: `url("https://images.unsplash.com/photo-1515965885361-f1e0095517ea?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3300&q=80")`,
-              backgroundImage: `url('https://images.pexels.com/photos/12747521/pexels-photo-12747521.png?cs=srgb&dl=pexels-ryan-morris-12747521.jpg&fm=jpg')`,
+              backgroundImage: `url('ndrfvertical.jpg')`,
               backgroundSize: "cover",
               backgroundPosition: "center center",
             }}
