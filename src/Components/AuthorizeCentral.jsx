@@ -66,8 +66,8 @@ const AuthorizeCentral = () => {
           isLoading: false,
           autoClose: 3000,
         });
-        setAuthorityName("");
-        setRole("");
+        // setAuthorityName("");
+        // setRole("");
       })
       .catch((err) => {
         toast.update(id, {

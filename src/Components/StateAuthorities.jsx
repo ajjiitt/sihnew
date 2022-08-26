@@ -42,9 +42,10 @@ const StateAuthorities = () => {
                     {index + 1}
                   </th>
                   <td class="py-4 px-6 text-footer-darkblue">
-                    {ele.stateAddress}
+                  {ele.name}
+                    
                   </td>
-                  <td class="py-4 px-6 text-footer-darkblue">{ele.name}</td>
+                  <td class="py-4 px-6 text-footer-darkblue">{ele.centerAddress}</td>
                 </tr>
               ))}
             </tbody>
