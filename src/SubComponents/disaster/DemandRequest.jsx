@@ -10,8 +10,7 @@ import {
 import { sendDemandMessage } from "../../Utils/telegramMessage";
 
 const DemandRequest = () => {
-  
-  let tempDemandArr = []
+  let tempDemandArr = [];
   const [searchParams, setSearchParams] = useSearchParams();
   const contractAddress = searchParams.get("q");
   // const accoundId = await getAccountID();
@@ -59,6 +58,7 @@ const DemandRequest = () => {
     { label: "pickle", value: "pickle", type: "equiments" },
     { label: "axe", value: "axe", type: "equiments" },
   ];
+  const [inputOther, setInputOther] = useState(false);
   const [multipleSelectTag, setMultipleSelectTag] =
     useState(multipleSelectValues);
   // multiselect need to ut
@@ -83,9 +83,8 @@ const DemandRequest = () => {
       .getDemands(contractAddress, accountId)
       .call();
     console.log(userDemands);
-    tempDemandArr = userDemands
+    tempDemandArr = userDemands;
     setViewDemandsSupplies(userDemands);
-    
   };
 
   const [curIndex, setCurIndex] = useState(0);
@@ -135,7 +134,7 @@ const DemandRequest = () => {
 
           fetchAllDemands();
           fetchUserDemands().then((cur) => {
-            let sz = tempDemandArr.length ;
+            let sz = tempDemandArr.length;
             // console.log(demands[sz].creatorName, "I wash er");
             sendDemandMessage(
               tempDemandArr[sz - 1].disasterDetails,
@@ -230,6 +229,8 @@ const DemandRequest = () => {
                       <select
                         onChange={(e) => {
                           supplyTypeOptionValueTemp = e.target.value;
+                          if (e.target.value == "other") setInputOther(true);
+                          else setInputOther(false)
                           setSupplyTypeOptionValue(e.target.value);
                           updateOptionTypeBased();
                         }}
@@ -242,11 +243,28 @@ const DemandRequest = () => {
                       </select>
                     </div>
                     <div className="w-3/4">
-                      <MultiSelect
-                        className="multi-select"
-                        onChange={handleOnchange}
-                        options={multipleSelectTag}
-                      />
+                      {inputOther ? (
+                        <input
+                          type="text"
+                          id="description"
+                          maxLength={250}
+                          value={multipleSelectValuesOption}
+                          onChange={(e) =>
+                            setMultipleSelectValuesOption(e.target.value)
+                          }
+                          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                          placeholder="Please add Products"
+                          required
+                        />
+                      ) : (
+                        <>
+                          <MultiSelect
+                            className="multi-select"
+                            onChange={handleOnchange}
+                            options={multipleSelectTag}
+                          />
+                        </>
+                      )}
                     </div>
                     <div className="w-3/4">
                       <label
