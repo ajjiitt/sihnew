@@ -30,8 +30,7 @@ const AuthorizeState = () => {
           isLoading: false,
           autoClose: 3000,
         });
-        setAuthorityName("");
-        setRole("");
+      
       })
       .catch((err) => {
         console.log(err);
@@ -86,7 +85,7 @@ const AuthorizeState = () => {
                         backgroundColor: ele.state ? "#e6e629a1" : "#42c642d6",
                       }}
                       onClick={(events) => {
-                        createCenterLevel(
+                        createStateLevel(
                           events,
                           ele.name,
                           ele.registerAddress
