@@ -64,10 +64,10 @@ const CreateDisaster = () => {
     e.preventDefault();
     const contract = intializeMasterContract();
     const accountId = await getAccountID();
-    if (inputs.type_of_disaster === "other") {
-      inputs.type_of_disaster = inputs.otherName;
-    }
     if (inputs.type_of_disaster !== "" && inputs.location_of_disaster !== "") {
+      if (inputs.type_of_disaster === "other") {
+        inputs.type_of_disaster = inputs.otherName;
+      }
       id = toast.loading("Creating Disaster", {
         position: "top-center",
         // closeOnClick: true,

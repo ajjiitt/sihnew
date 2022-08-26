@@ -380,6 +380,7 @@ function DemandCard({
       </div>
 
       <div class="flex flex-col sm:flex-row justify-between items-center sm:px-6 py-4">
+      <p class="font-bold">Name : {requestedBy}</p>
         {/* <div class="bg-orange-600 text-xs uppercase px-2 py-1 rounded-full border border-gray-200 text-gray-200 font-bold">
           {state}
         </div> */}

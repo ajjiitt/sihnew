@@ -18,22 +18,10 @@ const SupplyRequest = () => {
   const [state, setState] = useState("");
   const [searchParams, setSearchParams] = useSearchParams();
   const [supplies, setSupplies] = useState([
-    {
-      supplyType: "Home",
-      requestedBy: "Ghi",
-      deliveryAddress: "Mumbai",
-      amount: 100,
-      state: "Dispatched",
-    },
+    
   ]);
   const [viewCreateSupplies, setViewCreateSupplies] = useState([
-    {
-      supplyType: "Farm",
-      requestedBy: "Ghi",
-      deliveryAddress: "Mumbai",
-      amount: 100,
-      state: "Dispatched",
-    },
+    
   ]);
   const fetchSupplies = async () => {
     const contract = intializeMasterContract();
@@ -86,10 +74,28 @@ const SupplyRequest = () => {
     },
   ];
   const [selected, setSelected] = useState([]);
+  const typeSupplyOption = [
+    {
+      label:"Food",
+      value:"food"
+    },
+    {
+      label:"Medicine",
+      value:"medicine"
+    },
+    {
+      label:"Equiments",
+      value:"equiments"
+    },
+  ]
   const multipleSelectValues = [
-    { label: "medicine", value: "medicine",type:"medicine" },
-    { label: "food", value: "food",type:"medicine" },
-    { label: "maggi", value: "maggi",type:"medicine" },
+    { label: "medicine", value: "medicine",type:"food" },
+    { label: "rice", value: "rice",type:"food" },
+    { label: "maggi", value: "maggi",type:"food" },
+    { label: "Dolo", value: "Dolo",type:"medicine" },
+    { label: "Crocin", value: "Crocin",type:"medicine" },
+    { label: "pickle", value: "pickle",type:"equiments" },
+    { label: "axe", value: "axe",type:"equiments" },
   ];
   const tabComponents = [
     <ViewSupplies supplies={supplies} />,
@@ -145,12 +151,13 @@ const SupplyRequest = () => {
           aria-labelledby="modal-title"
           role="dialog"
           aria-modal="true"
+         
         >
           <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
 
           <div className="fixed z-10 inset-0 overflow-y-auto">
             <div className="flex items-center sm:items-center justify-center min-h-full p-4 text-center sm:p-0">
-              <div className="relative bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-lg sm:w-full">
+              <div className="relative bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-lg sm:w-full" style={{maxHeight:"600px",minHeight:"463px"}}>
                 <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                   <div className="flex flex-col items-center justify-center gap-5">
                     <div className="text-2xl">Create Supply</div>
