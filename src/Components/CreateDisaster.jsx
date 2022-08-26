@@ -67,53 +67,56 @@ const CreateDisaster = () => {
     if (inputs.type_of_disaster === "other") {
       inputs.type_of_disaster = inputs.otherName;
     }
-    id = toast.loading("Creating Disaster", {
-      position: "top-center",
-      // closeOnClick: true,
-    });
-    await contract.methods
-      .createDisaster(
-        inputs.type_of_disaster,
-        inputs.location_of_disaster,
-        inputs.severity
-      )
-      .send({ from: accountId })
-      .then((res) => {
-        if (inputs.type_of_disaster === "other") {
-          sendAlert(
-            inputs.otherName,
-            inputs.location_of_disaster,
-            inputs.severity
-          );
-        }else{
-
-          sendAlert(
-            inputs.type_of_disaster,
-            inputs.location_of_disaster,
-            inputs.severity
-          );
-        }
-        toast.update(id, {
-          render: "Disaster created successfully",
-          type: "success",
-          isLoading: false,
-          autoClose: 3000,
-        });
-        setInputs({
-          type_of_disaster: "",
-          location_of_disaster: "",
-          severity: "",
-        });
-        console.log(res);
-      })
-      .catch((err) => {
-        toast.update(id, {
-          render: "Failed to create disaster",
-          type: "error",
-          isLoading: false,
-          autoClose: 3000,
-        });
+    if (inputs.type_of_disaster !== "" && inputs.location_of_disaster !== "") {
+      id = toast.loading("Creating Disaster", {
+        position: "top-center",
+        // closeOnClick: true,
       });
+      await contract.methods
+        .createDisaster(
+          inputs.type_of_disaster,
+          inputs.location_of_disaster,
+          inputs.severity
+        )
+        .send({ from: accountId })
+        .then((res) => {
+          if (inputs.type_of_disaster === "other") {
+            sendAlert(
+              inputs.otherName,
+              inputs.location_of_disaster,
+              inputs.severity
+            );
+          } else {
+            sendAlert(
+              inputs.type_of_disaster,
+              inputs.location_of_disaster,
+              inputs.severity
+            );
+          }
+          toast.update(id, {
+            render: "Disaster created successfully",
+            type: "success",
+            isLoading: false,
+            autoClose: 3000,
+          });
+          setInputs({
+            type_of_disaster: "",
+            location_of_disaster: "",
+            severity: "",
+          });
+          console.log(res);
+        })
+        .catch((err) => {
+          toast.update(id, {
+            render: "Failed to create disaster",
+            type: "error",
+            isLoading: false,
+            autoClose: 3000,
+          });
+        });
+    } else {
+      toast.error("Please fill all the fields");
+    }
   };
 
   return (
@@ -150,6 +153,7 @@ const CreateDisaster = () => {
                       id="tabs"
                       className="w-full bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 "
                     >
+                      <option disabled selected> -- select an option -- </option>
                       {optionsD.map((option) => (
                         <option value={option.value}>{option.label}</option>
                       ))}
