@@ -129,7 +129,12 @@ const SupplyRequest = () => {
       const contractAddress = searchParams.get("q");
       console.log(contractAddress, "cow");
       await contract.methods
-        .createRequest(contractAddress, multipleSelectValuesOption, deliveryAddress, amount)
+        .createRequest(
+          contractAddress,
+          multipleSelectValuesOption,
+          deliveryAddress,
+          amount
+        )
         .send({ from: accountId })
         .then((res) => {
           console.log(res);
@@ -466,7 +471,10 @@ function SupplyCard({
               deliveryAddress: deliveryAddress,
               amount: amount,
             };
-            await generatePdf("Hey there testing stuff", data);
+            await generatePdf(
+              `SupplyType: ${data.supplyType} \n RequestedBy : ${data.requestedBy} \n Address : ${data.deliveryAddress} \n Amount : ${data.amount}`,
+              data
+            );
           }}
         >
           {" "}
