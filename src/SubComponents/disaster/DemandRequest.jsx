@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import MultiSelect from "react-multiple-select-dropdown-lite";
+import "react-multiple-select-dropdown-lite/dist/index.css";
 import {
   getAccountID,
   intializeMasterContract,
@@ -8,6 +10,8 @@ import {
 import { sendDemandMessage } from "../../Utils/telegramMessage";
 
 const DemandRequest = () => {
+  
+  let tempDemandArr = []
   const [searchParams, setSearchParams] = useSearchParams();
   const contractAddress = searchParams.get("q");
   // const accoundId = await getAccountID();
@@ -19,9 +23,50 @@ const DemandRequest = () => {
   const [disasterName, setDisasterName] = useState("Flood-Pune");
   const [quantity, setQuantity] = useState(0);
   const [location, setLocation] = useState("");
+  const [description, setDescription] = useState("");
   const [demands, setDemands] = useState([]);
   const [senderName, setSenderName] = useState("");
   const [viewCreateDemands, setViewDemandsSupplies] = useState([]);
+  const handleOnchange = (val) => setMultipleSelectValuesOption(val);
+  const typeSupplyOption = [
+    {
+      label: "All",
+      value: "all",
+    },
+    {
+      label: "Food",
+      value: "food",
+    },
+    {
+      label: "Medicine",
+      value: "medicine",
+    },
+    {
+      label: "Equiments",
+      value: "equiments",
+    },
+    {
+      label: "Other",
+      value: "other",
+    },
+  ];
+  const multipleSelectValues = [
+    { label: "wheat", value: "wheat", type: "food" },
+    { label: "rice", value: "rice", type: "food" },
+    { label: "maggi", value: "maggi", type: "food" },
+    { label: "Dolo", value: "Dolo", type: "medicine" },
+    { label: "Crocin", value: "Crocin", type: "medicine" },
+    { label: "pickle", value: "pickle", type: "equiments" },
+    { label: "axe", value: "axe", type: "equiments" },
+  ];
+  const [multipleSelectTag, setMultipleSelectTag] =
+    useState(multipleSelectValues);
+  // multiselect need to ut
+  let supplyTypeOptionValueTemp = "all";
+  const [supplyTypeOptionValue, setSupplyTypeOptionValue] = useState("all"); // normal select - dont work
+
+  const [multipleSelectValuesOption, setMultipleSelectValuesOption] =
+    useState(""); // all selected tag value store for taht tag
   const fetchAllDemands = async () => {
     const contractAddress = searchParams.get("q");
     const demands = await contract.methods
@@ -38,7 +83,9 @@ const DemandRequest = () => {
       .getDemands(contractAddress, accountId)
       .call();
     console.log(userDemands);
+    tempDemandArr = userDemands
     setViewDemandsSupplies(userDemands);
+    
   };
 
   const [curIndex, setCurIndex] = useState(0);
@@ -52,6 +99,7 @@ const DemandRequest = () => {
       value: 1,
     },
   ];
+  console.log(supplyTypeOptionValue, "   ", multipleSelectValuesOption);
   const tabComponents = [
     <ViewDemand demands={demands} />,
     <ViewCreatedDemand demands={viewCreateDemands} />,
@@ -62,7 +110,7 @@ const DemandRequest = () => {
     // const accoundId = getAccountID();
     const contractAddress = searchParams.get("q");
     const accoundId = await getAccountID();
-
+    console.log(supplyTypeOptionValueTemp + ":" + multipleSelectValuesOption);
     id = toast.loading("Creating Demand", {
       position: "top-center",
       // closeOnClick: true,
@@ -72,29 +120,36 @@ const DemandRequest = () => {
     // requestedBy={props.creatorName}
     // quantity={props.quantity}
     // disasterDetails={props.disasterDetails}
-    if (location.length >= 2 && supplyType.length >= 2) {
+    if (location.length >= 2 && supplyTypeOptionValueTemp.length >= 2) {
       console.log(supplyType);
       const generateSupply = await contract.methods
-        .createDemand(contractAddress, location, supplyType, quantity)
+        .createDemand(
+          contractAddress,
+          location,
+          multipleSelectValuesOption,
+          quantity
+        )
         .send({ from: accoundId })
         .then((res) => {
           console.log(res);
 
           fetchAllDemands();
           fetchUserDemands().then((cur) => {
-            let sz = demands.length;
-            console.log(demands[sz - 1].creatorName, "I wash er");
+            let sz = tempDemandArr.length ;
+            // console.log(demands[sz].creatorName, "I wash er");
             sendDemandMessage(
-              demands[sz - 1].disasterDetails,
-              demands[sz - 1].supplyType,
-              demands[sz - 1].location,
-              demands[sz - 1].quantity,
-              demands[sz - 1].creatorName
+              tempDemandArr[sz - 1].disasterDetails,
+              multipleSelectValuesOption,
+              location,
+              tempDemandArr[sz - 1].quantity,
+              tempDemandArr[sz - 1].creatorName
             );
           });
           setQuantity(0);
           setLocation("");
           setSupplyType("");
+          setMultipleSelectValuesOption("");
+          setSupplyTypeOptionValue("all");
           toast.update(id, {
             render: "Demands created successfully",
             type: "success",
@@ -122,6 +177,20 @@ const DemandRequest = () => {
     fetchAllDemands();
     fetchUserDemands();
   }, []);
+  const updateOptionTypeBased = () => {
+    if (supplyTypeOptionValueTemp == "all")
+      setMultipleSelectTag(multipleSelectValues);
+    else {
+      let temp = [];
+      multipleSelectValues.forEach((element) => {
+        console.log(element);
+        if (supplyTypeOptionValueTemp == element.type) temp.push(element);
+      });
+      console.log(temp);
+      setMultipleSelectTag(temp);
+    }
+  };
+
   return (
     <>
       <div>
@@ -148,7 +217,7 @@ const DemandRequest = () => {
                       >
                         Supply Type
                       </label>
-                      <input
+                      {/* <input
                         maxLength={250}
                         type="text"
                         id="demandDescription"
@@ -156,6 +225,44 @@ const DemandRequest = () => {
                         onChange={(e) => setSupplyType(e.target.value)}
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                         placeholder="Demand Description - max.length 250"
+                        required
+                      /> */}
+                      <select
+                        onChange={(e) => {
+                          supplyTypeOptionValueTemp = e.target.value;
+                          setSupplyTypeOptionValue(e.target.value);
+                          updateOptionTypeBased();
+                        }}
+                        id="tabs"
+                        className="w-full bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 "
+                      >
+                        {typeSupplyOption.map((option) => (
+                          <option value={option.value}>{option.label}</option>
+                        ))}
+                      </select>
+                    </div>
+                    <div className="w-3/4">
+                      <MultiSelect
+                        className="multi-select"
+                        onChange={handleOnchange}
+                        options={multipleSelectTag}
+                      />
+                    </div>
+                    <div className="w-3/4">
+                      <label
+                        for="first_name"
+                        class="block mb-2 text-sm font-medium text-gray-900 "
+                      >
+                        Description
+                      </label>
+                      <input
+                        type="text"
+                        id="description"
+                        maxLength={250}
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                        placeholder="Description"
                         required
                       />
                     </div>
@@ -322,7 +429,7 @@ const ViewDemand = ({ demands }) => {
 const ViewCreatedDemand = ({ demands }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const contractAddress = searchParams.get("q");
-  
+
   const accoundId = localStorage.getItem("account");
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -376,11 +483,11 @@ function DemandCard({
         Disaster : {disasterDetails}
       </div>
       <div class="bg-gray-200 text-gray-700 text-lg px-6 py-4">
-        Description : {supplyType}
+        Supply Products : {supplyType}
       </div>
 
       <div class="flex flex-col sm:flex-row justify-between items-center sm:px-6 py-4">
-      <p class="font-bold">Name : {requestedBy}</p>
+        <p class="font-bold">Name : {requestedBy}</p>
         {/* <div class="bg-orange-600 text-xs uppercase px-2 py-1 rounded-full border border-gray-200 text-gray-200 font-bold">
           {state}
         </div> */}

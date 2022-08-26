@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { MultiSelect } from "react-multi-select-component";
 import { useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import MultiSelect from "react-multiple-select-dropdown-lite";
+import "react-multiple-select-dropdown-lite/dist/index.css";
+
 import {
   getAccountID,
   intializeMasterContract,
@@ -11,18 +13,16 @@ const SupplyRequest = () => {
   let id;
   //just set supplies called from contract
   const [modal, setModal] = useState(false);
+
+  const [description, setDescription] = useState("");
   const [supplyType, setSupplyType] = useState("");
   const [requestedBy, setRequestedBy] = useState("");
   const [deliveryAddress, setDeliveryAddress] = useState("");
   const [amount, setAmount] = useState(0);
   const [state, setState] = useState("");
   const [searchParams, setSearchParams] = useSearchParams();
-  const [supplies, setSupplies] = useState([
-    
-  ]);
-  const [viewCreateSupplies, setViewCreateSupplies] = useState([
-    
-  ]);
+  const [supplies, setSupplies] = useState([]);
+  const [viewCreateSupplies, setViewCreateSupplies] = useState([]);
   const fetchSupplies = async () => {
     const contract = intializeMasterContract();
     const contractAddress = searchParams.get("q");
@@ -74,35 +74,52 @@ const SupplyRequest = () => {
     },
   ];
   const [selected, setSelected] = useState([]);
+  const handleOnchange = (val) => setMultipleSelectValuesOption(val);
   const typeSupplyOption = [
     {
-      label:"Food",
-      value:"food"
+      label: "All",
+      value: "all",
     },
     {
-      label:"Medicine",
-      value:"medicine"
+      label: "Food",
+      value: "food",
     },
     {
-      label:"Equiments",
-      value:"equiments"
+      label: "Medicine",
+      value: "medicine",
     },
-  ]
-  const multipleSelectValues = [
-    { label: "medicine", value: "medicine",type:"food" },
-    { label: "rice", value: "rice",type:"food" },
-    { label: "maggi", value: "maggi",type:"food" },
-    { label: "Dolo", value: "Dolo",type:"medicine" },
-    { label: "Crocin", value: "Crocin",type:"medicine" },
-    { label: "pickle", value: "pickle",type:"equiments" },
-    { label: "axe", value: "axe",type:"equiments" },
+    {
+      label: "Equiments",
+      value: "equiments",
+    },
+    {
+      label: "Other",
+      value: "other",
+    },
   ];
+  const multipleSelectValues = [
+    { label: "wheat", value: "wheat", type: "food" },
+    { label: "rice", value: "rice", type: "food" },
+    { label: "maggi", value: "maggi", type: "food" },
+    { label: "Dolo", value: "Dolo", type: "medicine" },
+    { label: "Crocin", value: "Crocin", type: "medicine" },
+    { label: "pickle", value: "pickle", type: "equiments" },
+    { label: "axe", value: "axe", type: "equiments" },
+  ];
+  const [multipleSelectTag, setMultipleSelectTag] =
+    useState(multipleSelectValues);
+  // multiselect need to ut
+  let supplyTypeOptionValueTemp = "all";
+  const [supplyTypeOptionValue, setSupplyTypeOptionValue] = useState("all"); // normal select - dont work
+
+  const [multipleSelectValuesOption, setMultipleSelectValuesOption] =
+    useState("");
   const tabComponents = [
     <ViewSupplies supplies={supplies} />,
     <ViewCreated supplies={viewCreateSupplies} />,
   ];
   const createSupply = async () => {
-    if (supplyType.length >= 2 && deliveryAddress.length >= 2 && amount >= 1) {
+    if (deliveryAddress.length >= 2 && amount >= 1) {
       const contract = intializeMasterContract();
       const accountId = await getAccountID();
       id = toast.loading("Creating Supply", {
@@ -112,26 +129,29 @@ const SupplyRequest = () => {
       const contractAddress = searchParams.get("q");
       console.log(contractAddress, "cow");
       await contract.methods
-        .createRequest(contractAddress, supplyType, deliveryAddress, amount)
+        .createRequest(contractAddress, multipleSelectValuesOption, deliveryAddress, amount)
         .send({ from: accountId })
         .then((res) => {
           console.log(res);
           fetchSupplies();
           fetchUserSupply();
-          setAmount(0);
-          setDeliveryAddress("");
-          setRequestedBy("");
-          setSupplyType("");
-          setState("");
-          setModal(false);
           toast.update(id, {
             render: "Supply Created successfully",
             type: "success",
             isLoading: false,
             autoClose: 3000,
           });
+          setAmount(0);
+          setDeliveryAddress("");
+          setRequestedBy("");
+          setSupplyType("");
+          setState("");
+          setDescription("");
+          setMultipleSelectValuesOption("");
+          setSupplyTypeOptionValue("all");
+          setModal(false);
         })
-        .catch((err) => { });
+        .catch((err) => {});
     } else {
       toast.info("Please Fill Valid Details");
     }
@@ -141,23 +161,40 @@ const SupplyRequest = () => {
     fetchSupplies();
     fetchUserSupply();
   }, []);
+
+  const updateOptionTypeBased = () => {
+    if (supplyTypeOptionValueTemp == "all")
+      setMultipleSelectTag(multipleSelectValues);
+    else {
+      let temp = [];
+      multipleSelectValues.forEach((element) => {
+        console.log(element);
+        if (supplyTypeOptionValueTemp == element.type) temp.push(element);
+      });
+      console.log(temp);
+      setMultipleSelectTag(temp);
+    }
+  };
+
   return (
     <>
       <div>
         {/* modal */}
         <div
-          className={modal ? "relative z-10" : "relative z-10 hidden"}
+          className={modal ? "relative z-10 " : "relative z-10 hidden"}
           id="fileUploadModal"
           aria-labelledby="modal-title"
           role="dialog"
           aria-modal="true"
-         
         >
           <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
 
-          <div className="fixed z-10 inset-0 overflow-y-auto">
-            <div className="flex items-center sm:items-center justify-center min-h-full p-4 text-center sm:p-0">
-              <div className="relative bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-lg sm:w-full" style={{maxHeight:"600px",minHeight:"463px"}}>
+          <div className="fixed z-10 inset-0 overflow-y-scroll">
+            <div className=" flex items-center sm:items-center justify-center min-h-full p-4 text-center sm:p-0">
+              <div
+                className="overflow-y-scroll relative bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-lg sm:w-full"
+                style={{ maxHeight: "600px", minHeight: "463px" }}
+              >
                 <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                   <div className="flex flex-col items-center justify-center gap-5">
                     <div className="text-2xl">Create Supply</div>
@@ -168,21 +205,43 @@ const SupplyRequest = () => {
                       >
                         Supply Type
                       </label>
-                      {/* <input
-                        type="text"
-                        id="receiverAddress"
-                        value={supplyType}
-                        onChange={(e) => setSupplyType(e.target.value)}
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                        placeholder="Supply Type"
-                        required
-                      /> */}
-                      {/* Multiple Select Started */}
+                      <select
+                        onChange={(e) => {
+                          supplyTypeOptionValueTemp = e.target.value;
+                          setSupplyTypeOptionValue(e.target.value);
+                          updateOptionTypeBased();
+                        }}
+                        id="tabs"
+                        className="w-full bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 "
+                      >
+                        {typeSupplyOption.map((option) => (
+                          <option value={option.value}>{option.label}</option>
+                        ))}
+                      </select>
+                    </div>
+                    <div className="w-3/4">
                       <MultiSelect
-                        options={multipleSelectValues}
-                        value={selected}
-                        onChange={setSelected}
-                        labelledBy="Select"
+                        className="multi-select"
+                        onChange={handleOnchange}
+                        options={multipleSelectTag}
+                      />
+                    </div>
+                    <div className="w-3/4">
+                      <label
+                        for="first_name"
+                        class="block mb-2 text-sm font-medium text-gray-900 "
+                      >
+                        Description
+                      </label>
+                      <input
+                        type="text"
+                        id="description"
+                        maxLength={250}
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                        placeholder="Description"
+                        required
                       />
                     </div>
 
@@ -317,7 +376,7 @@ const SupplyRequest = () => {
                   e.preventDefault();
                   setCurIndex(1);
                 }}
-              // className="inline-block  w-full h-full bg-white hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700 "
+                // className="inline-block  w-full h-full bg-white hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700 "
               >
                 <button className="inline-block p-4 w-full bg-white h-full hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700 rounded-r-lg">
                   View Created
