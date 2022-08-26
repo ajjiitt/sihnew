@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { MultiSelect } from "react-multi-select-component";
 import { useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
@@ -84,6 +85,12 @@ const SupplyRequest = () => {
       value: "Cancelled",
     },
   ];
+  const [selected, setSelected] = useState([]);
+  const multipleSelectValues = [
+    { label: "medicine", value: "medicine",type:"medicine" },
+    { label: "food", value: "food",type:"medicine" },
+    { label: "maggi", value: "maggi",type:"medicine" },
+  ];
   const tabComponents = [
     <ViewSupplies supplies={supplies} />,
     <ViewCreated supplies={viewCreateSupplies} />,
@@ -118,11 +125,12 @@ const SupplyRequest = () => {
             autoClose: 3000,
           });
         })
-        .catch((err) => {});
+        .catch((err) => { });
     } else {
       toast.info("Please Fill Valid Details");
     }
   };
+
   useEffect(() => {
     fetchSupplies();
     fetchUserSupply();
@@ -153,7 +161,7 @@ const SupplyRequest = () => {
                       >
                         Supply Type
                       </label>
-                      <input
+                      {/* <input
                         type="text"
                         id="receiverAddress"
                         value={supplyType}
@@ -161,6 +169,13 @@ const SupplyRequest = () => {
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                         placeholder="Supply Type"
                         required
+                      /> */}
+                      {/* Multiple Select Started */}
+                      <MultiSelect
+                        options={multipleSelectValues}
+                        value={selected}
+                        onChange={setSelected}
+                        labelledBy="Select"
                       />
                     </div>
 
@@ -295,7 +310,7 @@ const SupplyRequest = () => {
                   e.preventDefault();
                   setCurIndex(1);
                 }}
-                // className="inline-block  w-full h-full bg-white hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700 "
+              // className="inline-block  w-full h-full bg-white hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700 "
               >
                 <button className="inline-block p-4 w-full bg-white h-full hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700 rounded-r-lg">
                   View Created
