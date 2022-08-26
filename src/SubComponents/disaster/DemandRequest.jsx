@@ -6,10 +6,13 @@ import {
   intializeMasterContract,
 } from "../../Utils/connectWallet";
 import { sendDemandMessage } from "../../Utils/telegramMessage";
+
 const DemandRequest = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+const contractAddress = searchParams.get("q");
+  // const accoundId = await getAccountID();
   let id;
   const contract = intializeMasterContract();
-  const [searchParams, setSearchParams] = useSearchParams();
   //just set supplies called from contract
   const [modal, setModal] = useState(false);
   const [supplyType, setSupplyType] = useState("");
@@ -54,6 +57,9 @@ const DemandRequest = () => {
     <ViewCreatedDemand demands={viewCreateDemands} />,
   ];
   const createSupply = async () => {
+    // const [searchParams, setSearchParams] = useSearchParams();
+// const contractAddress = searchParams.get("q");
+  // const accoundId = getAccountID();
     const contractAddress = searchParams.get("q");
     const accoundId = await getAccountID();
 
@@ -77,6 +83,7 @@ const DemandRequest = () => {
           fetchAllDemands();
           fetchUserDemands().then((cur) => {
             let sz = demands.length;
+            console.log(demands[sz - 1].creatorName, "I wash er");
             sendDemandMessage(demands[sz - 1].disasterDetails, demands[sz - 1].supplyType, demands[sz - 1].location, demands[sz - 1].quantity, demands[sz - 1].creatorName);
           } );
           setQuantity(0);
@@ -275,19 +282,28 @@ const DemandRequest = () => {
 };
 
 export default DemandRequest;
-
-const ViewDemand = ({ demands }) => {
+const contract = intializeMasterContract();
+const ViewDemand =  ({ demands }) => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const contractAddress = searchParams.get("q");
+    const accoundId = localStorage.getItem("account");
+    
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
       {demands.length !== 0 ? (
         demands.map((props, index) => (
+          
           <DemandCard
+          contractAddress={contractAddress}
+          accountId={accoundId}
             location={props.location}
             supplyType={props.supplyType}
             requestedBy={props.creatorName}
             quantity={props.quantity}
             disasterDetails={props.disasterDetails}
+            state={props[5]}
             key={index}
+            index={index}
           />
         ))
       ) : (
@@ -299,17 +315,22 @@ const ViewDemand = ({ demands }) => {
   );
 };
 const ViewCreatedDemand = ({ demands }) => {
+  
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
       {demands.length !== 0 ? (
         demands.map((props, index) => (
           <DemandCard
+          contractAddress={contractAddress}
+          accountId={accoundId}
           location={props.location}
           supplyType={props.supplyType}
           requestedBy={props.creatorName}
           quantity={props.quantity}
           disasterDetails={props.disasterDetails}
+          state={demands[5]}
           key={index}
+          index={index}
           />
         ))
       ) : (
@@ -321,7 +342,15 @@ const ViewCreatedDemand = ({ demands }) => {
   );
 };
 
-function DemandCard({ location, supplyType, requestedBy, quantity, disasterDetails }) {
+function DemandCard({ location, supplyType, requestedBy, quantity, disasterDetails, state, index, contractAddress}) {
+  // const contractAddress = searchParams.get("q");
+  // const accoundId = getAccountID();
+  let accoundId = localStorage.getItem("account");
+  const acceptDemand = async () => {
+    const check= await contract.methods.acceptDemand(contractAddress, accoundId, index).send({from: accoundId});
+    console.log(check);
+  }
+
   return (
     <div class="w-full flex flex-col bg-white shadow-lg rounded-lg overflow-hidden">
       <div class="bg-gray-200 text-gray-700 text-lg px-6 py-4">
@@ -353,6 +382,13 @@ function DemandCard({ location, supplyType, requestedBy, quantity, disasterDetai
           <div class="bg-blue-700 w-12 h-12 flex justify-center items-center rounded-full uppercase font-bold text-white">
             {quantity}
           </div>
+          <button className='rounded-xl text-black p-3 font-semibold' style={{backgroundColor: "#42c642d6"}}
+                            onClick={ (events)=>{
+                              console.log(state, "state", contractAddress, accoundId, index);
+                              acceptDemand();
+                              events.preventDefault();
+                            }}
+                          > {state === 0 ? "Accept" : "Accepted"} </ button>
           <div class="ml-4">
             <p class="font-bold">{requestedBy}</p>
           </div>
