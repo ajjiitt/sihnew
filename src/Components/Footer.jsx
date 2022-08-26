@@ -2,62 +2,95 @@ import React from "react";
 import instagram from "../assets/instagram.svg";
 import twitter from "../assets/twitter.svg";
 import youtube from "../assets/youtube.svg";
+
 export default function Footer() {
   return (
     <div>
-      <div
-        style={{ fontFamily: "Inter" }}
-        className="h-full md:h-80 bg-footer-darkblue flex md:flex-row flex-col justify-center items-center text-white gap-5 md:gap-1 py-5 md:py-0"
-      >
-        {/* div1 */}
-        <div className="md:w-2/12 text-xl font-bold flex items-center justify-center">
-          10K user already connected worldwide
-        </div>
-        {/* div2 */}
-        <div className="md:w-5/12 flex flex-col md:flex-row justify-around items-center md:items-start mx-5 md:mt-3">
-          <div >
-            <div className="my-2 font-bold text-xl "> Quick Links</div>
-            <hr className="md:hidden"/>
-            <div className=" flex items-center md:items-start  gap-1 flex-col text-grey-copyright my-4">
-              <div className="hover:pl-1 hover:text-buttonOrange cursor-pointer ">HOME</div>
-              <div className="hover:pl-1 hover:text-buttonOrange cursor-pointer">DISASTERS</div>
-              <div className="hover:pl-1 hover:text-buttonOrange cursor-pointer">ABOUT US</div>
-              <div className="hover:pl-1 hover:text-buttonOrange cursor-pointer">NEWS</div>
-            </div>
-          </div>
+      <footer class="text-gray-400 bg-gray-900 body-font">
+        <div class="px-5 py-24 mx-auto flex md:items-center lg:items-start md:flex-row md:flex-nowrap flex-wrap flex-col md-px-20">
+          <div class="w-64 flex-shrink-0 md:mx-0 mx-auto text-center md:text-left">
 
-          <div>
-            <div className="my-2 font-bold text-xl"> Get In Touch</div>
-            <hr className="md:hidden"/>
-            <div className="flex items-center md:items-start gap-1 flex-col text-grey-copyright my-4">
-              <div className="hover:pl-1 hover:text-buttonOrange cursor-pointer">CONTACT US</div>
+            <p class="text-base text-gray-50">10K users already connected Worldwide</p>
+          </div>
+          <div class="flex-grow flex flex-wrap md:pl-20 -mb-10 md:mt-0 mt-10 md:text-left text-center">
+            <div class="lg:w-1/4 md:w-1/2 w-full px-4">
+              <h2 class="title-font font-medium text-white tracking-widest text-sm mb-3">USEFUL LINKS</h2>
+              <nav class="list-none mb-10">
+                <li>
+                  <a class="text-gray-400 hover:text-white">Home</a>
+                </li>
+                <li>
+                  <a class="text-gray-400 hover:text-white">Disasters</a>
+                </li>
+                <li>
+                  <a class="text-gray-400 hover:text-white">About Us</a>
+                </li>
+                <li>
+                  <a class="text-gray-400 hover:text-white">News</a>
+                </li>
+              </nav>
+            </div>
+            <div class="lg:w-1/4 md:w-1/2 w-full px-4">
+              <h2 class="title-font font-medium text-white tracking-widest text-sm mb-3">GET IN TOUCH</h2>
+              <nav class="list-none mb-10">
+                <li>
+                  <a class="text-gray-400 hover:text-white">Contact Us</a>
+                </li>
+              </nav>
+            </div>
+            <div class="lg:w-1/4 md:w-1/2 w-full px-4">
+              <h2 class="title-font font-medium text-white tracking-widest text-sm mb-3">ADDRESS</h2>
+              <nav class="list-none mb-10">
+                <li>
+                  <a class="text-gray-400 hover:text-white">Mumbai, MH</a>
+                </li>              </nav>
+            </div>
+            <div class="lg:w-1/4 md:w-1/2 w-full px-4">
+              <h2 class="title-font font-medium text-white tracking-widest text-sm mb-3">FOLLOW US</h2>
+              {/* <nav class="list-none mb-10">
+                <li>
+                  <a class="text-gray-400 hover:text-white">
+                    <img src={twitter.png} alt="" />
+                  </a>
+                </li>
+                <li>
+                  <a class="text-gray-400 hover:text-white">Second Link</a>
+                </li>
+                <li>
+                  <a class="text-gray-400 hover:text-white">Third Link</a>
+                </li>
+                <li>
+                  <a class="text-gray-400 hover:text-white">Fourth Link</a>
+                </li>
+              </nav> */}
+              <span class="inline-flex sm:ml-auto sm:mt-0 mt-4 justify-center sm:justify-start">
+                <a class="text-gray-400">
+                  <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-5 h-5" viewBox="0 0 24 24">
+                    <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"></path>
+                  </svg>
+                </a>
+                <a class="ml-3 text-gray-400">
+                  <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-5 h-5" viewBox="0 0 24 24">
+                    <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"></path>
+                  </svg>
+                </a>
+                <a class="ml-3 text-gray-400">
+                  <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-5 h-5" viewBox="0 0 24 24">
+                    <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37zm1.5-4.87h.01"></path>
+                  </svg>
+                </a>
+                <a class="ml-3 text-gray-400">
+                  <svg fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="0" class="w-5 h-5" viewBox="0 0 24 24">
+                    <path stroke="none" d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"></path>
+                    <circle cx="4" cy="4" r="2" stroke="none"></circle>
+                  </svg>
+                </a>
+              </span>
             </div>
           </div>
-
-          <div>
-            <div className="my-2 font-bold text-xl "> Address</div>
-            <hr className="md:hidden"/>
-            <div className="text-grey-copyright my-4">
-              <div className="hover:pl-1 hover:text-buttonOrange cursor-pointer">Mumbai, MH</div>
-            </div>
-          </div>
         </div>
-        {/* div3 */}
-        <div className="md:w-3/12 flex items-center justify-center flex-col gap-2 mb-5 md:mb-0">
-          <div className="text-bold  p-1 text-xl">Follow Us</div>
-          <hr className="h-2 w-full md:hidden"/>
-          <div className="flex gap-3">
-            <img className="cursor-pointer" src={instagram} alt="instagram" />
-            <img className="cursor-pointer" src={twitter} alt="twitter" />
-            <img className="cursor-pointer" src={youtube} alt="youtube" />
-          </div>
-        </div>
-      </div>
-      <div className="bg-footer-darkblue flex justify-center">
-        <div className="w-8/12 text-grey-copyright text-sm flex justify-center py-3 border-t-1 border-grey-copyright">
-          copyright &copy; 2022. All rights reserved. Privacy policy
-        </div>
-      </div>
+      </footer>
     </div>
   );
 }
