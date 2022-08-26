@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { getAccountID, intializeMasterContract } from "../Utils/connectWallet";
@@ -51,6 +52,10 @@ export default function RegisterForm() {
     } else if (role === "Ground") {
       user = await contract.methods
         .regAuth(authorityName, accountId, 2)
+        .send({ from: accountId });
+    } else {
+      user = await contract.methods
+        .regAuth(authorityName, accountId, 3)
         .send({ from: accountId });
     }
     return user;

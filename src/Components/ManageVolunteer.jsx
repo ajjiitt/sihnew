@@ -1,14 +1,21 @@
 import React, { useState } from "react";
 import ApproveVolunteer from "../SubComponents/ApproveVolunteer";
 import ViewAllVolunteer from "../SubComponents/ViewAllVolunteer";
-
+import { getAccountID, intializeMasterContract } from "../Utils/connectWallet";
+import { toast } from "react-toastify";
+// import { }
 const ManageVolunteer = () => {
+  const contract = intializeMasterContract();
   const [openTab, setOpenTab] = useState(1);
   const [uaddress, setUaddress] = useState("");
   const [workHour, setWorkHour] = useState(0);
-  const saveWOrkHour = () => {
-    console.log(uaddress, workHour);
+  const saveWOrkHour = async () => {
+    const accountId = await getAccountID();
+    const saveHours = await contract.methods.volunteerManage("0xEFD25003FEc6a6d695D93429DeB85d1f9217091a", uaddress, workHour, 0).send({from: accountId});
+    toast.info("Work hour added successfully")
+    console.log(uaddress, workHour, saveHours);
   };
+  
   const color = "footer-darkblue";
   return (
     <div className="flex flex-wrap  justify-center items-center">

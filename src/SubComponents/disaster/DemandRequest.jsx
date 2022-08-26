@@ -539,9 +539,9 @@ function DemandCard({
             {" "}
             {state === 0 ? "Accept" : "Accepted"}{" "}
           </button>
-          <div class="ml-4">
+          {/* <div class="ml-4">
             <p class="font-bold">{requestedBy}</p>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

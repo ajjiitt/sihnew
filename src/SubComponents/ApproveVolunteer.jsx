@@ -2,15 +2,27 @@ import React, { useState, useEffect } from "react";
 import { getAccountID, intializeMasterContract } from "../Utils/connectWallet";
 
 const ApproveVolunteer = () => {
+  const contract = intializeMasterContract();
   const [volunteerApprove, setVolunteerApprove] = useState([
     {
       address: "0xabE45d16e0390b9611098a2A58d25484D75d6F6E",
       name: "Volunteer 1",
     },
   ]);
-  const approve = (address) => {
+  const accountId = getAccountID();
+  const approve = async (address, name) => {
     console.log({ msg: "approve volunteer", address });
+    const newCenter = await contract.methods.createLevel(address, name, 3).send({from: accountId});
+
   };
+  const fetchVolunteers = async () => {
+    const volunteers = await contract.methods.getRegCenter(3).call();
+    console.log(volunteers);
+    setVolunteerApprove(volunteers);
+  }
+  useEffect(() => {
+    fetchVolunteers();
+  }, [])
   return (
     <div>
       <p className="font-semibold text-center text-2xl">ALL AUTHORITIES</p>
@@ -43,7 +55,7 @@ const ApproveVolunteer = () => {
                     {index + 1}
                   </th>
                   <td class="py-4 px-6 text-footer-darkblue">{ele.name}</td>
-                  <td class="py-4 px-6 text-footer-darkblue">{ele.address}</td>
+                  <td class="py-4 px-6 text-footer-darkblue">{ele.registerAddress}</td>
                   <td class="py-4 px-6 text-footer-darkblue">
                     <button
                       className="rounded-xl text-black p-3 font-semibold"
@@ -51,7 +63,7 @@ const ApproveVolunteer = () => {
                         backgroundColor: "#e6e629a1",
                       }}
                       onClick={(events) => {
-                        approve(ele.address);
+                        approve(ele.address, ele.name);
                       }}
                     >
                       Approve

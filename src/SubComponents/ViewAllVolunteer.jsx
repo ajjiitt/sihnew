@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { intializeMasterContract } from "../Utils/connectWallet";
 
 const ViewAllVolunteer = () => {
+  const contract = intializeMasterContract();
   const [buttoncolor, setButtonColor] = useState(0);
   const [volunteerArr, setVolunteerArr] = useState([
     {
@@ -8,6 +10,14 @@ const ViewAllVolunteer = () => {
       name: "Volunteer 1",
     },
   ]);
+  const fetchVolunteers = async () => {
+    const volunteers = await contract.methods.getRegCenter(3).call();
+    console.log(volunteers);
+    setVolunteerArr(volunteers);
+  }
+  useEffect(() => {
+    fetchVolunteers();
+  }, [])
   return (
     <div>
       <p className="font-semibold text-center text-2xl">ALL AUTHORITIES</p>
@@ -42,7 +52,7 @@ const ViewAllVolunteer = () => {
                   >
                     {ele.name}
                   </th>
-                  <td class="py-4 px-6 text-footer-darkblue">{ele.address}</td>
+                  <td class="py-4 px-6 text-footer-darkblue">{ele.registerAddress}</td>
                 </tr>
               ))}
             </tbody>

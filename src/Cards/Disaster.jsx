@@ -20,7 +20,7 @@ const Disaster = ({ name, location, description, contract, severity, authority }
         {name}
       </h5>
       <p class="mb-3 font-normal text-gray-500 dark:text-gray-400 break-all truncate">
-        {description ? description : "No description"}
+        {/* {description ? description : "No description"} */}
       </p>
       <a
         onClick={(e) => {
