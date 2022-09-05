@@ -105,7 +105,7 @@ export default function RegisterForm() {
                     <button
                       type="submit"
                       onClick={(e) => registerUser(e)}
-                      className="bg-blackDmain bg-footer-darkblue text-white hover:text-footer-darkblue hover:bg-white hover:border-1 hover:border-footer-darkblue  text-sm font-semibold py-2 px-4 rounded"
+                      className="bg-[#22262F] text-white hover:text-footer-darkblue hover:bg-white hover:border-1 hover:border-footer-darkblue  text-sm font-semibold py-2 px-4 rounded"
                     >
                       Register
                     </button>

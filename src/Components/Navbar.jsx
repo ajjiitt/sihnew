@@ -84,6 +84,11 @@ export default function Example() {
 
                 <button
                   className="bg-gray-900 hidden belowSm:block  text-white p-2 sm:px-3 sm:py-2 rounded-md text-sm font-medium"
+                  style= {{
+                    '@media (min-width: 387px)': {
+                      display: 'block',
+                    }
+                  }}
                   aria-current="page"
                   onClick={() => {
                     !localStorage.account
