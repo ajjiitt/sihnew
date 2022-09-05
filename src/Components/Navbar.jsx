@@ -83,12 +83,8 @@ export default function Example() {
               <div className="w-52  sm:w-60  absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 ">
 
                 <button
-                  className="bg-gray-900 hidden belowSm:block  text-white p-2 sm:px-3 sm:py-2 rounded-md text-sm font-medium"
-                  style= {{
-                    '@media (min-width: 387px)': {
-                      display: 'block',
-                    }
-                  }}
+                  className="bg-gray-900 hidden sm:block text-white p-2 sm:px-3 sm:py-2 rounded-md text-sm font-medium"
+                  
                   aria-current="page"
                   onClick={() => {
                     !localStorage.account
@@ -249,7 +245,7 @@ export default function Example() {
 
           <Disclosure.Panel className="md:hidden">
             <button
-              className="bg-gray-900 ml-4 mt-2  belowSm:hidden  text-white p-2 sm:px-3 sm:py-2 rounded-md text-sm font-medium"
+              className="bg-gray-900 ml-4 mt-2  sm:hidden  text-white p-2 sm:px-3 sm:py-2 rounded-md text-sm font-medium"
               aria-current="page"
               onClick={() => {
                 !localStorage.account
