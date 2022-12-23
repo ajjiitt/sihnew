@@ -10,7 +10,7 @@ const ImageSlider = () => {
                     {/* <p className="legend">Legend 1</p> */}
                 </div>
                 <div>
-                    <img src="https://ndrf.gov.in/sites/default/files/Har%20Ghar%20Tiranga.jpg" />
+                    <img src="https://ndrf.gov.in/sites/default/files/Slider%201.png" />
                     {/* <p className="legend">Legend 2</p> */}
                 </div>
                 <div>
