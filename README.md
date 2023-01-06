@@ -1,6 +1,7 @@
-![Trojan Hex](public\trojanHexBanner.png)
+![Trojan Hex](public/trojanHexBanner.png)
 ## Team : Trojan Hex New
-### Problem Statement : (GS910) Using Innovative Blockchain Technologies in Emergency Management and Disaster Response
+
+### Winning Project Solution for Problem Statement : (GS910) Using Innovative Blockchain Technologies in Emergency Management and Disaster Response
 
 ### Description : 
 The NDRF relays on a lot of data to quickly action during the time of disaster. Current limitations are that there is no one common platform / integrated or adaptable for futuristic needs. Blockchain is one suitable technology which is secure, distributed, and immutable digital ledger that records transactions. Using blockchain in emergency management can provide interoperability between many parties involved in response and provide transparency. Some requirements are A common platform, Immutable data, Secure sharing & management, Demand reporting, improve trust with 3rd party verification, Tracking and visibility, Honoring volunteer effort, Future Tokenization.A blockchain solution seems to be of much use to address the challenges in disaster response mechanism. 
